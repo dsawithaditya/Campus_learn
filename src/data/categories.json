@@ -1,0 +1,75 @@
+[
+  {
+    "id": "tech",
+    "name": "Tech & Coding",
+    "slug": "tech",
+    "color": "#38BDF8",
+    "icon": "Code2",
+    "courseCount": 18,
+    "description": "Full-stack web dev, DSA, AI systems, open-source and hackathon mastery taught by senior campus devs."
+  },
+  {
+    "id": "singing",
+    "name": "Singing & Vocals",
+    "slug": "singing",
+    "color": "#F472B6",
+    "icon": "Mic2",
+    "courseCount": 12,
+    "description": "Classical Hindustani, Western pitch training, acoustic covers, and stage presence for college fests."
+  },
+  {
+    "id": "music",
+    "name": "Music Production",
+    "slug": "music",
+    "color": "#A78BFA",
+    "icon": "Music",
+    "courseCount": 14,
+    "description": "Beat-making in FL Studio, acoustic guitar riffs, keyboard chord progressions and audio mixing."
+  },
+  {
+    "id": "dance",
+    "name": "Dance & Choreography",
+    "slug": "dance",
+    "color": "#C084FC",
+    "icon": "Sparkles",
+    "courseCount": 11,
+    "description": "Urban hip-hop, contemporary Bollywood, locking & popping, and competitive group routines."
+  },
+  {
+    "id": "sports",
+    "name": "Sports & Fitness",
+    "slug": "sports",
+    "color": "#34D399",
+    "icon": "Trophy",
+    "courseCount": 15,
+    "description": "Inter-hostel basketball tactics, cricket batting drills, marathon pacing and calisthenics."
+  },
+  {
+    "id": "art",
+    "name": "Art & Design",
+    "slug": "art",
+    "color": "#FB923C",
+    "icon": "Palette",
+    "courseCount": 13,
+    "description": "UI/UX with Figma, digital vector illustration, fest poster designing, and acrylic canvas painting."
+  },
+  {
+    "id": "photography",
+    "name": "Photography & Video",
+    "slug": "photography",
+    "color": "#2DD4BF",
+    "icon": "Camera",
+    "courseCount": 10,
+    "description": "Campus event photography, street portraits, color grading in Premiere Pro and cinematic reels."
+  },
+  {
+    "id": "gaming",
+    "name": "Gaming & Esports",
+    "slug": "gaming",
+    "color": "#F87171",
+    "icon": "Gamepad2",
+    "courseCount": 9,
+    "description": "Valorant crosshair placement & callouts, BGMI strategy, chess opening principles and tournament tactics."
+  }
+]
+
