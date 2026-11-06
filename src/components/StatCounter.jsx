@@ -8,8 +8,7 @@ export function StatCounter({ end = 100, label, suffix = '', prefix = '', durati
   useEffect(() => {
     if (!isInView) return;
 
-    // Reduced motion check
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setCount(end);
       return;
     }
@@ -20,7 +19,6 @@ export function StatCounter({ end = 100, label, suffix = '', prefix = '', durati
     const animateCount = (timestamp) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.floor(eased * end));
 
@@ -32,22 +30,23 @@ export function StatCounter({ end = 100, label, suffix = '', prefix = '', durati
     };
 
     animationFrame = requestAnimationFrame(animateCount);
-    return () => cancelAnimationFrame(animationFrame);
+    return () => {
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
   }, [isInView, end, duration]);
 
   return (
     <div ref={ref} className="text-center">
-      <div className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-primary dark:text-primary-contrast tracking-tight mb-1">
+      <div className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 tracking-tight mb-1">
         {prefix}
         {count.toLocaleString()}
         {suffix}
       </div>
       {label && (
-        <div className="text-sm font-medium text-muted dark:text-muted-dark uppercase tracking-wider">
+        <div className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">
           {label}
         </div>
       )}
     </div>
   );
 }
-

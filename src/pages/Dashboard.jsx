@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import {
   Flame,
   BookOpen,
   Clock,
   Award,
   Heart,
-  Compass,
   Play,
   Lock,
   Sparkles,
   LogOut,
   LayoutDashboard,
-  Bookmark,
-  CheckCircle2,
 } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { ProgressRing } from '../components/ProgressRing';
@@ -32,16 +28,15 @@ const allBadges = [
 
 export default function Dashboard() {
   const user = useAppStore((state) => state.user);
-  const enrolledCourses = useAppStore((state) => state.enrolledCourses);
-  const savedCourseIds = useAppStore((state) => state.savedCourseIds);
+  const enrolledCourses = useAppStore((state) => state.enrolledCourses) || [];
+  const savedCourseIds = useAppStore((state) => state.savedCourseIds) || [];
   const logout = useAppStore((state) => state.logout);
   const updateCourseProgress = useAppStore((state) => state.updateCourseProgress);
   const addToast = useAppStore((state) => state.addToast);
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState('learning'); // 'learning' | 'saved' | 'badges'
+  const [activeTab, setActiveTab] = useState('learning');
 
-  // Redirect to login if user not in store
   useEffect(() => {
     if (!user) {
       navigate('/login');
@@ -50,32 +45,31 @@ export default function Dashboard() {
 
   if (!user) return null;
 
-  // Enrolled courses details
+  const safeCourses = Array.isArray(coursesData) ? coursesData : [];
+
   const enrolledDetails = enrolledCourses
-    .map((item) => {
-      const course = coursesData.find((c) => c.id === item.courseId);
-      return course ? { ...course, progress: item.progress } : null;
+    ?.map((item) => {
+      const course = safeCourses.find((c) => c?.id === item?.courseId);
+      return course ? { ...course, progress: item?.progress ?? 0 } : null;
     })
-    .filter(Boolean);
+    ?.filter(Boolean) || [];
 
-  // Saved courses details
-  const savedCourses = coursesData.filter((c) => savedCourseIds.includes(c.id));
+  const savedCourses = safeCourses.filter((c) => savedCourseIds?.includes(c?.id)) || [];
 
-  // Recommended courses based on enrolled courses categories
-  const enrolledCatIds = enrolledDetails.map((c) => c.categoryId);
-  const recommendedCourses = coursesData
-    .filter((c) => !enrolledCourses.some((e) => e.courseId === c.id))
-    .filter((c) => enrolledCatIds.includes(c.categoryId) || c.rating >= 4.9)
+  const enrolledCatIds = enrolledDetails.map((c) => c?.categoryId);
+  const recommendedCourses = safeCourses
+    .filter((c) => !enrolledCourses.some((e) => e?.courseId === c?.id))
+    .filter((c) => enrolledCatIds.includes(c?.categoryId) || (c?.rating || 0) >= 4.9)
     .slice(0, 3);
 
   const totalHoursLearned = enrolledDetails.reduce(
-    (acc, curr) => acc + Math.round((curr.durationHours * curr.progress) / 100),
+    (acc, curr) => acc + Math.round(((curr?.durationHours || 0) * (curr?.progress || 0)) / 100),
     0
   );
 
   const handleResume = (courseId, currentProgress) => {
-    const next = Math.min(100, currentProgress + 15);
-    updateCourseProgress(courseId, next);
+    const next = Math.min(100, (currentProgress ?? 0) + 15);
+    updateCourseProgress(courseId, () => next);
     addToast(
       next >= 100 ? 'Module finished! 100% completed!' : `Progress updated to ${next}%`,
       'success'
@@ -86,30 +80,30 @@ export default function Dashboard() {
     <div className="pt-24 pb-20 md:pb-16 min-h-screen">
       <div className="container-custom">
         {/* Top Greeting Header */}
-        <div className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-lg p-6 sm:p-8 shadow-soft mb-8">
+        <div className="glass-card p-6 sm:p-8 shadow-2xl mb-8 animate-fade-up">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <img
-                src={user.avatar}
-                alt={user.name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-primary shadow-sm"
+                src={user?.avatar}
+                alt={user?.name || 'User'}
+                className="w-16 h-16 rounded-full object-cover border-2 border-orange-500 shadow-md"
               />
               <div>
-                <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-text dark:text-text-dark">
-                  Hey, {user.name.split(' ')[0]}! 👋
+                <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-zinc-100">
+                  Hey, {user?.name?.split(' ')?.[0] || 'Learner'}! 👋
                 </h1>
-                <p className="text-xs sm:text-sm text-muted dark:text-muted-dark mt-0.5">
-                  {user.college} • Campus Learner
+                <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
+                  {user?.college} • Campus Learner
                 </p>
               </div>
             </div>
 
             {/* Streak & Quick stats */}
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 rounded-pill">
-                <Flame className="w-5 h-5 fill-amber-500 text-amber-500 animate-pulse" />
+              <div className="flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/30 text-orange-400 rounded-full shadow-sm">
+                <Flame className="w-5 h-5 fill-orange-500 text-orange-500 animate-pulse" />
                 <span className="font-heading font-bold text-sm">
-                  {user.streak || 7} Day Streak!
+                  {user?.streak || 7} Day Streak!
                 </span>
               </div>
 
@@ -119,43 +113,43 @@ export default function Dashboard() {
                   logout();
                   navigate('/');
                 }}
-                className="p-2 rounded-full text-muted hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-full text-zinc-400 hover:text-rose-400 hover:bg-white/5 transition-colors active:scale-95"
                 aria-label="Log out"
               >
-                <LogOut className="w-5 h-5" strokeWidth={1.75} />
+                <LogOut className="w-5 h-5" strokeWidth={2} />
               </button>
             </div>
           </div>
 
           {/* 3 Small Stat Cards */}
-          <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 pt-6 border-t border-border/60 dark:border-border-dark/60">
-            <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/40 rounded-md text-center">
-              <div className="flex items-center justify-center gap-1.5 text-primary text-xs font-semibold uppercase mb-1">
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 pt-6 border-t border-white/10">
+            <div className="p-3 sm:p-4 bg-zinc-900/60 border border-white/5 rounded-xl text-center">
+              <div className="flex items-center justify-center gap-1.5 text-orange-400 text-xs font-semibold uppercase mb-1">
                 <BookOpen className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Enrolled</span>
               </div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-text dark:text-text-dark">
+              <div className="font-heading font-extrabold text-xl sm:text-2xl text-zinc-100">
                 {enrolledDetails.length}
               </div>
             </div>
 
-            <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/40 rounded-md text-center">
-              <div className="flex items-center justify-center gap-1.5 text-emerald-500 text-xs font-semibold uppercase mb-1">
+            <div className="p-3 sm:p-4 bg-zinc-900/60 border border-white/5 rounded-xl text-center">
+              <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs font-semibold uppercase mb-1">
                 <Clock className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Hours</span>
               </div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-text dark:text-text-dark">
+              <div className="font-heading font-extrabold text-xl sm:text-2xl text-zinc-100">
                 {totalHoursLearned}h
               </div>
             </div>
 
-            <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/40 rounded-md text-center">
-              <div className="flex items-center justify-center gap-1.5 text-accent text-xs font-semibold uppercase mb-1">
+            <div className="p-3 sm:p-4 bg-zinc-900/60 border border-white/5 rounded-xl text-center">
+              <div className="flex items-center justify-center gap-1.5 text-amber-400 text-xs font-semibold uppercase mb-1">
                 <Award className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Badges</span>
               </div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-text dark:text-text-dark">
-                {allBadges.filter((b) => b.unlocked).length}
+              <div className="font-heading font-extrabold text-xl sm:text-2xl text-zinc-100">
+                {allBadges?.filter((b) => b?.unlocked)?.length}
               </div>
             </div>
           </div>
@@ -168,10 +162,10 @@ export default function Dashboard() {
             <button
               type="button"
               onClick={() => setActiveTab('learning')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-md text-sm font-semibold transition-colors ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'learning'
-                  ? 'bg-primary text-white shadow-soft'
-                  : 'text-text dark:text-text-dark hover:bg-slate-100 dark:hover:bg-slate-800'
+                  ? 'btn-interactive text-white shadow-lg'
+                  : 'text-zinc-300 hover:bg-white/5 border border-transparent'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -184,10 +178,10 @@ export default function Dashboard() {
             <button
               type="button"
               onClick={() => setActiveTab('saved')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-md text-sm font-semibold transition-colors ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'saved'
-                  ? 'bg-primary text-white shadow-soft'
-                  : 'text-text dark:text-text-dark hover:bg-slate-100 dark:hover:bg-slate-800'
+                  ? 'btn-interactive text-white shadow-lg'
+                  : 'text-zinc-300 hover:bg-white/5 border border-transparent'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -200,17 +194,19 @@ export default function Dashboard() {
             <button
               type="button"
               onClick={() => setActiveTab('badges')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-md text-sm font-semibold transition-colors ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'badges'
-                  ? 'bg-primary text-white shadow-soft'
-                  : 'text-text dark:text-text-dark hover:bg-slate-100 dark:hover:bg-slate-800'
+                  ? 'btn-interactive text-white shadow-lg'
+                  : 'text-zinc-300 hover:bg-white/5 border border-transparent'
               }`}
             >
               <div className="flex items-center gap-3">
                 <Award className="w-4 h-4" />
                 <span>Student Badges</span>
               </div>
-              <span className="text-xs">{allBadges.filter((b) => b.unlocked).length}/5</span>
+              <span className="text-xs">
+                {allBadges?.filter((b) => b?.unlocked)?.length}/5
+              </span>
             </button>
           </aside>
 
@@ -219,13 +215,13 @@ export default function Dashboard() {
             {/* View: Continue Learning */}
             {activeTab === 'learning' && (
               <div className="space-y-6">
-                <h2 className="font-heading font-bold text-xl text-text dark:text-text-dark">
+                <h2 className="font-heading font-bold text-xl text-zinc-100">
                   In Progress Courses
                 </h2>
 
                 {enrolledDetails.length === 0 ? (
-                  <div className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md p-8 text-center">
-                    <p className="text-sm text-muted dark:text-muted-dark mb-4">
+                  <div className="glass-card p-8 text-center">
+                    <p className="text-sm text-zinc-400 mb-4">
                       You haven't enrolled in any courses yet.
                     </p>
                     <Link to="/explore">
@@ -236,39 +232,44 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {enrolledDetails.map((course) => (
+                    {enrolledDetails?.map((course, idx) => (
                       <div
-                        key={course.id}
-                        className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft hover:shadow-lift transition-shadow"
+                        key={course?.id || idx}
+                        className="glass-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-up"
                       >
                         <div className="flex items-start gap-4">
                           <img
-                            src={course.thumbnail}
+                            src={course?.thumbnail}
                             alt=""
-                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-md object-cover shrink-0"
+                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 border border-white/10"
                           />
                           <div>
-                            <span className="text-[11px] font-semibold text-primary uppercase">
-                              {course.level}
+                            <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wide">
+                              {course?.level}
                             </span>
-                            <h3 className="font-heading font-semibold text-base text-text dark:text-text-dark line-clamp-1">
-                              {course.title}
+                            <h3 className="font-heading font-bold text-base text-zinc-100 line-clamp-1">
+                              {course?.title}
                             </h3>
-                            <p className="text-xs text-muted dark:text-muted-dark mt-1">
-                              {course.lessonsCount} lessons • {course.durationHours} hours
+                            <p className="text-xs text-zinc-400 mt-1">
+                              {course?.lessonsCount} lessons • {course?.durationHours} hours
                             </p>
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-border/40">
-                          <ProgressRing value={course.progress} size={52} strokeWidth={5} />
+                        <div className="flex items-center justify-between sm:justify-end gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-white/10">
+                          <ProgressRing
+                            value={course?.progress}
+                            size={52}
+                            strokeWidth={5}
+                            color="#f97316"
+                          />
                           <Button
                             variant="secondary"
                             size="sm"
                             icon={Play}
-                            onClick={() => handleResume(course.id, course.progress)}
+                            onClick={() => handleResume(course?.id, course?.progress)}
                           >
-                            {course.progress >= 100 ? 'Review' : 'Resume'}
+                            {(course?.progress ?? 0) >= 100 ? 'Review' : 'Resume'}
                           </Button>
                         </div>
                       </div>
@@ -278,16 +279,16 @@ export default function Dashboard() {
 
                 {/* Recommended For You Section */}
                 {recommendedCourses.length > 0 && (
-                  <div className="pt-8 border-t border-border/80 dark:border-border-dark/80">
+                  <div className="pt-8 border-t border-white/10">
                     <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="w-4 h-4 text-accent" />
-                      <h3 className="font-heading font-bold text-lg text-text dark:text-text-dark">
+                      <Sparkles className="w-4 h-4 text-orange-400" />
+                      <h3 className="font-heading font-bold text-lg text-zinc-100">
                         Recommended for You
                       </h3>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                      {recommendedCourses.map((c) => (
-                        <CourseCard key={c.id} course={c} />
+                      {recommendedCourses?.map((c) => (
+                        <CourseCard key={c?.id} course={c} />
                       ))}
                     </div>
                   </div>
@@ -298,12 +299,12 @@ export default function Dashboard() {
             {/* View: Saved Courses */}
             {activeTab === 'saved' && (
               <div className="space-y-6">
-                <h2 className="font-heading font-bold text-xl text-text dark:text-text-dark">
+                <h2 className="font-heading font-bold text-xl text-zinc-100">
                   Saved For Later ({savedCourses.length})
                 </h2>
                 {savedCourses.length === 0 ? (
-                  <div className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md p-8 text-center">
-                    <p className="text-sm text-muted dark:text-muted-dark mb-4">
+                  <div className="glass-card p-8 text-center">
+                    <p className="text-sm text-zinc-400 mb-4">
                       No courses saved yet. Click the heart icon on any course card to bookmark it.
                     </p>
                     <Link to="/explore">
@@ -314,8 +315,8 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {savedCourses.map((c) => (
-                      <CourseCard key={c.id} course={c} />
+                    {savedCourses?.map((c) => (
+                      <CourseCard key={c?.id} course={c} />
                     ))}
                   </div>
                 )}
@@ -325,27 +326,27 @@ export default function Dashboard() {
             {/* View: Badges */}
             {activeTab === 'badges' && (
               <div className="space-y-6">
-                <h2 className="font-heading font-bold text-xl text-text dark:text-text-dark">
+                <h2 className="font-heading font-bold text-xl text-zinc-100">
                   Campus Achievements & Badges
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {allBadges.map((badge) => (
+                  {allBadges?.map((badge) => (
                     <div
-                      key={badge.id}
-                      className={`p-5 rounded-md border flex items-start gap-4 transition-all ${
-                        badge.unlocked
-                          ? 'bg-surface dark:bg-surface-dark border-primary/30 shadow-soft'
-                          : 'bg-slate-50/50 dark:bg-slate-900/20 border-border dark:border-border-dark opacity-60'
+                      key={badge?.id}
+                      className={`glass-card p-5 flex items-start gap-4 transition-all ${
+                        badge?.unlocked
+                          ? 'border-orange-500/30 shadow-lg'
+                          : 'opacity-50'
                       }`}
                     >
                       <div
-                        className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
-                          badge.unlocked
-                            ? 'bg-primary-soft text-primary dark:bg-primary-soft/15 dark:text-primary-contrast'
-                            : 'bg-slate-200 dark:bg-slate-800 text-slate-400'
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
+                          badge?.unlocked
+                            ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                            : 'bg-zinc-800 text-zinc-500'
                         }`}
                       >
-                        {badge.unlocked ? (
+                        {badge?.unlocked ? (
                           <Award className="w-6 h-6" strokeWidth={2} />
                         ) : (
                           <Lock className="w-5 h-5" strokeWidth={2} />
@@ -353,17 +354,17 @@ export default function Dashboard() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h4 className="font-heading font-bold text-base text-text dark:text-text-dark">
-                            {badge.name}
+                          <h4 className="font-heading font-bold text-base text-zinc-100">
+                            {badge?.name}
                           </h4>
-                          {badge.unlocked && (
-                            <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded-full">
+                          {badge?.unlocked && (
+                            <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">
                               Unlocked
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-muted dark:text-muted-dark mt-1">
-                          {badge.desc}
+                        <p className="text-xs text-zinc-400 mt-1">
+                          {badge?.desc}
                         </p>
                       </div>
                     </div>
@@ -375,15 +376,15 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Mobile Bottom Tab Bar (fixed on mobile) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/90 dark:bg-surface-dark/90 backdrop-blur-md border-t border-border dark:border-border-dark py-2 px-6 flex items-center justify-around">
+      {/* Mobile Bottom Tab Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-zinc-950/90 backdrop-blur-xl border-t border-white/10 py-2.5 px-6 flex items-center justify-around">
         <button
           type="button"
           onClick={() => setActiveTab('learning')}
           className={`flex flex-col items-center gap-1 py-1 text-xs font-semibold ${
             activeTab === 'learning'
-              ? 'text-primary dark:text-primary-contrast'
-              : 'text-muted dark:text-muted-dark'
+              ? 'text-orange-400'
+              : 'text-zinc-500'
           }`}
         >
           <LayoutDashboard className="w-5 h-5" />
@@ -395,8 +396,8 @@ export default function Dashboard() {
           onClick={() => setActiveTab('saved')}
           className={`flex flex-col items-center gap-1 py-1 text-xs font-semibold ${
             activeTab === 'saved'
-              ? 'text-primary dark:text-primary-contrast'
-              : 'text-muted dark:text-muted-dark'
+              ? 'text-orange-400'
+              : 'text-zinc-500'
           }`}
         >
           <Heart className="w-5 h-5" />
@@ -408,8 +409,8 @@ export default function Dashboard() {
           onClick={() => setActiveTab('badges')}
           className={`flex flex-col items-center gap-1 py-1 text-xs font-semibold ${
             activeTab === 'badges'
-              ? 'text-primary dark:text-primary-contrast'
-              : 'text-muted dark:text-muted-dark'
+              ? 'text-orange-400'
+              : 'text-zinc-500'
           }`}
         >
           <Award className="w-5 h-5" />
@@ -419,4 +420,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

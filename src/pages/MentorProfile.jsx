@@ -20,22 +20,25 @@ import coursesData from '../data/courses.json';
 
 export default function MentorProfile() {
   const { id } = useParams();
-  const mentor = mentorsData.find((m) => m.id === id) || mentorsData[0];
+  const safeMentors = Array.isArray(mentorsData) ? mentorsData : [];
+  const safeCourses = Array.isArray(coursesData) ? coursesData : [];
 
-  const followedMentorIds = useAppStore((state) => state.followedMentorIds);
+  const mentor = safeMentors.find((m) => m?.id === id) || safeMentors[0] || {};
+
+  const followedMentorIds = useAppStore((state) => state.followedMentorIds) || [];
   const toggleFollowMentor = useAppStore((state) => state.toggleFollowMentor);
   const addToast = useAppStore((state) => state.addToast);
 
   const [activeTab, setActiveTab] = useState('courses');
 
-  const isFollowed = followedMentorIds.includes(mentor.id);
-  const mentorCourses = coursesData.filter((c) => c.mentorId === mentor.id);
+  const isFollowed = followedMentorIds.includes(mentor?.id);
+  const mentorCourses = safeCourses.filter((c) => c?.mentorId === mentor?.id);
 
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${mentor.name} on Campus Learn`,
-        text: `Check out senior mentor ${mentor.name} (${mentor.college}) on Campus Learn!`,
+        title: `${mentor?.name || 'Mentor'} on Campus Learn`,
+        text: `Check out senior mentor ${mentor?.name} (${mentor?.college}) on Campus Learn!`,
         url: window.location.href,
       }).catch(() => {});
     } else {
@@ -51,47 +54,50 @@ export default function MentorProfile() {
   ];
 
   return (
-    <div className="pt-24 pb-16 min-h-screen">
+    <div className="pt-24 pb-16 min-h-screen relative overflow-hidden">
+      {/* Decorative ambient radial background */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+
       {/* Mentor Header Profile Card */}
-      <div className="bg-surface dark:bg-surface-dark border-b border-border/80 dark:border-border-dark/80 py-10 shadow-soft">
+      <div className="glass-card border-b border-border/80 dark:border-border-dark/80 py-10 shadow-soft">
         <div className="container-custom">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex flex-col sm:flex-row sm:items-center gap-6">
               <div className="relative">
                 <img
-                  src={mentor.avatar}
-                  alt={mentor.name}
-                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-primary-soft dark:border-slate-800 shadow-lift"
+                  src={mentor?.avatar}
+                  alt={mentor?.name || 'Mentor avatar'}
+                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-orange-500/30 shadow-lift"
                 />
-                <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-2 border-surface dark:border-surface-dark rounded-full" />
+                <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-2 border-zinc-900 rounded-full" />
               </div>
 
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2">
                   <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-text dark:text-text-dark">
-                    {mentor.name}
+                    {mentor?.name}
                   </h1>
-                  <span className="text-xs bg-primary-soft text-primary dark:bg-primary-soft/20 dark:text-primary-contrast px-2.5 py-0.5 rounded-pill font-semibold">
+                  <span className="text-xs bg-orange-500/15 text-orange-400 border border-orange-500/30 px-2.5 py-0.5 rounded-pill font-semibold">
                     Campus Lead
                   </span>
                 </div>
 
-                <p className="text-sm font-semibold text-primary dark:text-primary-contrast flex items-center gap-1.5">
+                <p className="text-sm font-semibold text-orange-400 flex items-center gap-1.5">
                   <GraduationCap className="w-4 h-4" />
-                  <span>{mentor.college}</span>
+                  <span>{mentor?.college}</span>
                 </p>
 
                 <p className="text-xs sm:text-sm text-muted dark:text-muted-dark">
-                  {mentor.branch} • {mentor.year}
+                  {mentor?.branch} • {mentor?.year}
                 </p>
 
                 {/* Follower & Rating counts */}
                 <div className="flex items-center gap-5 pt-2 text-xs text-muted dark:text-muted-dark">
                   <span className="flex items-center gap-1 font-semibold text-text dark:text-text-dark">
-                    <Users className="w-4 h-4 text-primary" />
-                    {(mentor.followers + (isFollowed ? 1 : 0)).toLocaleString()} followers
+                    <Users className="w-4 h-4 text-orange-500" />
+                    {((mentor?.followers || 0) + (isFollowed ? 1 : 0)).toLocaleString()} followers
                   </span>
-                  <Rating value={mentor.rating} count={mentor.coursesCount * 140} size="sm" />
+                  <Rating value={mentor?.rating || 5} count={(mentor?.coursesCount || 1) * 140} size="sm" />
                 </div>
               </div>
             </div>
@@ -101,7 +107,7 @@ export default function MentorProfile() {
               <Button
                 variant={isFollowed ? 'secondary' : 'primary'}
                 size="md"
-                onClick={() => toggleFollowMentor(mentor.id)}
+                onClick={() => mentor?.id && toggleFollowMentor(mentor.id)}
                 icon={isFollowed ? Check : Plus}
               >
                 {isFollowed ? 'Following' : 'Follow Mentor'}
@@ -126,7 +132,7 @@ export default function MentorProfile() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {mentorCourses.map((c) => (
-                  <CourseCard key={c.id} course={c} />
+                  <CourseCard key={c?.id} course={c} />
                 ))}
               </div>
             )}
@@ -135,13 +141,13 @@ export default function MentorProfile() {
 
         {/* Tab 2: About */}
         {activeTab === 'about' && (
-          <div className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md p-6 sm:p-8 space-y-6 max-w-3xl shadow-soft">
+          <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-3xl shadow-soft">
             <div>
               <h3 className="font-heading font-bold text-lg text-text dark:text-text-dark mb-2">
                 Mentor Biography
               </h3>
               <p className="text-sm sm:text-base text-muted dark:text-muted-dark leading-relaxed">
-                {mentor.bio}
+                {mentor?.bio}
               </p>
             </div>
 
@@ -150,10 +156,10 @@ export default function MentorProfile() {
                 Core Competencies & Club Specialties
               </h4>
               <div className="flex flex-wrap gap-2">
-                {mentor.skills?.map((skill) => (
+                {mentor?.skills?.map((skill) => (
                   <span
                     key={skill}
-                    className="text-xs font-semibold bg-primary-soft dark:bg-slate-800 text-primary dark:text-primary-contrast px-3 py-1 rounded-pill"
+                    className="text-xs font-semibold bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-1 rounded-pill"
                   >
                     {skill}
                   </span>
@@ -165,12 +171,12 @@ export default function MentorProfile() {
 
         {/* Tab 3: Reviews */}
         {activeTab === 'reviews' && (
-          <div className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md p-6 sm:p-8 space-y-4 max-w-3xl shadow-soft">
+          <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-4 max-w-3xl shadow-soft">
             <h3 className="font-heading font-bold text-lg text-text dark:text-text-dark">
               Student Endorsements
             </h3>
             <div className="space-y-4">
-              <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-md space-y-1.5">
+              <div className="p-4 bg-zinc-900/60 border border-zinc-800/80 rounded-xl space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-xs text-text dark:text-text-dark">
                     Pranav V. (2nd year B.Tech)
@@ -188,4 +194,3 @@ export default function MentorProfile() {
     </div>
   );
 }
-

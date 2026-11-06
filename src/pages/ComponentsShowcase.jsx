@@ -22,6 +22,10 @@ export default function ComponentsShowcase() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const addToast = useAppStore((state) => state.addToast);
 
+  const safeCourses = Array.isArray(coursesData) ? coursesData : [];
+  const safeCategories = Array.isArray(categoriesData) ? categoriesData : [];
+  const safeMentors = Array.isArray(mentorsData) ? mentorsData : [];
+
   return (
     <div className="pt-28 pb-20 container-custom space-y-12">
       <div>
@@ -59,8 +63,8 @@ export default function ComponentsShowcase() {
           <Badge variant="outline">Outline Badge</Badge>
         </div>
         <div className="flex flex-wrap gap-2.5 pt-2">
-          {categoriesData.slice(0, 4).map((c, i) => (
-            <CategoryChip key={c.id} category={c} active={i === 0} />
+          {safeCategories.slice(0, 4).map((c, i) => (
+            <CategoryChip key={c?.id || i} category={c} active={i === 0} />
           ))}
         </div>
       </section>
@@ -85,10 +89,10 @@ export default function ComponentsShowcase() {
       <section className="space-y-4">
         <h2 className="text-lg font-heading font-bold text-text dark:text-text-dark">Course & Mentor Cards</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <CourseCard course={coursesData[0]} />
-          <CourseCard course={coursesData[3]} />
-          <MentorCard mentor={mentorsData[0]} />
-          <MentorCard mentor={mentorsData[1]} />
+          {safeCourses[0] && <CourseCard course={safeCourses[0]} />}
+          {safeCourses[3] && <CourseCard course={safeCourses[3]} />}
+          {safeMentors[0] && <MentorCard mentor={safeMentors[0]} />}
+          {safeMentors[1] && <MentorCard mentor={safeMentors[1]} />}
         </div>
       </section>
 
@@ -116,4 +120,3 @@ export default function ComponentsShowcase() {
     </div>
   );
 }
-

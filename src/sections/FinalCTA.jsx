@@ -8,20 +8,20 @@ export function FinalCTA() {
 
   return (
     <section className="section-padding relative overflow-hidden text-center">
-      {/* Background soft glow */}
+      {/* Background ambient radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] hero-glow rounded-full pointer-events-none -z-10" />
 
       <div className="container-custom max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-pill bg-primary-soft dark:bg-primary-soft/15 border border-primary/20 text-xs font-semibold text-primary dark:text-primary-contrast mb-6">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-xs font-semibold text-orange-400 mb-6 shadow-sm">
           <GraduationCap className="w-4 h-4" />
           <span>Your College Gateway</span>
         </div>
 
-        <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-text dark:text-text-dark tracking-tight leading-tight mb-5">
+        <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-zinc-100 tracking-tight leading-tight mb-5">
           Ready to learn directly from campus seniors?
         </h2>
 
-        <p className="text-muted dark:text-muted-dark text-base sm:text-lg mb-8 max-w-xl mx-auto leading-relaxed">
+        <p className="text-zinc-400 text-base sm:text-lg mb-8 max-w-xl mx-auto leading-relaxed">
           Join thousands of students building real projects, winning hackathons, and acing college fests. Free forever.
         </p>
 
@@ -50,4 +50,3 @@ export function FinalCTA() {
     </section>
   );
 }
-

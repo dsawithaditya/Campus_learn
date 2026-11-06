@@ -20,7 +20,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const isValidCollegeEmail = (str) => {
-    const trimmed = str.trim().toLowerCase();
+    const trimmed = (str || '').trim().toLowerCase();
     return trimmed.endsWith('.edu') || trimmed.endsWith('.ac.in') || trimmed.includes('@college.');
   };
 
@@ -64,12 +64,15 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen pt-20 flex">
+    <div className="min-h-screen pt-20 flex relative overflow-hidden">
+      {/* Decorative ambient radial background */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[300px] bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+
       {/* Left Column: Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-md space-y-6 glass-card p-8 rounded-2xl border border-border/80 dark:border-border-dark/80 shadow-lift">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent mb-2">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-orange-400 mb-2">
               <GraduationCap className="w-4 h-4" />
               <span>Campus Registration</span>
             </div>
@@ -82,7 +85,7 @@ export default function Signup() {
           </div>
 
           {error && (
-            <div className="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 rounded-md text-xs text-rose-600 dark:text-rose-400 flex items-center gap-2">
+            <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-md text-xs text-rose-400 flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -92,13 +95,13 @@ export default function Signup() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="p-8 text-center bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg space-y-3"
+              className="p-8 text-center bg-emerald-500/10 border border-emerald-500/30 rounded-lg space-y-3"
             >
-              <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" strokeWidth={2} />
-              <h3 className="font-heading font-bold text-lg text-emerald-800 dark:text-emerald-300">
+              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" strokeWidth={2} />
+              <h3 className="font-heading font-bold text-lg text-emerald-300">
                 Account Created!
               </h3>
-              <p className="text-xs text-emerald-600 dark:text-emerald-400">
+              <p className="text-xs text-emerald-400/90">
                 Setting up your student dashboard...
               </p>
             </motion.div>
@@ -115,7 +118,7 @@ export default function Signup() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Priyanshi Mehta"
-                  className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                  className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                 />
               </div>
 
@@ -130,7 +133,7 @@ export default function Signup() {
                   value={collegeName}
                   onChange={(e) => setCollegeName(e.target.value)}
                   placeholder="e.g. BITS Pilani, IIT Delhi, SRCC"
-                  className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                  className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                 />
               </div>
 
@@ -145,7 +148,7 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@college.edu or name@college.ac.in"
-                  className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                  className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                 />
                 {isEmailDirty && !isEmailValid && (
                   <p className="text-[11px] text-amber-500 mt-1 flex items-center gap-1">
@@ -174,12 +177,12 @@ export default function Signup() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary pr-9"
+                      className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500 pr-9"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted"
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted cursor-pointer"
                     >
                       {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                     </button>
@@ -196,7 +199,7 @@ export default function Signup() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                   />
                 </div>
               </div>
@@ -213,7 +216,7 @@ export default function Signup() {
 
               <div className="text-center text-xs text-muted dark:text-muted-dark pt-1">
                 Already registered?{' '}
-                <Link to="/login" className="font-semibold text-primary dark:text-primary-contrast hover:underline">
+                <Link to="/login" className="font-semibold text-orange-400 hover:underline">
                   Log in
                 </Link>
               </div>
@@ -225,7 +228,7 @@ export default function Signup() {
       {/* Right Column: Gradient Art (Hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 cta-gradient p-12 items-center justify-center relative overflow-hidden text-white">
         <div className="max-w-md space-y-6 z-10">
-          <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
             <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <h2 className="font-heading font-extrabold text-3xl sm:text-4xl leading-tight">
@@ -240,4 +243,3 @@ export default function Signup() {
     </div>
   );
 }
-

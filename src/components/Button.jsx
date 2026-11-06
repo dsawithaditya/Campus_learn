@@ -5,7 +5,7 @@ import { Loader2 } from 'lucide-react';
 export const Button = React.forwardRef(function Button(
   {
     children,
-    variant = 'primary', // 'primary' | 'secondary' | 'ghost' | 'primary-indigo'
+    variant = 'primary', // 'primary' | 'secondary' | 'ghost' | 'interactive'
     size = 'md', // 'sm' | 'md' | 'lg'
     icon: Icon,
     iconPosition = 'left',
@@ -20,20 +20,22 @@ export const Button = React.forwardRef(function Button(
   ref
 ) {
   const sizeStyles = {
-    sm: 'text-[14px] px-3.5 py-2 min-h-[40px] md:min-h-[38px] rounded-sm gap-1.5',
-    md: 'text-[15px] md:text-[16px] px-5 py-2.5 min-h-[44px] rounded-md gap-2',
-    lg: 'text-[16px] md:text-[17px] px-6 py-3.5 min-h-[48px] rounded-md gap-2.5 font-semibold',
+    sm: 'text-[13px] px-3.5 py-1.5 min-h-[38px] rounded-lg gap-1.5',
+    md: 'text-[14px] md:text-[15px] px-5 py-2.5 min-h-[44px] rounded-xl gap-2 font-semibold',
+    lg: 'text-[15px] md:text-[16px] px-6 py-3.5 min-h-[48px] rounded-xl gap-2.5 font-bold',
   };
 
   const variantStyles = {
     primary:
-      'bg-accent text-white hover:bg-[#F05545] shadow-cta active:bg-[#E04435] focus-visible:ring-2 focus-visible:ring-accent/50',
+      'btn-interactive',
+    interactive:
+      'btn-interactive',
     secondary:
-      'border border-border dark:border-border-dark bg-surface dark:bg-surface-dark text-text dark:text-text-dark hover:border-primary dark:hover:border-primary-contrast hover:text-primary dark:hover:text-primary-contrast active:bg-primary-soft/40 group',
+      'border border-white/10 dark:border-white/10 bg-zinc-900/60 dark:bg-zinc-900/60 backdrop-blur-md text-zinc-100 hover:border-orange-500/50 hover:text-orange-400 active:scale-[0.96] shadow-sm group',
     ghost:
-      'bg-transparent text-muted dark:text-muted-dark hover:text-text dark:hover:text-text-dark hover:bg-primary-soft/60 dark:hover:bg-slate-800/60 active:bg-primary-soft',
+      'bg-transparent text-zinc-400 hover:text-zinc-100 hover:bg-white/5 active:scale-[0.96]',
     'primary-indigo':
-      'bg-primary text-white hover:bg-primary-dark shadow-soft active:bg-primary-dark/95 focus-visible:ring-2 focus-visible:ring-primary/50',
+      'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-indigo-500/50',
   };
 
   return (
@@ -43,9 +45,9 @@ export const Button = React.forwardRef(function Button(
       onClick={onClick}
       disabled={disabled || loading}
       whileHover={disabled || loading ? {} : { y: -2 }}
-      whileTap={disabled || loading ? {} : { scale: 0.97 }}
-      transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className={`inline-flex items-center justify-center font-medium font-body transition-colors duration-fast outline-none select-none ${
+      whileTap={disabled || loading ? {} : { scale: 0.96, y: 1 }}
+      transition={{ duration: 0.18, ease: [0.34, 1.56, 0.64, 1] }}
+      className={`inline-flex items-center justify-center font-body outline-none select-none transition-all ${
         sizeStyles[size] || sizeStyles.md
       } ${variantStyles[variant] || variantStyles.primary} ${
         fullWidth ? 'w-full' : ''
@@ -59,14 +61,14 @@ export const Button = React.forwardRef(function Button(
           {Icon && iconPosition === 'left' && (
             <Icon
               className="w-4 h-4 shrink-0 transition-transform duration-fast group-hover:-translate-x-0.5"
-              strokeWidth={1.75}
+              strokeWidth={2}
             />
           )}
           <span>{children}</span>
           {Icon && iconPosition === 'right' && (
             <Icon
               className="w-4 h-4 shrink-0 transition-transform duration-fast group-hover:translate-x-1"
-              strokeWidth={1.75}
+              strokeWidth={2}
             />
           )}
         </>
@@ -74,4 +76,3 @@ export const Button = React.forwardRef(function Button(
     </motion.button>
   );
 });
-

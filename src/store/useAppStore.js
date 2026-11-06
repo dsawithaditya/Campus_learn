@@ -1,10 +1,13 @@
 import { create } from 'zustand';
 
-// Safe localStorage helper
+// Safe localStorage helper with robust error handling
 const getStoredValue = (key, fallback) => {
   try {
+    if (typeof window === 'undefined') return fallback;
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : fallback;
+    if (!item) return fallback;
+    const parsed = JSON.parse(item);
+    return parsed ?? fallback;
   } catch (e) {
     console.error(`Error reading ${key} from localStorage`, e);
     return fallback;
@@ -13,7 +16,9 @@ const getStoredValue = (key, fallback) => {
 
 const setStoredValue = (key, value) => {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
   } catch (e) {
     console.error(`Error saving ${key} to localStorage`, e);
   }
@@ -23,20 +28,20 @@ const setStoredValue = (key, value) => {
 const getInitialTheme = () => {
   const saved = getStoredValue('campus_theme', null);
   if (saved === 'dark' || saved === 'light') return saved;
-  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark';
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    return 'light';
   }
-  return 'light';
+  return 'dark'; // Default to modern obsidian & ember dark mode
 };
 
 export const useAppStore = create((set, get) => ({
   theme: getInitialTheme(),
-  savedCourseIds: getStoredValue('campus_saved_courses', ['c1', 'c4']),
+  savedCourseIds: getStoredValue('campus_saved_courses', ['c1', 'c4']) || [],
   enrolledCourses: getStoredValue('campus_enrolled_courses', [
     { courseId: 'c1', progress: 65, lastAccessed: '2025-02-14' },
     { courseId: 'c3', progress: 30, lastAccessed: '2025-02-12' },
     { courseId: 'c7', progress: 85, lastAccessed: '2025-02-10' },
-  ]),
+  ]) || [],
   user: getStoredValue('campus_user', {
     name: 'Aarav Sharma',
     email: 'aarav.sharma@iitb.ac.in',
@@ -45,70 +50,108 @@ export const useAppStore = create((set, get) => ({
     streak: 8,
     badges: ['Early Bird', 'Tech Maven', 'Streak Master'],
   }),
-  followedMentorIds: getStoredValue('campus_followed_mentors', ['m1', 'm3']),
+  followedMentorIds: getStoredValue('campus_followed_mentors', ['m1', 'm3']) || [],
   searchQuery: '',
   toasts: [],
 
   toggleTheme: () => {
-    const nextTheme = get().theme === 'light' ? 'dark' : 'light';
-    setStoredValue('campus_theme', nextTheme);
-    set({ theme: nextTheme });
-    if (nextTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    set((state) => {
+      const nextTheme = state.theme === 'light' ? 'dark' : 'light';
+      setStoredValue('campus_theme', nextTheme);
+      if (typeof document !== 'undefined') {
+        if (nextTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+        }
+      }
+      return { theme: nextTheme };
+    });
   },
 
   setTheme: (theme) => {
     setStoredValue('campus_theme', theme);
-    set({ theme });
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    if (typeof document !== 'undefined') {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
     }
+    set({ theme });
   },
 
   toggleSave: (id) => {
-    const saved = get().savedCourseIds;
-    const isSaved = saved.includes(id);
-    const updated = isSaved ? saved.filter((item) => item !== id) : [...saved, id];
-    setStoredValue('campus_saved_courses', updated);
-    set({ savedCourseIds: updated });
+    let wasSaved = false;
+    set((state) => {
+      const currentList = Array.isArray(state.savedCourseIds) ? state.savedCourseIds : [];
+      wasSaved = currentList.includes(id);
+      const updated = wasSaved
+        ? currentList.filter((item) => item !== id)
+        : [...currentList, id];
+      setStoredValue('campus_saved_courses', updated);
+      return { savedCourseIds: updated };
+    });
+
     get().addToast(
-      isSaved ? 'Removed course from saved list' : 'Saved course to your library!',
+      wasSaved ? 'Removed course from saved list' : 'Saved course to your library!',
       'info'
     );
   },
 
   enroll: (courseId) => {
-    const enrolled = get().enrolledCourses;
-    const exists = enrolled.some((e) => e.courseId === courseId);
-    if (!exists) {
-      const updated = [...enrolled, { courseId, progress: 0, lastAccessed: new Date().toISOString() }];
+    let alreadyEnrolled = false;
+    set((state) => {
+      const currentList = Array.isArray(state.enrolledCourses) ? state.enrolledCourses : [];
+      const exists = currentList.some((e) => e?.courseId === courseId);
+      if (exists) {
+        alreadyEnrolled = true;
+        return state;
+      }
+      const updated = [
+        ...currentList,
+        { courseId, progress: 0, lastAccessed: new Date().toISOString() },
+      ];
       setStoredValue('campus_enrolled_courses', updated);
-      set({ enrolledCourses: updated });
-      get().addToast('Successfully enrolled in course!', 'success');
-    } else {
+      return { enrolledCourses: updated };
+    });
+
+    if (alreadyEnrolled) {
       get().addToast('You are already enrolled in this course', 'info');
+    } else {
+      get().addToast('Successfully enrolled in course!', 'success');
     }
   },
 
-  updateCourseProgress: (courseId, progress) => {
-    const enrolled = get().enrolledCourses.map((c) =>
-      c.courseId === courseId ? { ...c, progress: Math.min(100, Math.max(0, progress)) } : c
-    );
-    setStoredValue('campus_enrolled_courses', enrolled);
-    set({ enrolledCourses: enrolled });
+  updateCourseProgress: (courseId, progressOrFn) => {
+    set((state) => {
+      const currentList = Array.isArray(state.enrolledCourses) ? state.enrolledCourses : [];
+      const updated = currentList.map((c) => {
+        if (c?.courseId === courseId) {
+          const currentProgress = c.progress ?? 0;
+          const nextVal =
+            typeof progressOrFn === 'function' ? progressOrFn(currentProgress) : progressOrFn;
+          return { ...c, progress: Math.min(100, Math.max(0, nextVal)) };
+        }
+        return c;
+      });
+      setStoredValue('campus_enrolled_courses', updated);
+      return { enrolledCourses: updated };
+    });
   },
 
   login: (userData) => {
     const user = {
-      name: userData.name || 'Student Learner',
-      email: userData.email,
-      college: userData.college || 'Indian Institute of Technology',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+      name: userData?.name || 'Student Learner',
+      email: userData?.email || 'student@college.edu',
+      college: userData?.college || 'Indian Institute of Technology',
+      avatar:
+        userData?.avatar ||
+        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
       streak: 5,
       badges: ['New Explorer', 'Campus Learner'],
     };
@@ -124,12 +167,18 @@ export const useAppStore = create((set, get) => ({
   },
 
   toggleFollowMentor: (mentorId) => {
-    const followed = get().followedMentorIds;
-    const isFollowed = followed.includes(mentorId);
-    const updated = isFollowed ? followed.filter((id) => id !== mentorId) : [...followed, mentorId];
-    setStoredValue('campus_followed_mentors', updated);
-    set({ followedMentorIds: updated });
-    get().addToast(isFollowed ? 'Unfollowed mentor' : 'Following mentor!', 'success');
+    let wasFollowed = false;
+    set((state) => {
+      const currentList = Array.isArray(state.followedMentorIds) ? state.followedMentorIds : [];
+      wasFollowed = currentList.includes(mentorId);
+      const updated = wasFollowed
+        ? currentList.filter((id) => id !== mentorId)
+        : [...currentList, mentorId];
+      setStoredValue('campus_followed_mentors', updated);
+      return { followedMentorIds: updated };
+    });
+
+    get().addToast(wasFollowed ? 'Unfollowed mentor' : 'Following mentor!', 'success');
   },
 
   setSearchQuery: (query) => set({ searchQuery: query }),
@@ -146,4 +195,3 @@ export const useAppStore = create((set, get) => ({
     set((state) => ({ toasts: state.toasts.filter((t) => t.id !== id) }));
   },
 }));
-

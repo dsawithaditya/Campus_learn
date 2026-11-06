@@ -31,16 +31,16 @@ export function HowItWorks() {
   const [ref, isInView] = useInView({ threshold: 0.2, once: true });
 
   return (
-    <section ref={ref} className="section-padding bg-slate-50/50 dark:bg-slate-900/30 border-y border-border/70 dark:border-border-dark/70">
+    <section ref={ref} className="section-padding bg-zinc-950/40 border-y border-white/5">
       <div className="container-custom">
         <div className="text-center max-w-xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-primary dark:text-primary-contrast mb-2 block">
+          <span className="text-xs font-bold uppercase tracking-wider text-orange-400 mb-2 block">
             Simple 3-Step Flow
           </span>
-          <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[40px] text-text dark:text-text-dark leading-[1.15]">
+          <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[40px] text-zinc-100 leading-[1.15]">
             How Campus Learn Works
           </h2>
-          <p className="text-sm sm:text-base text-muted dark:text-muted-dark mt-3">
+          <p className="text-sm sm:text-base text-zinc-400 mt-3">
             Designed to fit around exams, lab submissions, and semester deadlines.
           </p>
         </div>
@@ -58,7 +58,7 @@ export function HowItWorks() {
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeDasharray="6 6"
-                className="text-primary/40 dark:text-primary-contrast/30"
+                className="text-orange-500/30"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: isInView ? 1 : 0 }}
                 transition={{ duration: 1.2, ease: 'easeInOut' }}
@@ -66,31 +66,31 @@ export function HowItWorks() {
             </svg>
           </div>
 
-          {steps.map((item, idx) => {
+          {steps?.map((item, idx) => {
             const Icon = item.icon;
             return (
               <motion.div
-                key={item.step}
+                key={item?.step || idx}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: idx * 0.2 }}
-                className="relative z-10 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md p-6 sm:p-8 flex flex-col items-center text-center shadow-soft hover:shadow-lift transition-shadow"
+                transition={{ duration: 0.5, delay: idx * 0.15 }}
+                className="glass-card relative z-10 p-6 sm:p-8 flex flex-col items-center text-center shadow-lg"
               >
                 {/* Step badge */}
-                <div className="w-14 h-14 rounded-full bg-primary-soft dark:bg-primary-soft/15 text-primary dark:text-primary-contrast flex items-center justify-center mb-5 border border-primary/20">
-                  <Icon className="w-6 h-6" strokeWidth={1.75} />
+                <div className="w-14 h-14 rounded-2xl bg-orange-500/10 text-orange-400 border border-orange-500/30 flex items-center justify-center mb-5 shadow-inner">
+                  <Icon className="w-6 h-6" strokeWidth={2} />
                 </div>
 
-                <span className="text-xs font-bold text-accent tracking-widest uppercase mb-1">
-                  Step {item.step}
+                <span className="text-xs font-bold text-orange-400 tracking-widest uppercase mb-1">
+                  Step {item?.step}
                 </span>
 
-                <h3 className="font-heading font-semibold text-lg text-text dark:text-text-dark mb-2.5">
-                  {item.title}
+                <h3 className="font-heading font-bold text-lg text-zinc-100 mb-2.5">
+                  {item?.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-muted dark:text-muted-dark leading-relaxed">
-                  {item.description}
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                  {item?.description}
                 </p>
               </motion.div>
             );
@@ -100,4 +100,3 @@ export function HowItWorks() {
     </section>
   );
 }
-

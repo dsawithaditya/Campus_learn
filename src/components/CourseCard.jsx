@@ -9,37 +9,52 @@ import mentorsData from '../data/mentors.json';
 
 export function CourseCard({ course, className = '' }) {
   const navigate = useNavigate();
-  const savedCourseIds = useAppStore((state) => state.savedCourseIds);
+  const savedCourseIds = useAppStore((state) => state.savedCourseIds) || [];
   const toggleSave = useAppStore((state) => state.toggleSave);
 
-  const isSaved = savedCourseIds.includes(course.id);
-  const category = categoriesData.find((c) => c.id === course.categoryId);
-  const mentor = mentorsData.find((m) => m.id === course.mentorId);
+  if (!course) return null;
+
+  const isSaved = savedCourseIds?.includes(course.id);
+  const category = categoriesData?.find((c) => c?.id === course?.categoryId);
+  const mentor = mentorsData?.find((m) => m?.id === course?.mentorId);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+  };
 
   const handleCardClick = () => {
-    navigate(`/course/${course.slug}`);
+    if (course?.slug) {
+      navigate(`/course/${course.slug}`);
+    }
   };
 
   const handleHeartClick = (e) => {
     e.stopPropagation();
-    toggleSave(course.id);
+    if (course?.id) {
+      toggleSave(course.id);
+    }
   };
 
   return (
-    <motion.div
+    <div
       onClick={handleCardClick}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className={`group bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md overflow-hidden cursor-pointer shadow-soft hover:shadow-lift flex flex-col justify-between transition-shadow duration-base ${className}`}
+      onMouseMove={handleMouseMove}
+      className={`glass-card group relative overflow-hidden cursor-pointer flex flex-col justify-between transition-all duration-300 ${className}`}
+      style={{
+        backgroundImage:
+          'radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(249,115,22,0.12), transparent 40%)',
+      }}
     >
       <div>
         {/* Thumbnail 16:10 with zoom */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-zinc-800/80 mb-4">
           <motion.img
-            src={course.thumbnail}
-            alt={course.title}
+            src={course?.thumbnail}
+            alt={course?.title || 'Course thumbnail'}
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-base group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
 
           {/* Top Badges */}
@@ -47,12 +62,12 @@ export function CourseCard({ course, className = '' }) {
             {category && (
               <span
                 style={{
-                  backgroundColor: `${category.color}EE`,
+                  backgroundColor: `${category?.color || '#f97316'}EE`,
                   color: '#FFFFFF',
                 }}
-                className="text-[11px] font-semibold px-2.5 py-1 rounded-pill shadow-sm"
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm"
               >
-                {category.name}
+                {category?.name}
               </span>
             )}
 
@@ -62,11 +77,11 @@ export function CourseCard({ course, className = '' }) {
               onClick={handleHeartClick}
               whileTap={{ scale: 1.3 }}
               aria-label={isSaved ? 'Remove from saved' : 'Save course'}
-              className="pointer-events-auto w-8 h-8 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm flex items-center justify-center shadow-sm text-muted hover:text-accent transition-colors"
+              className="pointer-events-auto w-8 h-8 rounded-full bg-zinc-900/80 backdrop-blur-md flex items-center justify-center shadow-md text-zinc-300 hover:text-orange-500 transition-colors border border-white/10"
             >
               <Heart
                 className={`w-4 h-4 transition-colors ${
-                  isSaved ? 'fill-accent text-accent' : 'text-slate-600 dark:text-slate-300'
+                  isSaved ? 'fill-orange-500 text-orange-500' : 'text-zinc-300'
                 }`}
                 strokeWidth={isSaved ? 0 : 2}
               />
@@ -75,58 +90,57 @@ export function CourseCard({ course, className = '' }) {
 
           {/* Level Tag & Free Pill at bottom */}
           <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-medium text-white pointer-events-none">
-            <span className="bg-slate-900/70 backdrop-blur-sm px-2 py-0.5 rounded-sm">
-              {course.level}
+            <span className="bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded-md border border-white/10">
+              {course?.level}
             </span>
-            <span className="bg-accent font-bold px-2 py-0.5 rounded-sm shadow-sm text-white">
-              {course.price || 'Free'}
+            <span className="bg-gradient-to-r from-orange-500 to-amber-500 font-bold px-2.5 py-0.5 rounded-md shadow-sm text-white">
+              {course?.price || 'Free'}
             </span>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-4 sm:p-5">
+        <div className="space-y-2">
           {/* Title (max 2 lines) */}
-          <h3 className="font-heading font-semibold text-[17px] text-text dark:text-text-dark line-clamp-2 leading-snug group-hover:text-primary dark:group-hover:text-primary-contrast transition-colors mb-2">
-            {course.title}
+          <h3 className="font-heading font-bold text-[17px] text-zinc-100 line-clamp-2 leading-snug group-hover:text-orange-400 transition-colors">
+            {course?.title}
           </h3>
 
-          <p className="text-muted dark:text-muted-dark text-xs sm:text-[13px] line-clamp-2 mb-3">
-            {course.shortDescription}
+          <p className="text-zinc-400 text-xs sm:text-[13px] line-clamp-2 leading-relaxed">
+            {course?.shortDescription}
           </p>
 
           {/* Meta details */}
-          <div className="flex items-center gap-3 text-xs text-muted dark:text-muted-dark mb-4">
+          <div className="flex items-center gap-3 text-xs text-zinc-500 pt-1 pb-2">
             <span className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" strokeWidth={1.75} />
-              {course.durationHours} hrs
+              <Clock className="w-3.5 h-3.5 text-orange-400" strokeWidth={2} />
+              {course?.durationHours} hrs
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <BookOpen className="w-3.5 h-3.5" strokeWidth={1.75} />
-              {course.lessonsCount} lessons
+              <BookOpen className="w-3.5 h-3.5 text-orange-400" strokeWidth={2} />
+              {course?.lessonsCount} lessons
             </span>
           </div>
         </div>
       </div>
 
       {/* Footer: Mentor & Rating */}
-      <div className="px-4 sm:px-5 pb-4 pt-3 border-t border-border/60 dark:border-border-dark/60 flex items-center justify-between">
+      <div className="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
         {mentor && (
           <div className="flex items-center gap-2">
             <img
-              src={mentor.avatar}
-              alt={mentor.name}
-              className="w-6 h-6 rounded-full object-cover border border-border dark:border-border-dark"
+              src={mentor?.avatar}
+              alt={mentor?.name || 'Mentor'}
+              className="w-6 h-6 rounded-full object-cover border border-white/20"
             />
-            <span className="text-xs font-medium text-text/90 dark:text-text-dark/90 truncate max-w-[110px]">
-              {mentor.name}
+            <span className="text-xs font-medium text-zinc-300 truncate max-w-[110px]">
+              {mentor?.name}
             </span>
           </div>
         )}
-        <Rating value={course.rating} count={course.reviewsCount} size="sm" />
+        <Rating value={course?.rating ?? 5} count={course?.reviewsCount} size="sm" />
       </div>
-    </motion.div>
+    </div>
   );
 }
-

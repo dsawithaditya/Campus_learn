@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   Sparkles,
   Award,
@@ -7,8 +7,6 @@ import {
   CheckCircle2,
   ArrowRight,
   ArrowLeft,
-  GraduationCap,
-  BookOpen,
 } from 'lucide-react';
 import { Button } from '../components/Button';
 import categoriesData from '../data/categories.json';
@@ -49,7 +47,7 @@ export default function Teach() {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleNext = (e) => {
@@ -67,13 +65,18 @@ export default function Teach() {
     }
   };
 
+  const safeCategories = Array.isArray(categoriesData) ? categoriesData : [];
+
   return (
-    <div className="pt-24 pb-16 min-h-screen">
+    <div className="pt-24 pb-16 min-h-screen relative overflow-hidden">
+      {/* Decorative ambient radial background */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+
       {/* Hero section */}
-      <div className="py-12 bg-slate-50 dark:bg-slate-900/40 border-b border-border/80 dark:border-border-dark/80 text-center">
+      <div className="py-12 border-b border-border/80 dark:border-border-dark/80 text-center relative">
         <div className="container-custom max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-pill bg-primary-soft dark:bg-primary-soft/15 border border-primary/20 text-xs font-semibold text-primary dark:text-primary-contrast mb-4">
-            <Sparkles className="w-4 h-4 text-accent" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill bg-orange-500/10 border border-orange-500/30 text-xs font-semibold text-orange-400 mb-4 shadow-[0_0_15px_rgba(249,115,22,0.15)]">
+            <Sparkles className="w-4 h-4 text-orange-400" />
             <span>Campus Mentorship Initiative</span>
           </div>
           <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-text dark:text-text-dark tracking-tight mb-4">
@@ -85,24 +88,24 @@ export default function Teach() {
         </div>
       </div>
 
-      <div className="container-custom mt-12 max-w-4xl space-y-16">
+      <div className="container-custom mt-12 max-w-4xl space-y-12">
         {/* Benefits Section: 3 cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {benefits.map((b, i) => {
-            const Icon = b.icon;
+          {benefits?.map((b, i) => {
+            const Icon = b?.icon;
             return (
               <div
-                key={i}
-                className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md p-6 shadow-soft text-center sm:text-left space-y-3"
+                key={b?.title || i}
+                className="glass-card rounded-xl p-6 text-center sm:text-left space-y-3"
               >
-                <div className="w-10 h-10 rounded-md bg-primary-soft text-primary dark:bg-primary-soft/15 dark:text-primary-contrast flex items-center justify-center mx-auto sm:mx-0">
-                  <Icon className="w-5 h-5" strokeWidth={2} />
+                <div className="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20 flex items-center justify-center mx-auto sm:mx-0 shadow-soft">
+                  {Icon && <Icon className="w-5 h-5" strokeWidth={2} />}
                 </div>
                 <h3 className="font-heading font-bold text-base text-text dark:text-text-dark">
-                  {b.title}
+                  {b?.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-muted dark:text-muted-dark leading-relaxed">
-                  {b.desc}
+                  {b?.desc}
                 </p>
               </div>
             );
@@ -110,16 +113,16 @@ export default function Teach() {
         </div>
 
         {/* 3-Step Application Form with Progress Bar */}
-        <div className="bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-lg p-6 sm:p-10 shadow-lift">
+        <div className="glass-card rounded-2xl p-6 sm:p-10 shadow-lift border border-border/80 dark:border-border-dark/80">
           {isSubmitted ? (
-            /* Success Screen with Confetti-free Checkmark Animation */
+            /* Success Screen */
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
               className="py-12 text-center max-w-md mx-auto space-y-4"
             >
-              <div className="w-20 h-20 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto">
+              <div className="w-20 h-20 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(16,185,129,0.2)]">
                 <CheckCircle2 className="w-10 h-10" strokeWidth={2} />
               </div>
               <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-text dark:text-text-dark">
@@ -139,7 +142,7 @@ export default function Teach() {
               {/* Progress Bar Header */}
               <div className="mb-8">
                 <div className="flex items-center justify-between text-xs font-semibold text-muted dark:text-muted-dark mb-2">
-                  <span>Step {currentStep} of 3</span>
+                  <span className="text-orange-400 font-bold">Step {currentStep} of 3</span>
                   <span>
                     {currentStep === 1
                       ? 'Basic Information'
@@ -148,9 +151,9 @@ export default function Teach() {
                       : 'Course Proposal Idea'}
                   </span>
                 </div>
-                <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-primary transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300"
                     style={{ width: `${(currentStep / 3) * 100}%` }}
                   />
                 </div>
@@ -163,7 +166,6 @@ export default function Teach() {
                   <motion.div
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
                     className="space-y-4"
                   >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -178,7 +180,7 @@ export default function Teach() {
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="e.g. Siddharth Verma"
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                         />
                       </div>
                       <div>
@@ -192,7 +194,7 @@ export default function Teach() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="name@college.edu or .ac.in"
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                         />
                       </div>
                     </div>
@@ -209,7 +211,7 @@ export default function Teach() {
                           value={formData.college}
                           onChange={handleChange}
                           placeholder="e.g. IIT Delhi, BITS Goa, COEP"
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                         />
                       </div>
                       <div>
@@ -220,7 +222,7 @@ export default function Teach() {
                           name="year"
                           value={formData.year}
                           onChange={handleChange}
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                         >
                           <option value="2nd year">2nd Year</option>
                           <option value="3rd year">3rd Year</option>
@@ -237,7 +239,6 @@ export default function Teach() {
                   <motion.div
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
                     className="space-y-4"
                   >
                     <div>
@@ -248,11 +249,11 @@ export default function Teach() {
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                       >
-                        {categoriesData.map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {cat.name}
+                        {safeCategories.map((cat) => (
+                          <option key={cat?.id} value={cat?.id}>
+                            {cat?.name}
                           </option>
                         ))}
                       </select>
@@ -269,7 +270,7 @@ export default function Teach() {
                         value={formData.branch}
                         onChange={handleChange}
                         placeholder="e.g. React, Next.js, DSA, Tailwind CSS"
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                       />
                     </div>
                   </motion.div>
@@ -280,7 +281,6 @@ export default function Teach() {
                   <motion.div
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
                     className="space-y-4"
                   >
                     <div>
@@ -294,7 +294,7 @@ export default function Teach() {
                         value={formData.skillTitle}
                         onChange={handleChange}
                         placeholder="e.g. Modern Full-Stack Web Dev for SIH Hackathon"
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                       />
                     </div>
 
@@ -309,7 +309,7 @@ export default function Teach() {
                         value={formData.courseIdea}
                         onChange={handleChange}
                         placeholder="Explain 2-3 key takeaways and how this helps a college junior..."
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-primary"
+                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
                       />
                     </div>
                   </motion.div>
@@ -342,4 +342,3 @@ export default function Teach() {
     </div>
   );
 }
-

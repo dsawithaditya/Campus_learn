@@ -5,15 +5,18 @@ import { Button } from '../components/Button';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen pt-28 pb-16 flex items-center justify-center">
-      <div className="container-custom max-w-lg text-center space-y-6">
+    <div className="min-h-screen pt-28 pb-16 flex items-center justify-center relative overflow-hidden">
+      {/* Decorative ambient radial background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+
+      <div className="container-custom max-w-lg text-center space-y-6 glass-card p-10 rounded-2xl border border-border/80 dark:border-border-dark/80 shadow-lift">
         {/* Simple 2D Illustration */}
-        <div className="w-24 h-24 rounded-3xl bg-primary-soft dark:bg-slate-800 text-primary flex items-center justify-center mx-auto shadow-soft">
-          <Compass className="w-12 h-12 text-primary" strokeWidth={1.5} />
+        <div className="w-20 h-20 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-400 flex items-center justify-center mx-auto shadow-soft">
+          <Compass className="w-10 h-10 text-orange-400" strokeWidth={1.5} />
         </div>
 
         <div className="space-y-2">
-          <span className="text-xs font-bold text-accent uppercase tracking-widest">
+          <span className="text-xs font-bold text-orange-400 uppercase tracking-widest">
             Error 404
           </span>
           <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-text dark:text-text-dark">
@@ -40,4 +43,3 @@ export default function NotFound() {
     </div>
   );
 }
-
