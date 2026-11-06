@@ -45,7 +45,7 @@ export function Testimonials() {
           <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
             Student Stories
           </span>
-          <h2 className="font-heading font-bold text-3xl sm:text-5xl text-white tracking-tight">
+          <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
             Loved Across Indian Campuses
           </h2>
         </div>
@@ -69,11 +69,13 @@ export function Testimonials() {
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-white/10">
                 <div className="flex items-center gap-3.5">
-                  <img
-                    src={item?.avatar}
-                    alt={item?.author}
-                    className="w-12 h-12 rounded-full object-cover border border-white/20"
-                  />
+                  <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-[#FF6B00]/60 via-white/20 to-transparent shrink-0 shadow-[0_0_15px_rgba(255,107,0,0.2)]">
+                    <img
+                      src={item?.avatar}
+                      alt={item?.author}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </div>
                   <div>
                     <h4 className="font-heading font-semibold text-white text-base">
                       {item?.author}

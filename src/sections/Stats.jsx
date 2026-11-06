@@ -20,7 +20,7 @@ export function Stats() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7"
           >
-            <h2 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08]">
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08]">
               Focus on real skills, <br />
               <span className="text-zinc-400">not exam theory</span>
             </h2>
@@ -47,7 +47,7 @@ export function Stats() {
             transition={{ duration: 0.6 }}
             className="flex flex-col space-y-2 group"
           >
-            <div className="font-heading font-extrabold text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight group-hover:text-zinc-200 transition-colors">
+            <div className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight group-hover:text-[#FF6B00] transition-colors">
               95%
             </div>
             <div className="text-sm font-semibold text-zinc-300">
@@ -66,7 +66,7 @@ export function Stats() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="flex flex-col space-y-2 group"
           >
-            <div className="font-heading font-extrabold text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight group-hover:text-zinc-200 transition-colors">
+            <div className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight group-hover:text-[#FF6B00] transition-colors">
               0.3 sec
             </div>
             <div className="text-sm font-semibold text-zinc-300">
@@ -85,7 +85,7 @@ export function Stats() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col space-y-2 group"
           >
-            <div className="font-heading font-extrabold text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight group-hover:text-zinc-200 transition-colors">
+            <div className="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight group-hover:text-[#FF6B00] transition-colors">
               1 line
             </div>
             <div className="text-sm font-semibold text-zinc-300">

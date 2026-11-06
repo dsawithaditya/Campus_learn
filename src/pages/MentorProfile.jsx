@@ -35,15 +35,16 @@ export default function MentorProfile() {
   const mentorCourses = safeCourses.filter((c) => c?.mentorId === mentor?.id);
 
   const handleShare = () => {
-    if (navigator.share) {
+    if (typeof navigator !== 'undefined' && navigator.share) {
       navigator.share({
         title: `${mentor?.name || 'Mentor'} on Campus Learn`,
         text: `Check out senior mentor ${mentor?.name} (${mentor?.college}) on Campus Learn!`,
         url: window.location.href,
       }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      addToast('Mentor profile link copied!', 'success');
+    } else if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => addToast('Mentor profile link copied!', 'success'))
+        .catch(() => addToast('Failed to copy link', 'error'));
     }
   };
 
@@ -63,13 +64,15 @@ export default function MentorProfile() {
         <div className="container-custom">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-              <div className="relative">
-                <img
-                  src={mentor?.avatar}
-                  alt={mentor?.name || 'Mentor avatar'}
-                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-orange-500/30 shadow-lift"
-                />
-                <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-2 border-zinc-900 rounded-full" />
+              <div className="relative shrink-0">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl p-[3px] bg-gradient-to-tr from-[#FF6B00] via-amber-400 to-[#FF6B00] shadow-[0_0_30px_rgba(255,107,0,0.35)] shrink-0">
+                  <img
+                    src={mentor?.avatar}
+                    alt={mentor?.name || 'Mentor avatar'}
+                    className="w-full h-full rounded-[22px] object-cover"
+                  />
+                </div>
+                <span className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-zinc-950 rounded-full shadow-md" />
               </div>
 
               <div className="space-y-1.5">

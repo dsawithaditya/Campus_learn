@@ -83,11 +83,13 @@ export default function Dashboard() {
         <div className="glass-card p-6 sm:p-8 shadow-2xl mb-8 animate-fade-up">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <img
-                src={user?.avatar}
-                alt={user?.name || 'User'}
-                className="w-16 h-16 rounded-full object-cover border-2 border-orange-500 shadow-md"
-              />
+              <div className="w-16 h-16 rounded-2xl p-[2px] bg-gradient-to-tr from-[#FF6B00] via-amber-400 to-[#FF6B00] shadow-[0_0_20px_rgba(255,107,0,0.35)] shrink-0">
+                <img
+                  src={user?.avatar}
+                  alt={user?.name || 'User'}
+                  className="w-full h-full rounded-[14px] object-cover"
+                />
+              </div>
               <div>
                 <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-zinc-100">
                   Hey, {user?.name?.split(' ')?.[0] || 'Learner'}! 👋

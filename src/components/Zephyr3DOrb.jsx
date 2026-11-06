@@ -92,28 +92,50 @@ export function Zephyr3DOrb() {
 
     // --- 1. Soft Elliptical Ground Contact Shadow & Amber Bounce ---
     const shadowCanvas = document.createElement('canvas');
-    shadowCanvas.width = 256;
-    shadowCanvas.height = 256;
+    shadowCanvas.width = 512;
+    shadowCanvas.height = 512;
     const sCtx = shadowCanvas.getContext('2d');
-    const sGrad = sCtx.createRadialGradient(128, 128, 10, 128, 128, 124);
-    sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.95)');
-    sGrad.addColorStop(0.3, 'rgba(0, 0, 0, 0.8)');
-    sGrad.addColorStop(0.65, 'rgba(255, 107, 0, 0.16)'); // Warm Blaze Orange bounce shadow
-    sGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    sCtx.fillStyle = sGrad;
-    sCtx.fillRect(0, 0, 256, 256);
+
+    // Warm Amber / Blaze Floor Light Pool (Diffused luminous under-glow)
+    const glowGrad = sCtx.createRadialGradient(256, 256, 10, 256, 256, 210);
+    glowGrad.addColorStop(0, 'rgba(255, 115, 10, 0.22)');
+    glowGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.12)');
+    glowGrad.addColorStop(0.6, 'rgba(255, 107, 0, 0.04)');
+    glowGrad.addColorStop(0.85, 'rgba(255, 107, 0, 0.00)');
+    glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0.00)');
+    sCtx.fillStyle = glowGrad;
+    sCtx.fillRect(0, 0, 512, 512);
+
+    // Soft Contact Ambient Occlusion Shadow (Smooth Gaussian falloff, no harsh black disk)
+    sCtx.save();
+    sCtx.translate(256, 256);
+    sCtx.scale(1.25, 0.82); // Realistic perspective foreshortened ellipse
+    const shadowGrad = sCtx.createRadialGradient(0, 0, 5, 0, 0, 140);
+    shadowGrad.addColorStop(0, 'rgba(8, 7, 7, 0.48)');       // Soft deep charcoal core (natural, not pitch-black ink)
+    shadowGrad.addColorStop(0.25, 'rgba(12, 10, 9, 0.35)');  // Smooth falloff
+    shadowGrad.addColorStop(0.50, 'rgba(18, 14, 12, 0.18)');  // Soft diffused penumbra
+    shadowGrad.addColorStop(0.75, 'rgba(22, 16, 12, 0.06)');  // Feathered edge
+    shadowGrad.addColorStop(0.95, 'rgba(0, 0, 0, 0.00)');    // Completely transparent well before boundary
+    shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0.00)');
+    sCtx.fillStyle = shadowGrad;
+    sCtx.beginPath();
+    sCtx.arc(0, 0, 140, 0, Math.PI * 2);
+    sCtx.fill();
+    sCtx.restore();
+
     const shadowTexture = new THREE.CanvasTexture(shadowCanvas);
 
-    const shadowGeo = new THREE.PlaneGeometry(5.4, 5.4);
+    // Sized & positioned to stay comfortably within camera view frustum (no bottom clipping)
+    const shadowGeo = new THREE.PlaneGeometry(4.8, 2.6);
     const shadowMat = new THREE.MeshBasicMaterial({
       map: shadowTexture,
       transparent: true,
-      opacity: 0.92,
+      opacity: 0.95,
       depthWrite: false,
     });
     const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
     shadowMesh.rotation.x = -Math.PI / 2;
-    shadowMesh.position.y = -2.35;
+    shadowMesh.position.set(0, -2.32, -0.22);
     scene.add(shadowMesh);
 
     // --- 2. Outer Crystalline Optical Glass Sphere ---
@@ -235,16 +257,44 @@ export function Zephyr3DOrb() {
     emblemGroup.add(slashMesh);
     gyroGroup.add(emblemGroup);
 
-    // D. Luminous Blaze Orange Equator Orbital Laser Track
-    const equatorGeo = new THREE.TorusGeometry(1.26, 0.018, 16, 100);
+    // D. Luminous Blaze Orange Equator Orbital Laser Track + Secondary Helical Pulse Ring
+    const equatorGeo = new THREE.TorusGeometry(1.26, 0.018, 16, 120);
     const equatorMat = new THREE.MeshBasicMaterial({
       color: 0xff6b00,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.88,
     });
     const equatorRing = new THREE.Mesh(equatorGeo, equatorMat);
     equatorRing.rotation.x = Math.PI / 2;
     gyroGroup.add(equatorRing);
+
+    const pulseRingGeo = new THREE.TorusGeometry(1.86, 0.012, 16, 120);
+    const pulseRingMat = new THREE.MeshBasicMaterial({
+      color: 0xf59e0b,
+      transparent: true,
+      opacity: 0.45,
+      blending: THREE.AdditiveBlending,
+    });
+    const pulseRing = new THREE.Mesh(pulseRingGeo, pulseRingMat);
+    pulseRing.rotation.x = Math.PI / 3.2;
+    pulseRing.rotation.y = Math.PI / 5;
+    gyroGroup.add(pulseRing);
+
+    // High-speed orbital photon nodes gliding along the equator ring
+    const photonGroup = new THREE.Group();
+    equatorRing.add(photonGroup);
+    const photonGeo = new THREE.SphereGeometry(0.045, 16, 16);
+    const photonMat = new THREE.MeshBasicMaterial({
+      color: 0xfff7ed,
+    });
+    const photonNodes = [];
+    for (let i = 0; i < 4; i++) {
+      const pMesh = new THREE.Mesh(photonGeo, photonMat);
+      const angle = (i / 4) * Math.PI * 2;
+      pMesh.position.set(Math.cos(angle) * 1.26, Math.sin(angle) * 1.26, 0);
+      photonGroup.add(pMesh);
+      photonNodes.push({ mesh: pMesh, baseAngle: angle });
+    }
 
     // --- 6. Radiant Luminous Blaze Singularity Core ---
     const coreGroup = new THREE.Group();
@@ -346,7 +396,7 @@ export function Zephyr3DOrb() {
     fillLight.position.set(-5, -2, -3);
     scene.add(fillLight);
 
-    // --- 9. Smooth Interactive Controls & Inertia Physics ---
+    // --- 9. Smooth Interactive Controls, Scroll-Reactive Physics & Inertia ---
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
@@ -358,12 +408,29 @@ export function Zephyr3DOrb() {
     let dragVelocityX = 0;
     let dragVelocityY = 0;
 
+    // Scroll-reactive state for 3D gyroscope acceleration & tilt
+    let lastScrollY = window.scrollY || 0;
+    let targetScrollSpin = 0;
+    let currentScrollSpin = 0;
+    let scrollEnergy = 0;
+    let smoothScrollRatio = 0;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY || 0;
+      const delta = currentScrollY - lastScrollY;
+      lastScrollY = currentScrollY;
+
+      // Accumulate rotational momentum from scroll delta
+      targetScrollSpin += delta * 0.0045;
+      scrollEnergy = Math.min(Math.abs(delta) * 0.04, 1.5);
+    };
+
     const handleMouseMove = (e) => {
       if (isDragging) {
         const deltaX = e.clientX - prevMouseX;
         const deltaY = e.clientY - prevMouseY;
-        dragVelocityX = deltaX * 0.005;
-        dragVelocityY = deltaY * 0.005;
+        dragVelocityX = deltaX * 0.0055;
+        dragVelocityY = deltaY * 0.0055;
         mainGroup.rotation.y += dragVelocityX;
         mainGroup.rotation.x += dragVelocityY;
         prevMouseX = e.clientX;
@@ -372,8 +439,8 @@ export function Zephyr3DOrb() {
         const rect = container.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-        targetX = y * 0.55;
-        targetY = x * 0.75;
+        targetX = y * 0.65;
+        targetY = x * 0.85;
       }
     };
 
@@ -399,62 +466,100 @@ export function Zephyr3DOrb() {
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     container.addEventListener('mousedown', handleMouseDown);
 
     // --- 10. Animation Loop ---
     let animId = null;
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const elapsed = (performance.now() - startTime) * 0.001;
 
-      // Inertia drag damping
+      // Smooth spring interpolation for scroll momentum
+      currentScrollSpin += (targetScrollSpin - currentScrollSpin) * 0.075;
+      scrollEnergy *= 0.92; // Smooth decay of scroll surge
+
+      const viewportH = window.innerHeight || 800;
+      const rawScrollRatio = Math.min(Math.max((window.scrollY || 0) / viewportH, 0), 1.5);
+      smoothScrollRatio += (rawScrollRatio - smoothScrollRatio) * 0.08;
+
+      // Zero-gravity 3D vertical levitation + subtle figure-8 drift
+      const levitationY = Math.sin(elapsed * 1.65) * 0.11;
+      const driftX = Math.cos(elapsed * 0.9) * 0.035;
+      mainGroup.position.y = levitationY;
+      mainGroup.position.x = driftX;
+
+      // Inertia drag damping & mouse/scroll 3D perspective tilt
       if (!isDragging) {
         dragVelocityX *= 0.93;
         dragVelocityY *= 0.93;
         mainGroup.rotation.y += dragVelocityX;
         mainGroup.rotation.x += dragVelocityY;
 
-        // Smooth parallax towards mouse target
-        currentX += (targetX - currentX) * 0.06;
-        currentY += (targetY - currentY) * 0.06;
-        mainGroup.rotation.x += (currentX - mainGroup.rotation.x * 0.15) * 0.035;
-        mainGroup.rotation.y += 0.0025; // Continuous subtle rotation
+        // Smooth parallax towards mouse target + scroll-driven 3D pitch
+        currentX += (targetX - currentX) * 0.065;
+        currentY += (targetY - currentY) * 0.065;
+        const desiredPitch = currentX + Math.sin(smoothScrollRatio * Math.PI) * 0.22;
+        mainGroup.rotation.x += (desiredPitch - mainGroup.rotation.x * 0.25) * 0.045;
+        mainGroup.rotation.y += 0.0032 + scrollEnergy * 0.015;
+        mainGroup.rotation.z = Math.sin(elapsed * 0.7) * 0.05 + currentY * 0.08;
       }
 
-      // Synchronized Differential Mechanics
-      gyroGroup.rotation.y = elapsed * 0.14;
-      outerRing.rotation.z = Math.sin(elapsed * 0.6) * 0.15;
-      innerRing.rotation.y = -elapsed * 0.22;
-      innerRing.rotation.z = Math.cos(elapsed * 0.5) * 0.2;
-      emblemGroup.rotation.y = elapsed * 0.28;
-      emblemGroup.rotation.x = Math.sin(elapsed * 0.4) * 0.18;
+      // Synchronized Differential Mechanics + Scroll-Driven Gyroscope Acceleration
+      gyroGroup.rotation.y = elapsed * 0.22 + currentScrollSpin * 1.4;
+      gyroGroup.rotation.x = Math.sin(elapsed * 0.5) * 0.12 + smoothScrollRatio * 0.45;
 
-      // Core pulsating breathing
-      const corePulse = 1.0 + Math.sin(elapsed * 2.5) * 0.09;
+      outerRing.rotation.z = Math.sin(elapsed * 0.75) * 0.24 + currentScrollSpin * 0.8;
+      outerRing.rotation.x = Math.cos(elapsed * 0.45) * 0.15;
+
+      innerRing.rotation.y = -elapsed * 0.34 - currentScrollSpin * 1.6;
+      innerRing.rotation.z = Math.cos(elapsed * 0.6) * 0.28 + smoothScrollRatio * 0.5;
+
+      emblemGroup.rotation.y = elapsed * 0.38 + currentScrollSpin * 2.1;
+      emblemGroup.rotation.x = Math.sin(elapsed * 0.55) * 0.22 - smoothScrollRatio * 0.35;
+
+      // Dynamic gimbal breathing when scrolling
+      const gimbalExpand = 1.0 + scrollEnergy * 0.045 + Math.sin(elapsed * 1.8) * 0.015;
+      gyroGroup.scale.set(gimbalExpand, gimbalExpand, gimbalExpand);
+
+      // Helical pulse ring & high-speed equator photon nodes
+      pulseRing.rotation.z = -elapsed * 0.5 - currentScrollSpin * 1.8;
+      pulseRing.rotation.y = Math.PI / 5 + Math.sin(elapsed * 0.8) * 0.25;
+      photonNodes.forEach((node, idx) => {
+        const a = node.baseAngle + elapsed * (1.8 + idx * 0.15) + currentScrollSpin * 2.5;
+        node.mesh.position.set(Math.cos(a) * 1.26, Math.sin(a) * 1.26, 0);
+      });
+
+      // Core pulsating breathing + scroll energy flare
+      const corePulse = 1.0 + Math.sin(elapsed * 2.8) * 0.1 + scrollEnergy * 0.14;
       coreGroup.scale.set(corePulse, corePulse, corePulse);
-      cageMesh.rotation.y = -elapsed * 0.45;
-      cageMesh.rotation.x = elapsed * 0.3;
+      innerCoreMat.emissiveIntensity = 2.2 + Math.sin(elapsed * 3.2) * 0.35 + scrollEnergy * 1.1;
+      coreLight.intensity = 3.2 + Math.sin(elapsed * 2.8) * 0.4 + scrollEnergy * 1.4;
+      cageMesh.rotation.y = -elapsed * 0.55 - currentScrollSpin * 2.2;
+      cageMesh.rotation.x = elapsed * 0.38 + currentScrollSpin * 1.2;
 
-      // Contact shadow subtle pulse with breathing
-      shadowMesh.scale.set(1.0 + Math.sin(elapsed * 2.5) * 0.03, 1.0 + Math.sin(elapsed * 2.5) * 0.03, 1.0);
+      // Ground contact shadow reacts realistically to zero-gravity levitation height
+      const shadowScale = 1.0 - levitationY * 0.35 + scrollEnergy * 0.04;
+      shadowMesh.scale.set(shadowScale, shadowScale, 1.0);
+      shadowMat.opacity = 0.92 - levitationY * 0.22;
 
-      // Orbiting satellites animation
+      // Orbiting satellites animation with scroll velocity boost
       satellites.forEach((sat) => {
-        const curAngle = sat.phase + elapsed * sat.speed;
+        const curAngle = sat.phase + elapsed * sat.speed + currentScrollSpin * (sat.speed > 0 ? 0.9 : -0.9);
         sat.mesh.position.set(
           Math.cos(curAngle) * sat.radius,
-          Math.sin(curAngle) * Math.sin(sat.tilt) * sat.radius * 0.45 + Math.sin(elapsed * 1.2 + sat.phase) * 0.12,
+          Math.sin(curAngle) * Math.sin(sat.tilt) * sat.radius * 0.48 + Math.sin(elapsed * 1.4 + sat.phase) * 0.14,
           Math.sin(curAngle) * sat.radius
         );
-        sat.mesh.rotation.x += 0.02;
-        sat.mesh.rotation.y += 0.025;
+        sat.mesh.rotation.x += 0.025 + scrollEnergy * 0.03;
+        sat.mesh.rotation.y += 0.03 + scrollEnergy * 0.03;
       });
 
       // Subtle stardust rotation
-      starPoints.rotation.y = elapsed * 0.03;
-      starPoints.rotation.x = Math.sin(elapsed * 0.2) * 0.05;
+      starPoints.rotation.y = elapsed * 0.04 + currentScrollSpin * 0.35;
+      starPoints.rotation.x = Math.sin(elapsed * 0.25) * 0.06;
 
       renderer.render(scene, camera);
     };
@@ -467,6 +572,7 @@ export function Zephyr3DOrb() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('scroll', handleScroll);
       if (container) {
         container.removeEventListener('mousedown', handleMouseDown);
         if (container.contains(renderer.domElement)) {
@@ -486,6 +592,8 @@ export function Zephyr3DOrb() {
       emblemRingGeo.dispose();
       slashGeo.dispose();
       equatorGeo.dispose();
+      pulseRingGeo.dispose();
+      photonGeo.dispose();
       innerCoreGeo.dispose();
       cageGeo.dispose();
       shardGeo.dispose();
@@ -496,6 +604,8 @@ export function Zephyr3DOrb() {
       titaniumMaterial.dispose();
       blazeAccentMaterial.dispose();
       equatorMat.dispose();
+      pulseRingMat.dispose();
+      photonMat.dispose();
       innerCoreMat.dispose();
       cageMat.dispose();
       shardMat.dispose();

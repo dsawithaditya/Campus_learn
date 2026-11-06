@@ -21,7 +21,7 @@ export function HowItWorks() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7"
           >
-            <h2 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08]">
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08]">
               Master skills in <br />
               <span className="text-zinc-400">any environment</span>
             </h2>

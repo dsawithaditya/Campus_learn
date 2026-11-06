@@ -72,8 +72,9 @@ export default function CourseDetail() {
         url: window.location.href,
       }).catch(() => {});
     } else if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      addToast('Course link copied to clipboard!', 'success');
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => addToast('Course link copied to clipboard!', 'success'))
+        .catch(() => addToast('Failed to copy link', 'error'));
     }
   };
 
@@ -160,11 +161,13 @@ export default function CourseDetail() {
                     to={`/mentor/${mentor?.id}`}
                     className="flex items-center gap-2 hover:text-orange-400 transition-colors"
                   >
-                    <img
-                      src={mentor?.avatar}
-                      alt={mentor?.name || 'Mentor'}
-                      className="w-6 h-6 rounded-full object-cover border border-white/20"
-                    />
+                    <div className="w-6 h-6 rounded-full p-[1px] bg-gradient-to-tr from-[#FF6B00] to-white/20 shrink-0">
+                      <img
+                        src={mentor?.avatar}
+                        alt={mentor?.name || 'Mentor'}
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
                     <span className="font-semibold text-zinc-200 underline decoration-dotted">
                       {mentor?.name} ({mentor?.college})
                     </span>

@@ -181,6 +181,9 @@ export default function Explore() {
               />
               <input
                 type="text"
+                id="explore-search-input"
+                name="search"
+                aria-label="Search courses, tags, and tools"
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -236,6 +239,9 @@ export default function Explore() {
             <div className="flex items-center gap-2 ml-auto text-xs sm:text-sm">
               <span className="text-zinc-400">Sort by:</span>
               <select
+                id="explore-sort"
+                name="sort"
+                aria-label="Sort courses by"
                 value={selectedSort}
                 onChange={(e) => {
                   setSelectedSort(e.target.value);
@@ -272,6 +278,8 @@ export default function Explore() {
                         <div className="flex items-center gap-2">
                           <input
                             type="checkbox"
+                            id={`cat-${cat?.id}`}
+                            name="category"
                             checked={isChecked}
                             onChange={() => toggleCategory(cat?.id)}
                             className="rounded border-zinc-700 bg-zinc-800 text-orange-500 focus:ring-orange-500 h-3.5 w-3.5"
@@ -298,10 +306,12 @@ export default function Explore() {
                   {['all', 'beginner', 'intermediate', 'advanced'].map((lvl) => (
                     <label
                       key={lvl}
+                      htmlFor={`level-${lvl}`}
                       className="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/5 cursor-pointer capitalize"
                     >
                       <input
                         type="radio"
+                        id={`level-${lvl}`}
                         name="level"
                         checked={selectedLevel === lvl}
                         onChange={() => {
@@ -332,10 +342,12 @@ export default function Explore() {
                   ].map((dur) => (
                     <label
                       key={dur.id}
+                      htmlFor={`duration-${dur.id}`}
                       className="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/5 cursor-pointer"
                     >
                       <input
                         type="radio"
+                        id={`duration-${dur.id}`}
                         name="duration"
                         checked={selectedDuration === dur.id}
                         onChange={() => {
@@ -352,9 +364,11 @@ export default function Explore() {
 
               {/* Rating 4+ */}
               <div className="pt-4 border-t border-white/10">
-                <label className="flex items-center gap-2 text-xs cursor-pointer select-none">
+                <label htmlFor="rating-4plus" className="flex items-center gap-2 text-xs cursor-pointer select-none">
                   <input
                     type="checkbox"
+                    id="rating-4plus"
+                    name="rating4"
                     checked={isRating4Plus}
                     onChange={(e) => {
                       setIsRating4Plus(e.target.checked);

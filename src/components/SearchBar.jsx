@@ -70,6 +70,8 @@ export function SearchBar({
 
         <input
           type="text"
+          id="header-search-input"
+          name="search"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

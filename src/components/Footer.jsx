@@ -81,14 +81,14 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <a href="#how-it-works" className="hover:text-white transition-colors">
+                <Link to="/#how-it-works" className="hover:text-white transition-colors">
                   How it Works
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#mentors" className="hover:text-white transition-colors">
+                <Link to="/#mentors" className="hover:text-white transition-colors">
                   Senior Mentors
-                </a>
+                </Link>
               </li>
               <li>
                 <Link to="/teach" className="hover:text-white transition-colors">
@@ -117,6 +117,11 @@ export function Footer() {
               <form onSubmit={handleSubscribe} className="space-y-2">
                 <input
                   type="email"
+                  name="newsletterEmail"
+                  id="footer-newsletter-email"
+                  aria-label="Campus newsletter email"
+                  autoComplete="email"
+                  required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@college.ac.in"

@@ -2,7 +2,7 @@
   {
     "id": "m1",
     "name": "Rohan Deshmukh",
-    "avatar": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&auto=format&fit=crop&q=80",
+    "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80",
     "college": "IIT Bombay",
     "branch": "Computer Science & Engineering",
     "year": "4th year",
@@ -15,7 +15,7 @@
   {
     "id": "m2",
     "name": "Ananya Kulkarni",
-    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
+    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80",
     "college": "BITS Pilani",
     "branch": "Electronics & Instrumentation",
     "year": "3rd year",
@@ -28,7 +28,7 @@
   {
     "id": "m3",
     "name": "Kabir Sen",
-    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
     "college": "Delhi University (SRCC)",
     "branch": "Economics & Media Studies",
     "year": "3rd year",
@@ -41,7 +41,7 @@
   {
     "id": "m4",
     "name": "Tanvi Verma",
-    "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80",
+    "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80",
     "college": "IIT Delhi",
     "branch": "Design & Mechanical",
     "year": "4th year",

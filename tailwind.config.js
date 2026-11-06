@@ -50,8 +50,10 @@ export default {
         }
       },
       fontFamily: {
+        display: ['"Syne"', '"Plus Jakarta Sans"', 'sans-serif'],
         heading: ['"Plus Jakarta Sans"', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
+        mono: ['"Space Grotesk"', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         sm: '10px',

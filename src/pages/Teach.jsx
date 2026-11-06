@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Sparkles,
@@ -30,6 +31,7 @@ const benefits = [
 ];
 
 export default function Teach() {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -132,7 +134,7 @@ export default function Teach() {
                 Thank you for stepping up to guide your peers. We will review your application and verify your college email within 48 hours.
               </p>
               <div className="pt-4">
-                <Button variant="primary" onClick={() => (window.location.href = '/')}>
+                <Button variant="primary" onClick={() => navigate('/')}>
                   Back to Campus Learn
                 </Button>
               </div>
@@ -170,13 +172,15 @@ export default function Teach() {
                   >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-name" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                           Full Name
                         </label>
                         <input
                           type="text"
                           required
+                          id="teach-name"
                           name="name"
+                          autoComplete="name"
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="e.g. Siddharth Verma"
@@ -184,13 +188,15 @@ export default function Teach() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-email" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                           College Email
                         </label>
                         <input
                           type="email"
                           required
+                          id="teach-email"
                           name="email"
+                          autoComplete="email"
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="name@college.edu or .ac.in"
@@ -201,12 +207,13 @@ export default function Teach() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-college" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                           College / University
                         </label>
                         <input
                           type="text"
                           required
+                          id="teach-college"
                           name="college"
                           value={formData.college}
                           onChange={handleChange}
@@ -215,10 +222,11 @@ export default function Teach() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-year" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                           Academic Year
                         </label>
                         <select
+                          id="teach-year"
                           name="year"
                           value={formData.year}
                           onChange={handleChange}
@@ -242,10 +250,11 @@ export default function Teach() {
                     className="space-y-4"
                   >
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-category" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                         Skill Category
                       </label>
                       <select
+                        id="teach-category"
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
@@ -260,12 +269,13 @@ export default function Teach() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-branch" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                         Specific Competencies / Tools (comma separated)
                       </label>
                       <input
                         type="text"
                         required
+                        id="teach-branch"
                         name="branch"
                         value={formData.branch}
                         onChange={handleChange}
@@ -284,12 +294,13 @@ export default function Teach() {
                     className="space-y-4"
                   >
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-skill-title" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                         Proposed Course Title
                       </label>
                       <input
                         type="text"
                         required
+                        id="teach-skill-title"
                         name="skillTitle"
                         value={formData.skillTitle}
                         onChange={handleChange}
@@ -299,12 +310,13 @@ export default function Teach() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-course-idea" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
                         Brief Outline of Modules & Lessons
                       </label>
                       <textarea
                         required
                         rows={4}
+                        id="teach-course-idea"
                         name="courseIdea"
                         value={formData.courseIdea}
                         onChange={handleChange}

@@ -14,6 +14,7 @@ export default function Login() {
   const [error, setError] = useState('');
 
   const login = useAppStore((state) => state.login);
+  const addToast = useAppStore((state) => state.addToast);
   const navigate = useNavigate();
 
   // Validate college email domain
@@ -108,11 +109,14 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* College Email */}
               <div>
-                <label className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1.5">
+                <label htmlFor="login-email" className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1.5">
                   College Email (.edu or .ac.in)
                 </label>
                 <input
                   type="email"
+                  id="login-email"
+                  name="email"
+                  autoComplete="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -136,16 +140,23 @@ export default function Login() {
               {/* Password */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider">
+                  <label htmlFor="login-password" className="text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider">
                     Password
                   </label>
-                  <a href="#reset" className="text-xs text-orange-400 hover:underline">
+                  <button
+                    type="button"
+                    onClick={() => addToast('Password reset link sent to your college email if registered.', 'info')}
+                    className="text-xs text-orange-400 hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  >
                     Forgot password?
-                  </a>
+                  </button>
                 </div>
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
+                    id="login-password"
+                    name="password"
+                    autoComplete="current-password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

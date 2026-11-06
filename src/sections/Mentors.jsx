@@ -18,7 +18,7 @@ export function Mentors() {
             <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
               Campus Mentorship
             </span>
-            <h2 className="font-heading font-bold text-3xl sm:text-5xl text-white tracking-tight">
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
               Learn Directly from Seniors
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 mt-2 max-w-xl">

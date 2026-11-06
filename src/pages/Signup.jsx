@@ -109,11 +109,14 @@ export default function Signup() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Full Name */}
               <div>
-                <label className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
+                <label htmlFor="signup-fullname" className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
                   Full Name
                 </label>
                 <input
                   type="text"
+                  id="signup-fullname"
+                  name="fullName"
+                  autoComplete="name"
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
@@ -124,11 +127,13 @@ export default function Signup() {
 
               {/* College Name */}
               <div>
-                <label className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
+                <label htmlFor="signup-college" className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
                   College / University Name
                 </label>
                 <input
                   type="text"
+                  id="signup-college"
+                  name="collegeName"
                   required
                   value={collegeName}
                   onChange={(e) => setCollegeName(e.target.value)}
@@ -139,11 +144,14 @@ export default function Signup() {
 
               {/* College Email */}
               <div>
-                <label className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
+                <label htmlFor="signup-email" className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
                   College Email
                 </label>
                 <input
                   type="email"
+                  id="signup-email"
+                  name="email"
+                  autoComplete="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -167,12 +175,15 @@ export default function Signup() {
               {/* Password & Confirm */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
+                  <label htmlFor="signup-password" className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
                     Password
                   </label>
                   <div className="relative">
                     <input
                       type={showPassword ? 'text' : 'password'}
+                      id="signup-password"
+                      name="password"
+                      autoComplete="new-password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -190,11 +201,14 @@ export default function Signup() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
+                  <label htmlFor="signup-confirm-password" className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1">
                     Confirm Password
                   </label>
                   <input
                     type={showPassword ? 'text' : 'password'}
+                    id="signup-confirm-password"
+                    name="confirmPassword"
+                    autoComplete="new-password"
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}

@@ -89,30 +89,30 @@ export function Navbar() {
             >
               Courses
             </Link>
-            <a
-              href="#mentors"
+            <Link
+              to="/#mentors"
               className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
             >
               Mentors
-            </a>
-            <a
-              href="#how-it-works"
+            </Link>
+            <Link
+              to="/#how-it-works"
               className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
             >
               How it Works
-            </a>
-            <a
-              href="#stats"
+            </Link>
+            <Link
+              to="/#stats"
               className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
             >
               Outcomes
-            </a>
-            <a
-              href="#testimonials"
+            </Link>
+            <Link
+              to="/#testimonials"
               className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
             >
               Student Stories
-            </a>
+            </Link>
           </nav>
 
           {/* Right Action Button */}
@@ -180,43 +180,68 @@ export function Navbar() {
                 <BookOpen className="w-4 h-4 text-zinc-400" />
                 <span>Browse All Courses</span>
               </Link>
-              <a
-                href="#mentors"
+              <Link
+                to="/#mentors"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white"
               >
                 <Users className="w-4 h-4 text-zinc-400" />
                 <span>Senior Campus Mentors</span>
-              </a>
-              <a
-                href="#how-it-works"
+              </Link>
+              <Link
+                to="/#how-it-works"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white"
               >
                 <Sparkles className="w-4 h-4 text-zinc-400" />
                 <span>How Campus Learn Works</span>
-              </a>
+              </Link>
             </div>
 
             <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  navigate('/signup');
-                }}
-                className="btn-zephyr-primary w-full py-2.5 text-sm"
-              >
-                Get Started
-              </button>
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  navigate('/login');
-                }}
-                className="btn-zephyr-secondary w-full py-2.5 text-sm"
-              >
-                Log in
-              </button>
+              {user ? (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigate('/dashboard');
+                    }}
+                    className="btn-zephyr-primary w-full py-2.5 text-sm"
+                  >
+                    Go to Dashboard
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      logout();
+                    }}
+                    className="btn-zephyr-secondary w-full py-2.5 text-sm"
+                  >
+                    Log out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigate('/signup');
+                    }}
+                    className="btn-zephyr-primary w-full py-2.5 text-sm"
+                  >
+                    Get Started
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigate('/login');
+                    }}
+                    className="btn-zephyr-secondary w-full py-2.5 text-sm"
+                  >
+                    Log in
+                  </button>
+                </>
+              )}
             </div>
           </motion.div>
         )}
