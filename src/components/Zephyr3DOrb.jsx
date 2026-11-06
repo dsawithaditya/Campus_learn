@@ -372,6 +372,12 @@ export function Zephyr3DOrb() {
       animId = requestAnimationFrame(animate);
       const elapsed = clock.getElapsedTime();
 
+      // Zero-Gravity Weightless Floating / Bobbing on the 3D Orb
+      const floatY = Math.sin(elapsed * 1.25) * 0.22;
+      const floatX = Math.cos(elapsed * 0.85) * 0.1;
+      mainGroup.position.y = floatY;
+      mainGroup.position.x = floatX;
+
       // Inertia drag damping
       if (!isDragging) {
         dragVelocityX *= 0.93;

@@ -60,16 +60,25 @@ export function Hero() {
             {/* Ambient Radial Backlight Glow behind Orb */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-gradient-to-tr from-white/[0.07] via-zinc-400/[0.04] to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
-            {/* Floating Card 1: Top-Left (Auto-deploy on build style) */}
+            {/* Moveable Floating Card 1: Top-Left (Live Project Cohorts) */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
-              transition={{
-                opacity: { duration: 0.6, delay: 0.2 },
-                y: { repeat: Infinity, duration: 5, ease: 'easeInOut' },
+              drag
+              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
+              dragElastic={0.25}
+              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              whileHover={{ scale: 1.06 }}
+              animate={{
+                y: [-8, 8, -8],
+                x: [-3, 3, -3],
+                rotate: [-1, 1, -1],
               }}
-              className="absolute -top-4 -left-6 sm:top-2 sm:-left-8 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/30 transition-all cursor-pointer"
-              onClick={() => navigate('/explore?category=tech')}
+              transition={{
+                y: { repeat: Infinity, duration: 4.8, ease: 'easeInOut' },
+                x: { repeat: Infinity, duration: 5.4, ease: 'easeInOut' },
+                rotate: { repeat: Infinity, duration: 6.2, ease: 'easeInOut' },
+              }}
+              className="absolute -top-4 -left-6 sm:top-2 sm:-left-8 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              title="Click & drag me anywhere!"
             >
               <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
                 <Code2 className="w-4 h-4" />
@@ -80,16 +89,25 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* Floating Card 2: Mid-Left (Manage dependencies style) */}
+            {/* Moveable Floating Card 2: Mid-Left (Senior Mentors) */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0, y: [0, 8, 0] }}
-              transition={{
-                opacity: { duration: 0.6, delay: 0.35 },
-                y: { repeat: Infinity, duration: 6, ease: 'easeInOut', delay: 1 },
+              drag
+              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
+              dragElastic={0.25}
+              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              whileHover={{ scale: 1.06 }}
+              animate={{
+                y: [8, -8, 8],
+                x: [3, -3, 3],
+                rotate: [1, -1, 1],
               }}
-              className="absolute top-1/2 -left-8 sm:-left-12 -translate-y-1/2 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/30 transition-all cursor-pointer"
-              onClick={() => navigate('/teach')}
+              transition={{
+                y: { repeat: Infinity, duration: 5.6, ease: 'easeInOut', delay: 0.5 },
+                x: { repeat: Infinity, duration: 6.0, ease: 'easeInOut', delay: 0.5 },
+                rotate: { repeat: Infinity, duration: 5.8, ease: 'easeInOut' },
+              }}
+              className="absolute top-1/2 -left-8 sm:-left-12 -translate-y-1/2 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              title="Click & drag me anywhere!"
             >
               <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
                 <Users className="w-4 h-4" />
@@ -100,16 +118,25 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* Floating Card 3: Bottom-Left (Generate live preview links style) */}
+            {/* Moveable Floating Card 3: Bottom-Left (Verified Credentials) */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: [0, -6, 0] }}
-              transition={{
-                opacity: { duration: 0.6, delay: 0.5 },
-                y: { repeat: Infinity, duration: 5.5, ease: 'easeInOut', delay: 2 },
+              drag
+              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
+              dragElastic={0.25}
+              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              whileHover={{ scale: 1.06 }}
+              animate={{
+                y: [-7, 7, -7],
+                x: [2, -2, 2],
+                rotate: [-1, 1, -1],
               }}
-              className="absolute -bottom-6 left-0 sm:bottom-0 sm:-left-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/30 transition-all cursor-pointer"
-              onClick={() => navigate('/explore')}
+              transition={{
+                y: { repeat: Infinity, duration: 5.2, ease: 'easeInOut', delay: 1.2 },
+                x: { repeat: Infinity, duration: 5.8, ease: 'easeInOut', delay: 0.8 },
+                rotate: { repeat: Infinity, duration: 6.5, ease: 'easeInOut' },
+              }}
+              className="absolute -bottom-6 left-0 sm:bottom-0 sm:-left-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              title="Click & drag me anywhere!"
             >
               <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
                 <Trophy className="w-4 h-4" />
@@ -120,8 +147,50 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* 3D Interactive WebGL Orb */}
-            <Zephyr3DOrb />
+            {/* Moveable Floating Card 4: Top-Right (Active Campus Network) */}
+            <motion.div
+              drag
+              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
+              dragElastic={0.25}
+              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              whileHover={{ scale: 1.06 }}
+              animate={{
+                y: [6, -6, 6],
+                x: [-2, 2, -2],
+                rotate: [0.8, -0.8, 0.8],
+              }}
+              transition={{
+                y: { repeat: Infinity, duration: 6.0, ease: 'easeInOut', delay: 0.8 },
+                x: { repeat: Infinity, duration: 5.2, ease: 'easeInOut', delay: 1.4 },
+                rotate: { repeat: Infinity, duration: 6.8, ease: 'easeInOut' },
+              }}
+              className="hidden sm:flex absolute -top-3 right-0 sm:top-4 sm:-right-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              title="Click & drag me anywhere!"
+            >
+              <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">10,000+ Students</div>
+                <div className="text-[10px] text-zinc-400">Across 50+ college hubs</div>
+              </div>
+            </motion.div>
+
+            {/* 3D Floating WebGL Orb with continuous levitation */}
+            <motion.div
+              animate={{
+                y: [-9, 9, -9],
+                rotate: [-0.6, 0.6, -0.6],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 6.5,
+                ease: 'easeInOut',
+              }}
+              className="w-full flex items-center justify-center"
+            >
+              <Zephyr3DOrb />
+            </motion.div>
           </div>
         </div>
       </div>
