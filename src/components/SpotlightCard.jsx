@@ -22,3 +22,4 @@ export function SpotlightCard({ children, className = '', style = {}, ...props }
     </div>
   );
 }
+
