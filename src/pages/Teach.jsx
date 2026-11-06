@@ -10,6 +10,7 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { Button } from '../components/Button';
+import { useAppStore } from '../store/useAppStore';
 import categoriesData from '../data/categories.json';
 
 const benefits = [
@@ -32,6 +33,7 @@ const benefits = [
 
 export default function Teach() {
   const navigate = useNavigate();
+  const addToast = useAppStore((state) => state.addToast);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -58,6 +60,7 @@ export default function Teach() {
       setCurrentStep((prev) => prev + 1);
     } else {
       setIsSubmitted(true);
+      addToast('Application submitted successfully! Our campus leads will review your profile.', 'success');
     }
   };
 

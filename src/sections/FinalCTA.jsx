@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 import { OrangeHorizonLight } from '../components/OrangeHorizonLight';
 
 export function FinalCTA() {
@@ -25,13 +26,11 @@ export function FinalCTA() {
 
         {/* Buttons: Primary "Get started" matches reference image */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
-          <button
+          <InteractiveHoverButton
+            text="Get started free"
             onClick={() => navigate('/signup')}
-            className="btn-glossy-white w-full sm:w-auto px-8 py-3.5 text-sm group"
-          >
-            <span>Get started</span>
-            <ArrowRight className="w-4 h-4 ml-2 inline-block transition-transform group-hover:translate-x-1" />
-          </button>
+            className="w-full sm:w-52 h-12 text-sm border-white/20 hover:border-[#FF6B00]/70 shadow-lg shadow-[#FF6B00]/20"
+          />
 
           <button
             onClick={() => navigate('/explore')}

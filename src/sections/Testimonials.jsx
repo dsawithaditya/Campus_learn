@@ -73,6 +73,8 @@ export function Testimonials() {
                     <img
                       src={item?.avatar}
                       alt={item?.author}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full rounded-full object-cover"
                     />
                   </div>

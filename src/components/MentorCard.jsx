@@ -50,6 +50,8 @@ export function MentorCard({ mentor, className = '' }) {
               <img
                 src={mentor?.avatar}
                 alt={mentor?.name || 'Mentor'}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full rounded-[14px] object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </div>

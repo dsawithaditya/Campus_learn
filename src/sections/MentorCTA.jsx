@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 
 export function MentorCTA() {
   const navigate = useNavigate();
@@ -42,13 +43,11 @@ export function MentorCTA() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <button
+              <InteractiveHoverButton
+                text="Start Mentoring"
                 onClick={() => navigate('/teach')}
-                className="btn-zephyr-primary px-7 py-3.5 text-sm"
-              >
-                <span>Start Mentoring</span>
-                <ArrowRight className="w-4 h-4 ml-2 inline-block" />
-              </button>
+                className="w-full sm:w-52 h-12 text-sm border-white/20 hover:border-[#FF6B00]/70 shadow-lg shadow-[#FF6B00]/20"
+              />
               <div className="text-xs text-zinc-400 flex items-center gap-2 font-medium">
                 <GraduationCap className="w-4 h-4 text-[#FF6B00]" />
                 <span>Zero fees • Verified mentor credential for placements</span>

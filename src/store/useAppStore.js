@@ -25,15 +25,6 @@ const setStoredValue = (key, value) => {
 };
 
 // Permanent Zephyr dark mode
-const getInitialTheme = () => {
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.setItem('campus_theme', JSON.stringify('dark'));
-    } catch (e) {}
-  }
-  return 'dark';
-};
-
 export const useAppStore = create((set, get) => ({
   theme: 'dark',
   savedCourseIds: getStoredValue('campus_saved_courses', ['c1', 'c4']) || [],

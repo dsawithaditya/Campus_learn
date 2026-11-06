@@ -8,35 +8,59 @@ export default {
   theme: {
     extend: {
       colors: {
+        background: 'hsl(var(--background, 0 0% 4%))',
+        foreground: 'hsl(var(--foreground, 240 5% 96%))',
+        card: {
+          DEFAULT: 'hsl(var(--card, 240 10% 7%))',
+          foreground: 'hsl(var(--card-foreground, 240 5% 96%))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover, 240 10% 7%))',
+          foreground: 'hsl(var(--popover-foreground, 240 5% 96%))',
+        },
         primary: {
-          DEFAULT: '#4F46E5',
-          dark: '#4338CA',
-          soft: '#EEF2FF',
-          contrast: '#818CF8',
+          DEFAULT: '#FF6B00',
+          foreground: '#FFFFFF',
+          dark: '#E05300',
+          soft: 'rgba(255, 107, 0, 0.15)',
+          contrast: '#FFA057',
         },
-        accent: {
-          DEFAULT: '#FF6B5B',
-          soft: '#FFE9E6',
-        },
-        bg: {
-          DEFAULT: '#FAFAF9',
-          dark: '#0F172A',
-        },
-        surface: {
-          DEFAULT: '#FFFFFF',
-          dark: '#1E293B',
-        },
-        text: {
-          DEFAULT: '#1E293B',
-          dark: '#F1F5F9',
+        'primary-foreground': '#FFFFFF',
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary, 240 4% 16%))',
+          foreground: 'hsl(var(--secondary-foreground, 0 0% 98%))',
         },
         muted: {
-          DEFAULT: '#64748B',
-          dark: '#94A3B8',
+          DEFAULT: '#A1A1AA',
+          dark: '#71717A',
+          foreground: 'hsl(var(--muted-foreground, 240 5% 65%))',
+        },
+        accent: {
+          DEFAULT: '#FF6B00',
+          soft: 'rgba(255, 107, 0, 0.15)',
+          foreground: '#FFFFFF',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive, 0 84% 60%))',
+          foreground: 'hsl(var(--destructive-foreground, 0 0% 98%))',
         },
         border: {
-          DEFAULT: '#E2E8F0',
-          dark: '#334155',
+          DEFAULT: 'rgba(255, 255, 255, 0.12)',
+          dark: 'rgba(255, 255, 255, 0.08)',
+        },
+        input: 'hsl(var(--input, 240 4% 18%))',
+        ring: 'hsl(var(--ring, 24 100% 50%))',
+        bg: {
+          DEFAULT: '#0A0A0A',
+          dark: '#0A0A0A',
+        },
+        surface: {
+          DEFAULT: '#141416',
+          dark: '#141416',
+        },
+        text: {
+          DEFAULT: '#F4F4F5',
+          dark: '#F4F4F5',
         },
         category: {
           tech: '#38BDF8',

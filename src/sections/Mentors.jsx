@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 import { MentorCard } from '../components/MentorCard';
 import mentorsData from '../data/mentors.json';
 
@@ -26,14 +27,11 @@ export function Mentors() {
             </p>
           </div>
 
-          <button
-            type="button"
+          <InteractiveHoverButton
+            text="Become a Mentor"
             onClick={() => navigate('/teach')}
-            className="btn-zephyr-secondary text-xs sm:text-sm self-start md:self-auto"
-          >
-            <span>Become a Mentor</span>
-            <ArrowRight className="w-3.5 h-3.5 ml-1.5 inline-block opacity-70" />
-          </button>
+            className="w-48 h-11 text-xs sm:text-sm self-start md:self-auto border-white/20 hover:border-[#FF6B00]/70"
+          />
         </div>
 
         {/* 4 Mentor Cards Grid */}

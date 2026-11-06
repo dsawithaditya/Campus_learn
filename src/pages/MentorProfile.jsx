@@ -69,6 +69,8 @@ export default function MentorProfile() {
                   <img
                     src={mentor?.avatar}
                     alt={mentor?.name || 'Mentor avatar'}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full rounded-[22px] object-cover"
                   />
                 </div>

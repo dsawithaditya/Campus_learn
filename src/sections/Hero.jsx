@@ -15,6 +15,7 @@ import {
   Gamepad2,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 import { Zephyr3DOrb } from '../components/Zephyr3DOrb';
 import { Modal } from '../components/Modal';
 import { OrangeHorizonLight } from '../components/OrangeHorizonLight';
@@ -110,13 +111,11 @@ export function Hero() {
 
               {/* Interactive CTA Buttons */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto mb-8">
-                <button
+                <InteractiveHoverButton
+                  text="Start Learning Free"
                   onClick={() => navigate('/signup')}
-                  className="btn-zephyr-primary text-sm font-semibold px-7 py-3 cursor-pointer"
-                >
-                  <span>Start Learning Free</span>
-                  <ArrowRight className="w-4 h-4 ml-2 inline-block" />
-                </button>
+                  className="w-full sm:w-56 h-12 text-sm border-white/20 hover:border-[#FF6B00]/70 shadow-lg shadow-[#FF6B00]/20"
+                />
 
                 <button
                   onClick={() => navigate('/explore')}

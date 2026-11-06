@@ -12,6 +12,8 @@ import { Modal } from '../components/Modal';
 import { CourseCard } from '../components/CourseCard';
 import { MentorCard } from '../components/MentorCard';
 import { SearchBar } from '../components/SearchBar';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
+import { InteractiveHoverButtonDemo } from '@/components/ui/demo';
 import { useAppStore } from '../store/useAppStore';
 import coursesData from '../data/courses.json';
 import categoriesData from '../data/categories.json';
@@ -50,6 +52,19 @@ export default function ComponentsShowcase() {
           <Button variant="primary" onClick={() => addToast('Test notification trigger!', 'success')}>
             Trigger Toast
           </Button>
+        </div>
+
+        {/* Shadcn UI Interactive Hover Button Showcase */}
+        <div className="pt-4 border-t border-white/10 space-y-3">
+          <h3 className="text-sm font-semibold text-zinc-300">Shadcn UI Interactive Hover Buttons</h3>
+          <div className="flex flex-wrap items-center gap-4">
+            <InteractiveHoverButton text="Button" />
+            <InteractiveHoverButton text="Get Started" className="w-44 h-11 text-sm border-white/20 hover:border-[#FF6B00]/70" />
+            <InteractiveHoverButton text="Start Mentoring" className="w-52 h-12 text-sm border-white/20 hover:border-[#FF6B00]/70" />
+            <div className="p-2 rounded-xl bg-zinc-900 border border-white/10">
+              <InteractiveHoverButtonDemo />
+            </div>
+          </div>
         </div>
       </section>
 

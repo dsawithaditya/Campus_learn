@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 :root {
+  --background: 0 0% 4%;
+  --foreground: 240 5% 96%;
+  --card: 240 10% 7%;
+  --card-foreground: 240 5% 96%;
+  --popover: 240 10% 7%;
+  --popover-foreground: 240 5% 96%;
+  --primary: 24 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 4% 16%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 24 100% 50%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 4% 18%;
+  --input: 240 4% 18%;
+  --ring: 24 100% 50%;
+
   --bg-primary: #0A0A0A;
   --bg-surface: #141416;
   --bg-card: rgba(18, 18, 22, 0.85);
