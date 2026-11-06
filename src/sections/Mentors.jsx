@@ -9,7 +9,9 @@ export function Mentors() {
   const safeMentors = Array.isArray(mentorsData) ? mentorsData : [];
 
   return (
-    <section id="mentors" className="py-24 sm:py-32 relative bg-black border-b border-white/10">
+    <section id="mentors" className="py-20 sm:py-28 relative overflow-hidden">
+      {/* Background Ambient Glow */}
+      <div className="absolute top-1/2 left-1/4 w-[600px] h-[350px] bg-white/[0.015] blur-3xl rounded-full pointer-events-none -z-10" />
       <div className="container-custom">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>

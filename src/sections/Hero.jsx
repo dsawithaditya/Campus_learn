@@ -53,24 +53,6 @@ export function Hero() {
                 Explore Courses
               </button>
             </div>
-
-            {/* Backed By Campus Network Footer */}
-            <div className="pt-2">
-              <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold block mb-3">
-                Backed by top campus clubs
-              </span>
-              <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">IIT Bombay</span>
-                <span className="text-zinc-400 dark:text-zinc-700">•</span>
-                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">BITS Pilani</span>
-                <span className="text-zinc-400 dark:text-zinc-700">•</span>
-                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">IIT Delhi</span>
-                <span className="text-zinc-400 dark:text-zinc-700">•</span>
-                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">NIT Trichy</span>
-                <span className="text-zinc-400 dark:text-zinc-700">•</span>
-                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">IIIT Hyderabad</span>
-              </div>
-            </div>
           </motion.div>
 
           {/* Right Column: Interactive 3D Glass Orb & Floating Feature Cards */}

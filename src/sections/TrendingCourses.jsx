@@ -43,7 +43,10 @@ export function TrendingCourses() {
     ?.slice(0, 8) || [];
 
   return (
-    <section className="py-24 sm:py-32 relative bg-black border-b border-white/10">
+    <section className="relative py-20 sm:py-28 overflow-hidden">
+      {/* Background Soft Glow */}
+      <div className="absolute top-1/4 right-1/3 w-[600px] h-[350px] bg-white/[0.015] blur-3xl rounded-full pointer-events-none -z-10" />
+
       <div className="container-custom">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
