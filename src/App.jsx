@@ -32,9 +32,6 @@ export function App() {
       {/* Splash Screen */}
       <SplashScreen onFinish={() => setSplashFinished(true)} />
 
-      {/* Global Scroll Progress Bar */}
-      <GlobalProgressBar />
-
       {/* Sticky Glass Navbar */}
       <Navbar />
 

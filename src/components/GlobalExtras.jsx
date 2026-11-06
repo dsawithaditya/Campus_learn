@@ -4,16 +4,7 @@ import { ArrowUp } from 'lucide-react';
 import { useScrollProgress } from '../hooks/useScrollProgress';
 
 export function GlobalProgressBar() {
-  const { progress } = useScrollProgress();
-
-  return (
-    <div className="fixed top-0 left-0 right-0 h-[2.5px] z-50 bg-transparent pointer-events-none">
-      <div
-        className="h-full bg-gradient-to-r from-primary via-indigo-500 to-accent transition-all duration-75"
-        style={{ width: `${progress * 100}%` }}
-      />
-    </div>
-  );
+  return null;
 }
 
 export function BackToTopButton() {
