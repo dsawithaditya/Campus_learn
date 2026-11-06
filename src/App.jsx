@@ -4,7 +4,6 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
 import { BackToTopButton, SplashScreen } from './components/GlobalExtras';
-import { PreferencesPill } from './components/PreferencesPill';
 import { AppRoutes } from './routes';
 import { useAppStore } from './store/useAppStore';
 
@@ -49,9 +48,6 @@ export function App() {
 
       {/* Back to top floating button */}
       <BackToTopButton />
-
-      {/* Persistent Zephyr-style Preferences Pill */}
-      <PreferencesPill />
 
       {/* Global Toast notifications */}
       <ToastContainer />
