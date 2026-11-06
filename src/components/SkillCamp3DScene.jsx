@@ -1003,8 +1003,8 @@ export function SkillCamp3DScene({ onSelectCategory }) {
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, mouse.y * 0.45, 0.05);
       camera.lookAt(0, 0, 0);
 
-      // Scroll parallax factor
-      const scrollParallax = scrollY * 0.0035;
+      // When scrolling down, ALL 3D icons should smoothly move down in sync with scroll
+      const scrollDownOffset = scrollY * 0.008;
 
       // Animate each of the 8 3D models
       categoryGroups.forEach((item) => {
@@ -1014,12 +1014,12 @@ export function SkillCamp3DScene({ onSelectCategory }) {
         const floatY = Math.sin(elapsedTime * 1.6 + item.floatPhase) * 0.14;
         const floatRot = Math.cos(elapsedTime * 1.3 + item.floatPhase) * 0.07;
 
-        // Scroll divergence: models float outwards smoothly as user scrolls
-        const scrollOffsetX = (item.basePos.x / 4.8) * scrollParallax;
-        const scrollOffsetY = (item.basePos.y / 3) * scrollParallax * 0.85;
+        // All 3D icons move DOWN as you scroll down
+        item.group.position.y = item.basePos.y + floatY - scrollDownOffset;
 
-        item.group.position.x = item.basePos.x + scrollOffsetX;
-        item.group.position.y = item.basePos.y + floatY - scrollOffsetY;
+        // Spread slightly outwards for depth
+        const scrollSpreadX = Math.sign(item.basePos.x) * (scrollY * 0.0018);
+        item.group.position.x = item.basePos.x + scrollSpreadX;
 
         // Spring Bounce & Spin decay
         if (item.bounceSpring > 0.001) {
@@ -1046,9 +1046,9 @@ export function SkillCamp3DScene({ onSelectCategory }) {
         item.model.rotation.x = item.baseRot.x + (isHovered ? -mouse.y * 0.4 : 0);
       });
 
-      // Animate floating decorative stars & candy
+      // Animate floating decorative stars & candy down with scroll as well
       decorParticles.forEach((p, idx) => {
-        p.mesh.position.y = p.baseY + Math.sin(elapsedTime * p.speed + idx) * 0.28 - scrollParallax * 0.55;
+        p.mesh.position.y = p.baseY + Math.sin(elapsedTime * p.speed + idx) * 0.28 - scrollDownOffset;
         p.mesh.rotation.z += 0.01 * p.rotSpeed;
         p.mesh.rotation.y += 0.006;
       });
@@ -1087,30 +1087,6 @@ export function SkillCamp3DScene({ onSelectCategory }) {
     <div className="absolute inset-0 w-full h-full pointer-events-auto">
       {/* Three.js Canvas container */}
       <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
-
-      {/* Floating Interactive Hover Tooltip */}
-      {hoveredCategory && (
-        <div
-          className="fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-full mb-3 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md shadow-2xl border border-slate-200/80 transition-opacity duration-150 animate-bounce-subtle"
-          style={{
-            left: `${mousePos.x}px`,
-            top: `${mousePos.y - 15}px`,
-          }}
-        >
-          <div className="flex items-center gap-2">
-            <span
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: hoveredCategory.color }}
-            />
-            <p className="font-heading font-black text-xs text-slate-900 tracking-tight">
-              {hoveredCategory.name}
-            </p>
-          </div>
-          <p className="text-[11px] text-slate-500 font-medium">
-            {hoveredCategory.desc} • <span className="text-blue-600 font-bold">Click to explore ✦</span>
-          </p>
-        </div>
-      )}
     </div>
   );
 }

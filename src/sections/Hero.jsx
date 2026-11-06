@@ -1,26 +1,40 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, ArrowRight, Play, Compass, CheckCircle2, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SkillCamp3DScene } from '../components/SkillCamp3DScene';
-import { SearchBar } from '../components/SearchBar';
 import { Modal } from '../components/Modal';
 import categoriesData from '../data/categories.json';
 
+// Direct course slug mapping for all 8 3D icons
+const CATEGORY_COURSE_SLUGS = {
+  tech: 'full-stack-web-dev-react-supabase',
+  singing: 'hindustani-classical-riyaz-essentials',
+  music: 'fl-studio-lofi-beats',
+  dance: 'urban-hiphop-street-footwork',
+  sports: 'basketball-tactics-court-vision',
+  art: 'figma-campus-startups-portfolio',
+  photography: 'campus-event-photography-street-portraits',
+  gaming: 'valorant-mechanics-radiant-game-sense',
+};
+
 export function Hero() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const safeCategories = Array.isArray(categoriesData) ? categoriesData : [];
-  const activeCategoryObj = safeCategories.find((c) => c?.id === selectedCategory);
 
   const handleSelectCategory = (catId) => {
-    setSelectedCategory(catId);
+    const slug = CATEGORY_COURSE_SLUGS[catId];
+    if (slug) {
+      navigate(`/course/${slug}`);
+    } else {
+      navigate(`/explore?category=${catId}`);
+    }
   };
 
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-center items-center pt-28 pb-16 overflow-hidden select-none">
+    <section className="relative min-h-[92vh] flex flex-col justify-center items-center pt-20 pb-16 overflow-hidden select-none">
       {/* Soft Ambient Pastel Background Auroras */}
       <div className="absolute top-10 left-1/4 w-[600px] h-[400px] bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-blue-200/35 blur-3xl rounded-full pointer-events-none -z-20" />
       <div className="absolute bottom-10 right-1/4 w-[550px] h-[350px] bg-gradient-to-l from-amber-200/40 via-rose-200/30 to-indigo-200/30 blur-3xl rounded-full pointer-events-none -z-20" />
@@ -30,23 +44,11 @@ export function Hero() {
 
       {/* Centered Typography & Content Overlay matching reference image */}
       <div className="container-custom relative z-10 text-center max-w-4xl px-4 pointer-events-none">
-        {/* Animated Subtitle Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm text-xs font-bold text-slate-800 dark:text-slate-200 mb-6 pointer-events-auto"
-        >
-          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-          <span>Interactive 3D Skill Camp • Click any 3D model to explore</span>
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-        </motion.div>
-
         {/* Giant Black Typography Display matching reference: HOWDO SKILLCAMP */}
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-1 mb-6"
         >
           <h1 className="font-heading font-black text-5xl sm:text-7xl md:text-8xl lg:text-[104px] tracking-[-0.04em] text-slate-950 dark:text-white leading-[0.92] uppercase">
@@ -61,7 +63,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.25 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mx-auto space-y-1 mb-8"
         >
           <p className="text-base sm:text-lg font-medium text-slate-600 dark:text-slate-300">
@@ -72,16 +74,16 @@ export function Hero() {
           </p>
         </motion.div>
 
-        {/* Interactive Search & Actions */}
+        {/* Interactive Actions */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-lg mx-auto pointer-events-auto"
         >
           <button
             onClick={() => navigate('/explore')}
-            className="btn-interactive w-full sm:w-auto flex items-center justify-center gap-2 text-sm font-bold shadow-xl"
+            className="btn-interactive w-full sm:w-auto flex items-center justify-center gap-2 text-sm font-bold shadow-xl cursor-pointer"
           >
             <span>Explore All Camps</span>
             <ArrowRight className="w-4 h-4" />
@@ -89,7 +91,7 @@ export function Hero() {
 
           <button
             onClick={() => setIsVideoModalOpen(true)}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-all shadow-sm flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
           >
             <Play className="w-4 h-4 text-blue-600 fill-blue-600" />
             <span>Watch Experience</span>
@@ -100,18 +102,14 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-10 flex flex-wrap items-center justify-center gap-2 pointer-events-auto"
         >
           {safeCategories.map((cat) => (
             <button
               key={cat?.id}
               onClick={() => handleSelectCategory(cat?.id)}
-              className={`text-xs px-3.5 py-1.5 rounded-full font-semibold transition-all flex items-center gap-1.5 ${
-                selectedCategory === cat?.id
-                  ? 'bg-blue-600 text-white shadow-md scale-105'
-                  : 'bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 shadow-sm'
-              }`}
+              className="text-xs px-3.5 py-1.5 rounded-full font-semibold transition-all flex items-center gap-1.5 bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
             >
               <span
                 className="w-2 h-2 rounded-full"
@@ -122,63 +120,6 @@ export function Hero() {
           ))}
         </motion.div>
       </div>
-
-      {/* Selected 3D Model Category Quick Preview Drawer/Modal */}
-      <AnimatePresence>
-        {activeCategoryObj && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.95 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 z-50 left-1/2 -translate-x-1/2 w-[92%] max-w-lg glass-card p-5 shadow-2xl border-2 border-blue-500/30"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-md"
-                  style={{ backgroundColor: activeCategoryObj?.color || '#2563eb' }}
-                >
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-heading font-black text-lg text-slate-900 dark:text-white">
-                      {activeCategoryObj?.name}
-                    </h3>
-                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-bold">
-                      {activeCategoryObj?.courseCount} Camps Live
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                    {activeCategoryObj?.description}
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedCategory(null)}
-                className="p-1 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="flex items-center justify-between pt-4 mt-3 border-t border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
-                100% Peer Senior Led • Campus Verified
-              </span>
-              <button
-                onClick={() => navigate(`/explore?category=${activeCategoryObj?.id}`)}
-                className="btn-interactive text-xs font-bold px-4 py-1.5 flex items-center gap-1.5"
-              >
-                <span>View Bootcamps</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Video Modal */}
       <Modal
