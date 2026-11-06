@@ -41,10 +41,10 @@ export function CourseCard({ course, className = '' }) {
     <div
       onClick={handleCardClick}
       onMouseMove={handleMouseMove}
-      className={`glass-card p-4 group relative overflow-hidden cursor-pointer flex flex-col justify-between transition-all duration-300 ${className}`}
+      className={`zephyr-card p-4 group relative overflow-hidden cursor-pointer flex flex-col justify-between transition-all duration-300 rounded-2xl ${className}`}
       style={{
         backgroundImage:
-          'radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(59,130,246,0.1), transparent 40%)',
+          'radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(255,255,255,0.08), transparent 45%)',
       }}
     >
       <div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, Code2, Mic2, Music, Flame, Trophy, Palette, Camera, Gamepad2 } from 'lucide-react';
+import { ArrowRight, Code2, Mic2, Music, Flame, Trophy, Palette, Camera, Gamepad2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import categoriesData from '../data/categories.json';
 
 const iconMap = {
@@ -23,51 +24,50 @@ export function CategoryRow() {
   };
 
   return (
-    <section className="py-14 border-y border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/40 backdrop-blur-sm">
+    <section className="py-16 sm:py-20 border-b border-white/10 bg-black">
       <div className="container-custom">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>SkillCamp Disciplines</span>
-            </div>
-            <h2 className="font-heading font-black text-2xl sm:text-3xl text-slate-900 dark:text-white">
-              Choose your creative playground
+            <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
+              Campus Domains
+            </span>
+            <h2 className="font-heading font-bold text-2xl sm:text-4xl text-white tracking-tight">
+              Explore Peer-Led Disciplines
             </h2>
           </div>
           <button
             type="button"
             onClick={() => navigate('/explore')}
-            className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1 group self-start sm:self-auto"
+            className="text-xs sm:text-sm font-medium text-zinc-400 hover:text-white flex items-center gap-1 group self-start sm:self-auto transition-colors"
           >
-            <span>View all 8 skill domains</span>
+            <span>View all courses</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
 
-        {/* 8 Categories Grid matching the 3D icons */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3.5">
-          {safeCategories?.map((cat) => {
-            const Icon = iconMap[cat?.id] || Sparkles;
+        {/* 8 Categories Grid with Zephyr minimalist dark pill styling */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+          {safeCategories?.map((cat, index) => {
+            const IconComponent = iconMap[cat?.id] || Code2;
             return (
-              <button
-                key={cat?.id}
+              <motion.button
+                key={cat?.id || index}
+                type="button"
                 onClick={() => handleCategoryClick(cat?.id)}
-                className="group glass-card p-4 rounded-2xl flex flex-col items-center text-center transition-all duration-200 hover:-translate-y-1.5 hover:shadow-xl hover:border-blue-500/40 cursor-pointer"
+                whileHover={{ y: -3, scale: 1.02 }}
+                whileTap={{ scale: 0.96 }}
+                className="zephyr-card p-4 rounded-2xl flex flex-col items-center justify-center text-center group cursor-pointer border border-white/10 hover:border-white/25 transition-all"
               >
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center text-white mb-3 shadow-md transition-transform group-hover:scale-110"
-                  style={{ backgroundColor: cat?.color || '#3b82f6' }}
-                >
-                  <Icon className="w-6 h-6" strokeWidth={2.2} />
+                <div className="w-10 h-10 rounded-xl bg-white/5 group-hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 group-hover:text-white mb-3 transition-colors">
+                  <IconComponent className="w-5 h-5" />
                 </div>
-                <h3 className="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white line-clamp-1 mb-1">
-                  {cat?.name}
-                </h3>
-                <span className="text-[11px] font-semibold text-slate-400 group-hover:text-blue-600 transition-colors">
-                  {cat?.courseCount} Camps
+                <span className="text-xs font-semibold text-zinc-300 group-hover:text-white transition-colors truncate w-full">
+                  {cat?.name || 'Domain'}
                 </span>
-              </button>
+                <span className="text-[10px] text-zinc-500 mt-0.5">
+                  {cat?.courseCount || 12}+ cohorts
+                </span>
+              </motion.button>
             );
           })}
         </div>
@@ -75,3 +75,5 @@ export function CategoryRow() {
     </section>
   );
 }
+
+export default CategoryRow;

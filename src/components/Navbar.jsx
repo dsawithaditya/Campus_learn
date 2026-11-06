@@ -1,360 +1,228 @@
-import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ChevronDown,
-  Menu,
-  X,
-  Compass,
-  Sparkles,
-  LogOut,
-  LayoutDashboard,
-  Users,
-  Info,
-} from 'lucide-react';
+import { Menu, X, ArrowUpRight, Compass, Users, Sparkles, BookOpen } from 'lucide-react';
 import { useScrollProgress } from '../hooks/useScrollProgress';
 import { useAppStore } from '../store/useAppStore';
-import { ThemeToggle } from './ThemeToggle';
-import { Button } from './Button';
-import categoriesData from '../data/categories.json';
 
 export function Navbar() {
   const { scrollY } = useScrollProgress();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const user = useAppStore((state) => state.user);
   const logout = useAppStore((state) => state.logout);
   const navigate = useNavigate();
 
   const isScrolled = scrollY > 30;
-  const safeCategories = Array.isArray(categoriesData) ? categoriesData : [];
 
-  const handleLogout = () => {
-    logout();
-    setIsUserMenuOpen(false);
-    navigate('/');
-  };
+  // Modern directional scroll detection (auto-hides on scroll down, reveals on scroll up)
+  useEffect(() => {
+    const handleDirectionalScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show when near the very top of the page
+      if (currentScrollY < 30) {
+        setIsVisible(true);
+        setLastScrollY(currentScrollY);
+        return;
+      }
+
+      // If mobile menu is open, don't hide
+      if (isMobileMenuOpen) {
+        setIsVisible(true);
+        return;
+      }
+
+      // Scrolling DOWN -> hide navbar
+      if (currentScrollY > lastScrollY && currentScrollY > 70) {
+        setIsVisible(false);
+      }
+      // Scrolling UP -> reveal navbar
+      else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleDirectionalScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleDirectionalScroll);
+  }, [lastScrollY, isMobileMenuOpen]);
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isScrolled ? 'glass-navbar py-2.5 shadow-sm' : 'bg-transparent py-4'
-        }`}
-      >
-        <div className="container-custom flex items-center justify-between">
-          {/* Logo with 3D Glossy Gradient Sphere matching reference image */}
-          <Link
-            to="/"
-            className="flex items-center gap-2.5 group focus-visible:ring-2 focus-visible:ring-blue-500 rounded-full"
-          >
-            <div className="relative w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 via-pink-400 to-amber-300 p-0.5 shadow-md transition-transform group-hover:scale-105">
-              <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
-                <span className="font-heading font-black text-xs tracking-tighter">CL</span>
-              </div>
+      {/* Floating Centered Pill Navbar with Directional Auto-Hide */}
+      <header className="fixed top-5 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+        <motion.div
+          animate={{
+            y: isVisible ? 0 : -90,
+            opacity: isVisible ? 1 : 0,
+          }}
+          transition={{
+            duration: 0.35,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className={`pointer-events-auto w-full max-w-5xl rounded-full transition-shadow duration-300 px-5 sm:px-6 py-2.5 flex items-center justify-between zephyr-pill-nav ${isScrolled ? 'shadow-[0_15px_35px_rgba(0,0,0,0.85)] border-white/20' : 'border-white/10'
+            }`}
+        >
+          {/* Brand Logo & Name */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="relative w-7 h-7 rounded-full border border-white/30 bg-zinc-900 flex items-center justify-center text-white text-xs font-bold transition-transform group-hover:scale-105 group-hover:border-white">
+              {/* Zephyr-style circular slashed emblem */}
+              <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-white fill-none stroke-[2]">
+                <circle cx="12" cy="12" r="9" />
+                <line x1="5" y1="19" x2="19" y2="5" />
+              </svg>
             </div>
-            <span className="font-heading font-black text-xl tracking-tight text-slate-900 dark:text-white flex items-center">
-              Campus<span className="text-blue-600 dark:text-blue-400">Learn</span>
+            <span className="font-heading font-bold text-sm sm:text-base tracking-tight text-white flex items-center gap-1">
+              Campus <span className="text-zinc-400 font-normal">Learn</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-7">
-            {/* Categories Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setIsCategoriesOpen(true)}
-              onMouseLeave={() => setIsCategoriesOpen(false)}
-            >
-              <button
-                type="button"
-                onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
-                className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 py-1"
-                aria-expanded={isCategoriesOpen}
-              >
-                <span>Categories</span>
-                <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform ${
-                    isCategoriesOpen ? 'rotate-180 text-blue-600 dark:text-blue-400' : ''
-                  }`}
-                  strokeWidth={2.2}
-                />
-              </button>
-
-              <AnimatePresence>
-                {isCategoriesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute top-full -left-12 w-72 glass-card shadow-2xl p-2 z-50 mt-1"
-                  >
-                    <div className="grid grid-cols-1 gap-1">
-                      {safeCategories?.map((cat) => (
-                        <Link
-                          key={cat?.id}
-                          to={`/explore?category=${cat?.id}`}
-                          onClick={() => setIsCategoriesOpen(false)}
-                          className="flex items-center justify-between px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
-                        >
-                          <div className="flex items-center gap-2.5">
-                            <span
-                              className="w-2.5 h-2.5 rounded-full"
-                              style={{ backgroundColor: cat?.color || '#3b82f6' }}
-                            />
-                            <span className="font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                              {cat?.name}
-                            </span>
-                          </div>
-                          <span className="text-xs text-slate-400 font-medium">
-                            {cat?.courseCount} camps
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            <NavLink
+          {/* Center Navigation Links (Hidden on mobile) */}
+          <nav className="hidden md:flex items-center gap-1 text-xs sm:text-sm font-medium text-zinc-400">
+            <Link
               to="/explore"
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors flex items-center gap-1 ${
-                  isActive
-                    ? 'text-blue-600 dark:text-blue-400 font-bold'
-                    : 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400'
-                }`
-              }
+              className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
             >
-              <span>Explore</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" strokeWidth={2} />
-            </NavLink>
-
-            <NavLink
-              to="/teach"
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors flex items-center gap-1.5 ${
-                  isActive
-                    ? 'text-blue-600 dark:text-blue-400 font-bold'
-                    : 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400'
-                }`
-              }
-            >
-              <span>Community</span>
-            </NavLink>
-
+              Courses
+            </Link>
             <a
               href="#mentors"
-              className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
             >
               Mentors
             </a>
-
             <a
-              href="#about"
-              className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              href="#how-it-works"
+              className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
             >
-              About Us
+              How it Works
+            </a>
+            <a
+              href="#stats"
+              className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
+            >
+              Outcomes
+            </a>
+            <a
+              href="#testimonials"
+              className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
+            >
+              Student Stories
             </a>
           </nav>
 
-          {/* Right Actions: Start Creating CTA + Theme Toggle */}
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-
+          {/* Right Action Button */}
+          <div className="hidden sm:flex items-center gap-2.5">
             {user ? (
-              <div className="relative">
+              <div className="flex items-center gap-2">
                 <button
-                  type="button"
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  aria-label="User profile menu"
-                  className="flex items-center gap-2 p-1 pl-2.5 rounded-full border border-slate-200 dark:border-slate-800 hover:border-blue-500 transition-colors bg-white dark:bg-slate-900 shadow-sm"
+                  onClick={() => navigate('/dashboard')}
+                  className="btn-zephyr-secondary text-xs px-4 py-1.5"
                 >
-                  <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 hidden sm:inline-block max-w-[90px] truncate">
-                    {user?.name?.split(' ')?.[0]}
-                  </span>
-                  <img
-                    src={user?.avatar}
-                    alt={user?.name || 'User'}
-                    className="w-7 h-7 rounded-full object-cover border border-blue-500/50"
-                  />
+                  Dashboard
                 </button>
-
-                <AnimatePresence>
-                  {isUserMenuOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full mt-2 w-56 glass-card shadow-2xl p-2 z-50"
-                    >
-                      <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
-                        <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                          {user?.name}
-                        </p>
-                        <p className="text-[11px] text-slate-500 truncate">
-                          {user?.college}
-                        </p>
-                      </div>
-                      <div className="py-1">
-                        <Link
-                          to="/dashboard"
-                          onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
-                        >
-                          <LayoutDashboard className="w-4 h-4 text-blue-600" strokeWidth={2} />
-                          <span>Student Dashboard</span>
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={handleLogout}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg"
-                        >
-                          <LogOut className="w-4 h-4" strokeWidth={2} />
-                          <span>Log out</span>
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <button
+                  onClick={logout}
+                  className="text-xs text-zinc-400 hover:text-white px-2 py-1"
+                >
+                  Log out
+                </button>
               </div>
             ) : (
-              <div className="hidden sm:flex items-center gap-2.5">
-                <Link to="/login">
-                  <button className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-blue-600 px-3 py-2 transition-colors">
-                    Log In
-                  </button>
+              <>
+                <Link
+                  to="/login"
+                  className="text-xs text-zinc-300 hover:text-white px-3 py-1.5 transition-colors"
+                >
+                  Log in
                 </Link>
-                <Link to="/teach">
-                  <button className="btn-interactive flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full text-white shadow-md">
-                    <span>Start Creating</span>
-                    <Sparkles className="w-3.5 h-3.5" />
-                  </button>
-                </Link>
-              </div>
+                <button
+                  onClick={() => navigate('/signup')}
+                  className="btn-zephyr-primary text-xs px-4 py-2"
+                >
+                  Get Started
+                </button>
+              </>
             )}
-
-            {/* Mobile Hamburger Button */}
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle navigation menu"
-              className="md:hidden p-2 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" strokeWidth={2} />
-              ) : (
-                <Menu className="w-6 h-6" strokeWidth={2} />
-              )}
-            </button>
           </div>
-        </div>
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-1.5 rounded-full text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Toggle Navigation Menu"
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </motion.div>
       </header>
 
-      {/* Mobile Slide-in Drawer */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="absolute right-0 top-0 bottom-0 w-80 max-w-[85%] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 p-6 shadow-2xl flex flex-col justify-between"
-            >
-              <div className="space-y-6">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
-                  <span className="font-heading font-black text-lg text-slate-900 dark:text-white">
-                    Campus<span className="text-blue-600">Learn</span>
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-1 rounded-md text-slate-500"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-20 left-4 right-4 z-40 md:hidden p-5 rounded-3xl bg-zinc-950/95 border border-white/15 backdrop-blur-2xl shadow-2xl space-y-4"
+          >
+            <div className="flex flex-col space-y-2 text-sm font-medium">
+              <Link
+                to="/explore"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white"
+              >
+                <BookOpen className="w-4 h-4 text-zinc-400" />
+                <span>Browse All Courses</span>
+              </Link>
+              <a
+                href="#mentors"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white"
+              >
+                <Users className="w-4 h-4 text-zinc-400" />
+                <span>Senior Campus Mentors</span>
+              </a>
+              <a
+                href="#how-it-works"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white"
+              >
+                <Sparkles className="w-4 h-4 text-zinc-400" />
+                <span>How Campus Learn Works</span>
+              </a>
+            </div>
 
-                <div className="space-y-3">
-                  <Link
-                    to="/explore"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600"
-                  >
-                    Explore Camps
-                  </Link>
-                  <Link
-                    to="/teach"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600"
-                  >
-                    Start Creating / Teach
-                  </Link>
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600"
-                  >
-                    Student Dashboard
-                  </Link>
-                </div>
-
-                <div>
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-                    Top Categories
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {safeCategories?.slice(0, 6).map((cat) => (
-                      <Link
-                        key={cat?.id}
-                        to={`/explore?category=${cat?.id}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-xs px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium"
-                      >
-                        {cat?.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
-                {user ? (
-                  <Button variant="ghost" fullWidth onClick={handleLogout}>
-                    Log out ({user?.name?.split(' ')?.[0]})
-                  </Button>
-                ) : (
-                  <div className="space-y-2">
-                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="secondary" fullWidth className="mb-2">
-                        Log in
-                      </Button>
-                    </Link>
-                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="primary" fullWidth>
-                        Start Creating ✦
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </div>
+            <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  navigate('/signup');
+                }}
+                className="btn-zephyr-primary w-full py-2.5 text-sm"
+              >
+                Get Started
+              </button>
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  navigate('/login');
+                }}
+                className="btn-zephyr-secondary w-full py-2.5 text-sm"
+              >
+                Log in
+              </button>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 }
+
+export default Navbar;

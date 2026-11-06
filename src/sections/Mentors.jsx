@@ -9,41 +9,35 @@ export function Mentors() {
   const safeMentors = Array.isArray(mentorsData) ? mentorsData : [];
 
   return (
-    <section id="mentors" className="py-20 relative">
+    <section id="mentors" className="py-24 sm:py-32 relative bg-black border-b border-white/10">
       <div className="container-custom">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
-              <Sparkles className="w-4 h-4 text-amber-500" strokeWidth={2} />
-              <span>Campus Mentorship</span>
-            </div>
-            <h2 className="font-heading font-black text-3xl sm:text-4xl text-slate-900 dark:text-white leading-[1.15]">
+            <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
+              Campus Mentorship
+            </span>
+            <h2 className="font-heading font-bold text-3xl sm:text-5xl text-white tracking-tight">
               Learn Directly from Seniors
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-              Top club leads, hackathon winners, and collegiate fest champions ready to guide you.
+            <p className="text-sm sm:text-base text-zinc-400 mt-2 max-w-xl">
+              Club heads, national hackathon winners, and collegiate fest leads ready to guide you 1-on-1.
             </p>
           </div>
 
           <button
             type="button"
             onClick={() => navigate('/teach')}
-            className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1.5 group self-start md:self-auto cursor-pointer"
+            className="btn-zephyr-secondary text-xs sm:text-sm self-start md:self-auto"
           >
             <span>Become a Mentor</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="w-3.5 h-3.5 ml-1.5 inline-block opacity-70" />
           </button>
         </div>
 
-        {/* Row of 4 MentorCards */}
+        {/* 4 Mentor Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {safeMentors?.slice(0, 4)?.map((mentor, idx) => (
-            <div
-              key={mentor?.id || idx}
-              className={`animate-fade-up ${
-                idx === 0 ? 'delay-1' : idx === 1 ? 'delay-2' : idx === 2 ? 'delay-3' : ''
-              }`}
-            >
+            <div key={mentor?.id || idx}>
               <MentorCard mentor={mentor} />
             </div>
           ))}
@@ -52,3 +46,5 @@ export function Mentors() {
     </section>
   );
 }
+
+export default Mentors;

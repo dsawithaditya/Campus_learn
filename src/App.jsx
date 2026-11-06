@@ -4,22 +4,24 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
 import { BackToTopButton, SplashScreen } from './components/GlobalExtras';
+import { PreferencesPill } from './components/PreferencesPill';
 import { AppRoutes } from './routes';
 import { useAppStore } from './store/useAppStore';
 
 export function App() {
-  const theme = useAppStore((state) => state.theme);
   const [splashFinished, setSplashFinished] = useState(false);
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
+    // Permanently enforce Zephyr dark mode
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+    document.documentElement.style.backgroundColor = '#000000';
+    document.documentElement.style.colorScheme = 'dark';
+    if (document.body) {
+      document.body.style.backgroundColor = '#000000';
+      document.body.style.color = '#ffffff';
     }
-  }, [theme]);
+  }, []);
 
   return (
     <BrowserRouter>
@@ -47,6 +49,9 @@ export function App() {
 
       {/* Back to top floating button */}
       <BackToTopButton />
+
+      {/* Persistent Zephyr-style Preferences Pill */}
+      <PreferencesPill />
 
       {/* Global Toast notifications */}
       <ToastContainer />

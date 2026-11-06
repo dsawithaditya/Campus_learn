@@ -24,15 +24,18 @@ const setStoredValue = (key, value) => {
   }
 };
 
-// Initial theme detection: Default to light mode matching the Skillcamp design
+// Permanent Zephyr dark mode
 const getInitialTheme = () => {
-  const saved = getStoredValue('campus_theme', null);
-  if (saved === 'dark' || saved === 'light') return saved;
-  return 'light'; // Default to clean, modern, vibrant light mode
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('campus_theme', JSON.stringify('dark'));
+    } catch (e) {}
+  }
+  return 'dark';
 };
 
 export const useAppStore = create((set, get) => ({
-  theme: getInitialTheme(),
+  theme: 'dark',
   savedCourseIds: getStoredValue('campus_saved_courses', ['c1', 'c4']) || [],
   enrolledCourses: getStoredValue('campus_enrolled_courses', [
     { courseId: 'c1', progress: 65, lastAccessed: '2025-02-14' },
@@ -52,34 +55,12 @@ export const useAppStore = create((set, get) => ({
   toasts: [],
 
   toggleTheme: () => {
-    set((state) => {
-      const nextTheme = state.theme === 'light' ? 'dark' : 'light';
-      setStoredValue('campus_theme', nextTheme);
-      if (typeof document !== 'undefined') {
-        if (nextTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-          document.documentElement.classList.remove('light');
-        } else {
-          document.documentElement.classList.remove('dark');
-          document.documentElement.classList.add('light');
-        }
-      }
-      return { theme: nextTheme };
-    });
+    // Permanent dark mode
+    set({ theme: 'dark' });
   },
 
-  setTheme: (theme) => {
-    setStoredValue('campus_theme', theme);
-    if (typeof document !== 'undefined') {
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-        document.documentElement.classList.remove('light');
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.documentElement.classList.add('light');
-      }
-    }
-    set({ theme });
+  setTheme: () => {
+    set({ theme: 'dark' });
   },
 
   toggleSave: (id) => {

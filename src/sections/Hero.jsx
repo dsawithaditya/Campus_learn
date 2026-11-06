@@ -1,128 +1,167 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Sparkles, Code2, Users, Trophy, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { SkillCamp3DScene } from '../components/SkillCamp3DScene';
+import { Zephyr3DOrb } from '../components/Zephyr3DOrb';
 import { Modal } from '../components/Modal';
-
-// Direct course slug mapping for all 8 3D icons
-const CATEGORY_COURSE_SLUGS = {
-  tech: 'full-stack-web-dev-react-supabase',
-  singing: 'hindustani-classical-riyaz-essentials',
-  music: 'fl-studio-lofi-beats',
-  dance: 'urban-hiphop-street-footwork',
-  sports: 'basketball-tactics-court-vision',
-  art: 'figma-campus-startups-portfolio',
-  photography: 'campus-event-photography-street-portraits',
-  gaming: 'valorant-mechanics-radiant-game-sense',
-};
 
 export function Hero() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleSelectCategory = (catId) => {
-    const slug = CATEGORY_COURSE_SLUGS[catId];
-    if (slug) {
-      navigate(`/course/${slug}`);
-    } else {
-      navigate(`/explore?category=${catId}`);
-    }
-  };
-
   return (
-    <section className="relative min-h-[98vh] flex flex-col justify-center items-center pt-24 pb-24 select-none">
-      {/* Soft Ambient Pastel Background Auroras */}
-      <div className="absolute top-10 left-1/4 w-[600px] h-[400px] bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-blue-200/35 blur-3xl rounded-full pointer-events-none -z-20" />
-      <div className="absolute bottom-10 right-1/4 w-[550px] h-[350px] bg-gradient-to-l from-amber-200/40 via-rose-200/30 to-indigo-200/30 blur-3xl rounded-full pointer-events-none -z-20" />
+    <section className="relative min-h-[92vh] flex flex-col justify-center pt-28 pb-16 overflow-hidden">
+      {/* Top Ambient Glow matching Zephyr */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-white/[0.06] to-transparent blur-3xl pointer-events-none -z-10" />
 
-      {/* Real-time Interactive 3D Canvas with 8 Categories */}
-      <SkillCamp3DScene onSelectCategory={handleSelectCategory} />
-
-      {/* Centered Typography & Content Overlay matching reference image */}
-      <div className="container-custom relative z-10 text-center max-w-4xl px-4 pointer-events-none">
-        {/* Giant Black Typography Display matching reference: HOWDO SKILLCAMP */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-1 mb-6"
-        >
-          <h1 className="font-heading font-black text-5xl sm:text-7xl md:text-8xl lg:text-[104px] tracking-[-0.04em] text-slate-950 dark:text-white leading-[0.92] uppercase">
-            CAMPUS LEARN
-          </h1>
-          <h2 className="font-heading font-black text-5xl sm:text-7xl md:text-8xl lg:text-[104px] tracking-[-0.04em] text-slate-950 dark:text-white leading-[0.92] uppercase">
-            SKILLCAMP
-          </h2>
-        </motion.div>
-
-        {/* Subtitle matching German / English dual line in reference image */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto space-y-1 mb-8"
-        >
-          <p className="text-base sm:text-lg font-medium text-slate-600 dark:text-slate-300">
-            Ein Ort für alle, die Neues entdecken wollen.
-          </p>
-          <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-normal">
-            The playground for digital, creative, and active minds. Master tech, arts, vocals and sports directly from senior campus mentors.
-          </p>
-        </motion.div>
-
-        {/* Interactive Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-lg mx-auto pointer-events-auto"
-        >
-          <button
-            onClick={() => navigate('/explore')}
-            className="btn-interactive w-full sm:w-auto flex items-center justify-center gap-2 text-sm font-bold shadow-xl cursor-pointer"
+      <div className="container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Left Column: Heading, Subtitle & CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex flex-col items-start z-10"
           >
-            <span>Explore All Camps</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+            {/* Main H1 Title matching Zephyr "The only sane way to do micro-frontends" */}
+            <h1 className="font-heading font-bold text-4xl sm:text-6xl lg:text-[70px] text-white leading-[1.05] tracking-[-0.035em] mb-6">
+              The only sane way to{' '}
+              <span className="text-zinc-100 block sm:inline">
+                learn from seniors
+              </span>
+            </h1>
 
-          <button
-            onClick={() => setIsVideoModalOpen(true)}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <Play className="w-4 h-4 text-blue-600 fill-blue-600" />
-            <span>Watch Experience</span>
-          </button>
-        </motion.div>
+            {/* Subtitle matching Zephyr aesthetic */}
+            <p className="text-base sm:text-lg text-zinc-400 max-w-xl mb-9 leading-relaxed font-normal">
+              Campus Learn is a peer-to-peer student platform for hands-on bootcamps in tech, music, sports, and arts—taught directly by senior students from top colleges.
+            </p>
+
+            {/* Interactive CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto mb-14">
+              <button
+                onClick={() => navigate('/signup')}
+                className="btn-zephyr-primary text-sm font-semibold px-7 py-3"
+              >
+                <span>Start Learning Free</span>
+                <ArrowRight className="w-4 h-4 ml-2 inline-block" />
+              </button>
+
+              <button
+                onClick={() => navigate('/explore')}
+                className="btn-zephyr-secondary text-sm font-medium px-6 py-3"
+              >
+                Explore Courses
+              </button>
+            </div>
+
+            {/* Backed By Campus Network Footer */}
+            <div className="pt-2">
+              <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold block mb-3">
+                Backed by top campus clubs
+              </span>
+              <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">IIT Bombay</span>
+                <span className="text-zinc-400 dark:text-zinc-700">•</span>
+                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">BITS Pilani</span>
+                <span className="text-zinc-400 dark:text-zinc-700">•</span>
+                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">IIT Delhi</span>
+                <span className="text-zinc-400 dark:text-zinc-700">•</span>
+                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">NIT Trichy</span>
+                <span className="text-zinc-400 dark:text-zinc-700">•</span>
+                <span className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-default">IIIT Hyderabad</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Interactive 3D Glass Orb & Floating Feature Cards */}
+          <div className="lg:col-span-5 relative flex items-center justify-center">
+            {/* Ambient Radial Backlight Glow behind Orb */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-gradient-to-tr from-white/[0.07] via-zinc-400/[0.04] to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+            {/* Floating Card 1: Top-Left (Auto-deploy on build style) */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
+              transition={{
+                opacity: { duration: 0.6, delay: 0.2 },
+                y: { repeat: Infinity, duration: 5, ease: 'easeInOut' },
+              }}
+              className="absolute -top-4 -left-6 sm:top-2 sm:-left-8 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/30 transition-all cursor-pointer"
+              onClick={() => navigate('/explore?category=tech')}
+            >
+              <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                <Code2 className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">Live Project Cohorts</div>
+                <div className="text-[10px] text-zinc-400">Build real apps & fests</div>
+              </div>
+            </motion.div>
+
+            {/* Floating Card 2: Mid-Left (Manage dependencies style) */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0, y: [0, 8, 0] }}
+              transition={{
+                opacity: { duration: 0.6, delay: 0.35 },
+                y: { repeat: Infinity, duration: 6, ease: 'easeInOut', delay: 1 },
+              }}
+              className="absolute top-1/2 -left-8 sm:-left-12 -translate-y-1/2 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/30 transition-all cursor-pointer"
+              onClick={() => navigate('/teach')}
+            >
+              <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                <Users className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">Senior Mentors</div>
+                <div className="text-[10px] text-zinc-400">1-on-1 peer guidance</div>
+              </div>
+            </motion.div>
+
+            {/* Floating Card 3: Bottom-Left (Generate live preview links style) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: [0, -6, 0] }}
+              transition={{
+                opacity: { duration: 0.6, delay: 0.5 },
+                y: { repeat: Infinity, duration: 5.5, ease: 'easeInOut', delay: 2 },
+              }}
+              className="absolute -bottom-6 left-0 sm:bottom-0 sm:-left-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/30 transition-all cursor-pointer"
+              onClick={() => navigate('/explore')}
+            >
+              <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                <Trophy className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">Verified Credentials</div>
+                <div className="text-[10px] text-zinc-400">Portfolio ready badges</div>
+              </div>
+            </motion.div>
+
+            {/* 3D Interactive WebGL Orb */}
+            <Zephyr3DOrb />
+          </div>
+        </div>
       </div>
 
       {/* Video Modal */}
       <Modal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
-        title="Experience Campus Learn Skillcamp"
+        title="Experience Campus Learn"
       >
-        <div className="space-y-4">
-          <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-900 flex items-center justify-center">
-            <img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=80"
-              alt="Students collaborating"
-              className="w-full h-full object-cover opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 flex flex-col justify-end p-6 text-white">
-              <p className="font-heading font-extrabold text-xl">
-                The Student Peer Learning Revolution
-              </p>
-              <p className="text-xs text-slate-300 mt-1">
-                From hackathon victory circuits to university music fests.
-              </p>
-            </div>
-          </div>
-          <p className="text-xs text-slate-500 leading-relaxed">
-            Every course module is taught by high-achieving seniors from IITs, BITS, and premier design colleges.
-          </p>
+        <div className="aspect-video w-full rounded-xl overflow-hidden bg-zinc-900">
+          <iframe
+            className="w-full h-full"
+            src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1"
+            title="Campus Learn Experience"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
         </div>
       </Modal>
     </section>
   );
 }
+
+export default Hero;

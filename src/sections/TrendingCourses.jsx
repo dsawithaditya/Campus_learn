@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Flame, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { CourseCard } from '../components/CourseCard';
-import { Tabs } from '../components/Tabs';
 import { Skeleton } from '../components/Skeleton';
 import coursesData from '../data/courses.json';
 
 const filterTabs = [
-  { id: 'all', label: 'All Skill Camps' },
+  { id: 'all', label: 'All Cohorts' },
   { id: 'tech', label: 'Tech & Coding' },
   { id: 'art', label: 'Art & Design' },
   { id: 'sports', label: 'Sports & Fitness' },
@@ -24,7 +23,7 @@ export function TrendingCourses() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 400);
+    }, 350);
     return () => clearTimeout(timer);
   }, []);
 
@@ -44,62 +43,79 @@ export function TrendingCourses() {
     ?.slice(0, 8) || [];
 
   return (
-    <section className="py-20 relative">
+    <section className="py-24 sm:py-32 relative bg-black border-b border-white/10">
       <div className="container-custom">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
-              <Flame className="w-4 h-4 text-orange-500" strokeWidth={2} />
-              <span>Trending Bootcamps</span>
-            </div>
-            <h2 className="font-heading font-black text-3xl sm:text-4xl text-slate-900 dark:text-white leading-[1.15]">
-              Most Popular Peer Camps
+            <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
+              Peer-Led Bootcamps
+            </span>
+            <h2 className="font-heading font-bold text-3xl sm:text-5xl text-white tracking-tight">
+              Featured Campus Cohorts
             </h2>
           </div>
 
           <button
-            type="button"
             onClick={() => navigate('/explore')}
-            className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1 group self-start md:self-auto cursor-pointer"
+            className="btn-zephyr-secondary text-xs sm:text-sm self-start md:self-auto"
           >
-            <span>Browse all 100+ bootcamps</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <span>Browse All Courses</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-1.5 inline-block opacity-70" />
           </button>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="mb-8">
-          <Tabs
-            tabs={filterTabs}
-            activeTab={activeTab}
-            onChange={setActiveTab}
-            id="trending-filter-tabs"
-          />
+        {/* Minimalist Pill Filter Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-10">
+          {filterTabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap cursor-pointer ${
+                  isActive
+                    ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.2)] font-semibold scale-105'
+                    : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Course Cards Grid */}
+        {/* Course Grid */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((i) => (
-              <Skeleton key={i} variant="card" />
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} className="h-80 w-full rounded-2xl bg-zinc-900/60" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             <AnimatePresence mode="popLayout">
-              {filteredCourses.map((course, index) => (
-                <div
+              {filteredCourses.map((course) => (
+                <motion.div
                   key={course?.id}
-                  className={`animate-fade-up delay-${(index % 3) + 1}`}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <CourseCard course={course} />
-                </div>
+                </motion.div>
               ))}
             </AnimatePresence>
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
   );
 }
+
+export default TrendingCourses;
