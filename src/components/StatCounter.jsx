@@ -37,13 +37,13 @@ export function StatCounter({ end = 100, label, suffix = '', prefix = '', durati
 
   return (
     <div ref={ref} className="text-center">
-      <div className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 tracking-tight mb-1">
+      <div className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 tracking-tight mb-1">
         {prefix}
         {count.toLocaleString()}
         {suffix}
       </div>
       {label && (
-        <div className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+        <div className="text-xs sm:text-sm font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
           {label}
         </div>
       )}

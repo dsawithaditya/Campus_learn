@@ -9,18 +9,18 @@ export function Mentors() {
   const safeMentors = Array.isArray(mentorsData) ? mentorsData : [];
 
   return (
-    <section className="section-padding">
+    <section id="mentors" className="py-20 relative">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-400 mb-2">
-              <Sparkles className="w-4 h-4 text-orange-400" strokeWidth={2} />
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+              <Sparkles className="w-4 h-4 text-amber-500" strokeWidth={2} />
               <span>Campus Mentorship</span>
             </div>
-            <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[40px] text-zinc-100 leading-[1.15]">
+            <h2 className="font-heading font-black text-3xl sm:text-4xl text-slate-900 dark:text-white leading-[1.15]">
               Learn Directly from Seniors
             </h2>
-            <p className="text-sm text-zinc-400 mt-2">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
               Top club leads, hackathon winners, and collegiate fest champions ready to guide you.
             </p>
           </div>
@@ -28,7 +28,7 @@ export function Mentors() {
           <button
             type="button"
             onClick={() => navigate('/teach')}
-            className="text-sm font-semibold text-orange-400 hover:text-orange-300 hover:underline flex items-center gap-1.5 group self-start md:self-auto"
+            className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1.5 group self-start md:self-auto cursor-pointer"
           >
             <span>Become a Mentor</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

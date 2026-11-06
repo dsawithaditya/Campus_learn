@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  GraduationCap,
   ChevronDown,
   Menu,
   X,
@@ -10,6 +9,8 @@ import {
   Sparkles,
   LogOut,
   LayoutDashboard,
+  Users,
+  Info,
 } from 'lucide-react';
 import { useScrollProgress } from '../hooks/useScrollProgress';
 import { useAppStore } from '../store/useAppStore';
@@ -27,7 +28,7 @@ export function Navbar() {
   const logout = useAppStore((state) => state.logout);
   const navigate = useNavigate();
 
-  const isScrolled = scrollY > 40;
+  const isScrolled = scrollY > 30;
   const safeCategories = Array.isArray(categoriesData) ? categoriesData : [];
 
   const handleLogout = () => {
@@ -39,42 +40,28 @@ export function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 glass-navbar border-b border-white/10 ${
-          isScrolled ? 'py-2.5 shadow-xl' : 'py-4'
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 glass-navbar ${
+          isScrolled ? 'py-2.5 shadow-md' : 'py-3.5'
         }`}
       >
         <div className="container-custom flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo with 3D Glossy Gradient Sphere matching reference image */}
           <Link
             to="/"
-            className="flex items-center gap-2.5 group focus-visible:ring-2 focus-visible:ring-orange-500 rounded-lg"
+            className="flex items-center gap-2.5 group focus-visible:ring-2 focus-visible:ring-blue-500 rounded-full"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-md transition-transform group-hover:scale-105">
-              <GraduationCap className="w-5 h-5" strokeWidth={2.2} />
+            <div className="relative w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 via-pink-400 to-amber-300 p-0.5 shadow-md transition-transform group-hover:scale-105">
+              <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
+                <span className="font-heading font-black text-xs tracking-tighter">CL</span>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <span className="font-heading font-extrabold text-lg sm:text-xl tracking-tight text-zinc-100 flex items-center gap-1">
-                Campus<span className="text-orange-400">Learn</span>
-              </span>
-            </div>
+            <span className="font-heading font-black text-xl tracking-tight text-slate-900 dark:text-white flex items-center">
+              Campus<span className="text-blue-600 dark:text-blue-400">Learn</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6">
-            <NavLink
-              to="/explore"
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors flex items-center gap-1.5 ${
-                  isActive
-                    ? 'text-orange-400 font-bold'
-                    : 'text-zinc-400 hover:text-zinc-100'
-                }`
-              }
-            >
-              <Compass className="w-4 h-4" strokeWidth={2} />
-              <span>Explore</span>
-            </NavLink>
-
+          <nav className="hidden md:flex items-center gap-7">
             {/* Categories Dropdown */}
             <div
               className="relative"
@@ -84,15 +71,15 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
-                className="text-sm font-semibold text-zinc-400 hover:text-zinc-100 transition-colors flex items-center gap-1 py-1"
+                className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 py-1"
                 aria-expanded={isCategoriesOpen}
               >
                 <span>Categories</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform ${
-                    isCategoriesOpen ? 'rotate-180 text-orange-400' : ''
+                    isCategoriesOpen ? 'rotate-180 text-blue-600 dark:text-blue-400' : ''
                   }`}
-                  strokeWidth={2}
+                  strokeWidth={2.2}
                 />
               </button>
 
@@ -103,7 +90,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.98 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full -left-20 w-72 glass-card shadow-2xl p-2 z-50 mt-1"
+                    className="absolute top-full -left-12 w-72 glass-card shadow-2xl p-2 z-50 mt-1"
                   >
                     <div className="grid grid-cols-1 gap-1">
                       {safeCategories?.map((cat) => (
@@ -111,19 +98,19 @@ export function Navbar() {
                           key={cat?.id}
                           to={`/explore?category=${cat?.id}`}
                           onClick={() => setIsCategoriesOpen(false)}
-                          className="flex items-center justify-between px-3 py-2 rounded-lg text-sm hover:bg-white/10 transition-colors group"
+                          className="flex items-center justify-between px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
                         >
                           <div className="flex items-center gap-2.5">
                             <span
                               className="w-2.5 h-2.5 rounded-full"
-                              style={{ backgroundColor: cat?.color || '#f97316' }}
+                              style={{ backgroundColor: cat?.color || '#3b82f6' }}
                             />
-                            <span className="font-medium text-zinc-300 group-hover:text-orange-400">
+                            <span className="font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
                               {cat?.name}
                             </span>
                           </div>
-                          <span className="text-xs text-zinc-500 font-body">
-                            {cat?.courseCount}
+                          <span className="text-xs text-slate-400 font-medium">
+                            {cat?.courseCount} camps
                           </span>
                         </Link>
                       ))}
@@ -134,22 +121,49 @@ export function Navbar() {
             </div>
 
             <NavLink
+              to="/explore"
+              className={({ isActive }) =>
+                `text-sm font-semibold transition-colors flex items-center gap-1 ${
+                  isActive
+                    ? 'text-blue-600 dark:text-blue-400 font-bold'
+                    : 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400'
+                }`
+              }
+            >
+              <span>Explore</span>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400" strokeWidth={2} />
+            </NavLink>
+
+            <NavLink
               to="/teach"
               className={({ isActive }) =>
                 `text-sm font-semibold transition-colors flex items-center gap-1.5 ${
                   isActive
-                    ? 'text-orange-400 font-bold'
-                    : 'text-zinc-400 hover:text-zinc-100'
+                    ? 'text-blue-600 dark:text-blue-400 font-bold'
+                    : 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400'
                 }`
               }
             >
-              <Sparkles className="w-4 h-4 text-orange-400" strokeWidth={2} />
-              <span>Teach</span>
+              <span>Community</span>
             </NavLink>
+
+            <a
+              href="#mentors"
+              className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              Mentors
+            </a>
+
+            <a
+              href="#about"
+              className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              About Us
+            </a>
           </nav>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Right Actions: Start Creating CTA + Theme Toggle */}
+          <div className="flex items-center gap-3">
             <ThemeToggle />
 
             {user ? (
@@ -158,15 +172,15 @@ export function Navbar() {
                   type="button"
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   aria-label="User profile menu"
-                  className="flex items-center gap-2 p-1 pl-2.5 rounded-full border border-white/10 hover:border-orange-500/40 transition-colors bg-zinc-900/60"
+                  className="flex items-center gap-2 p-1 pl-2.5 rounded-full border border-slate-200 dark:border-slate-800 hover:border-blue-500 transition-colors bg-white dark:bg-slate-900 shadow-sm"
                 >
-                  <span className="text-xs font-semibold text-zinc-200 hidden sm:inline-block max-w-[90px] truncate">
+                  <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 hidden sm:inline-block max-w-[90px] truncate">
                     {user?.name?.split(' ')?.[0]}
                   </span>
                   <img
                     src={user?.avatar}
                     alt={user?.name || 'User'}
-                    className="w-7 h-7 rounded-full object-cover border border-orange-500/40"
+                    className="w-7 h-7 rounded-full object-cover border border-blue-500/50"
                   />
                 </button>
 
@@ -179,11 +193,11 @@ export function Navbar() {
                       transition={{ duration: 0.15 }}
                       className="absolute right-0 top-full mt-2 w-56 glass-card shadow-2xl p-2 z-50"
                     >
-                      <div className="px-3 py-2 border-b border-white/10">
-                        <p className="text-xs font-semibold text-zinc-100 truncate">
+                      <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
+                        <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                           {user?.name}
                         </p>
-                        <p className="text-[11px] text-zinc-400 truncate">
+                        <p className="text-[11px] text-slate-500 truncate">
                           {user?.college}
                         </p>
                       </div>
@@ -191,15 +205,15 @@ export function Navbar() {
                         <Link
                           to="/dashboard"
                           onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-zinc-200 hover:bg-white/10 rounded-lg"
+                          className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
                         >
-                          <LayoutDashboard className="w-4 h-4 text-orange-400" strokeWidth={2} />
+                          <LayoutDashboard className="w-4 h-4 text-blue-600" strokeWidth={2} />
                           <span>Student Dashboard</span>
                         </Link>
                         <button
                           type="button"
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-rose-400 hover:bg-rose-950/40 rounded-lg"
+                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg"
                         >
                           <LogOut className="w-4 h-4" strokeWidth={2} />
                           <span>Log out</span>
@@ -210,16 +224,17 @@ export function Navbar() {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="hidden sm:flex items-center gap-2">
+              <div className="hidden sm:flex items-center gap-2.5">
                 <Link to="/login">
-                  <Button variant="ghost" size="sm">
-                    Log in
-                  </Button>
+                  <button className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-blue-600 px-3 py-2 transition-colors">
+                    Log In
+                  </button>
                 </Link>
-                <Link to="/signup">
-                  <Button variant="primary" size="sm">
-                    Sign up
-                  </Button>
+                <Link to="/teach">
+                  <button className="btn-interactive flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full text-white shadow-md">
+                    <span>Start Creating</span>
+                    <Sparkles className="w-3.5 h-3.5" />
+                  </button>
                 </Link>
               </div>
             )}
@@ -229,7 +244,7 @@ export function Navbar() {
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle navigation menu"
-              className="md:hidden p-2 rounded-lg text-zinc-200 hover:bg-white/5 active:scale-95"
+              className="md:hidden p-2 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" strokeWidth={2} />
@@ -250,82 +265,64 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             />
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 right-0 bottom-0 w-3/4 max-w-sm bg-zinc-950 border-l border-white/10 p-6 flex flex-col justify-between shadow-2xl z-10"
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="absolute right-0 top-0 bottom-0 w-80 max-w-[85%] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 p-6 shadow-2xl flex flex-col justify-between"
             >
-              <div>
-                <div className="flex items-center justify-between pb-6 border-b border-white/10 mb-6">
-                  <div className="flex items-center gap-2">
-                    <GraduationCap className="w-6 h-6 text-orange-400" strokeWidth={2} />
-                    <span className="font-heading font-bold text-lg text-zinc-100">
-                      Campus Learn
-                    </span>
-                  </div>
+              <div className="space-y-6">
+                <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+                  <span className="font-heading font-black text-lg text-slate-900 dark:text-white">
+                    Campus<span className="text-blue-600">Learn</span>
+                  </span>
                   <button
                     type="button"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    aria-label="Close menu"
-                    className="p-1 rounded text-zinc-400 hover:text-white"
+                    className="p-1 rounded-md text-slate-500"
                   >
-                    <X className="w-5 h-5" strokeWidth={2} />
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                <div className="flex flex-col gap-3 font-semibold text-base">
-                  <Link
-                    to="/"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-3 py-2.5 rounded-lg hover:bg-white/5 text-zinc-200"
-                  >
-                    Home
-                  </Link>
+                <div className="space-y-3">
                   <Link
                     to="/explore"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-3 py-2.5 rounded-lg hover:bg-white/5 text-zinc-200"
+                    className="block px-3 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600"
                   >
-                    Explore Courses
+                    Explore Camps
                   </Link>
                   <Link
                     to="/teach"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-3 py-2.5 rounded-lg hover:bg-white/5 text-zinc-200 flex items-center justify-between"
+                    className="block px-3 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600"
                   >
-                    <span>Become a Mentor</span>
-                    <span className="text-xs bg-orange-500/20 text-orange-400 border border-orange-500/30 px-2 py-0.5 rounded-full font-bold">
-                      Teach
-                    </span>
+                    Start Creating / Teach
                   </Link>
-
-                  {user && (
-                    <Link
-                      to="/dashboard"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="px-3 py-2.5 rounded-lg hover:bg-white/5 text-zinc-200"
-                    >
-                      Dashboard
-                    </Link>
-                  )}
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-3 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600"
+                  >
+                    Student Dashboard
+                  </Link>
                 </div>
 
-                {/* Mobile categories list */}
-                <div className="mt-6 pt-6 border-t border-white/10">
-                  <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+                <div>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
                     Top Categories
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {safeCategories?.slice(0, 5)?.map((cat) => (
+                    {safeCategories?.slice(0, 6).map((cat) => (
                       <Link
                         key={cat?.id}
                         to={`/explore?category=${cat?.id}`}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-xs px-2.5 py-1 rounded-full bg-zinc-900 border border-white/5 text-zinc-300"
+                        className="text-xs px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium"
                       >
                         {cat?.name}
                       </Link>
@@ -334,8 +331,7 @@ export function Navbar() {
                 </div>
               </div>
 
-              {/* Mobile Auth actions */}
-              <div className="pt-6 border-t border-white/10">
+              <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
                 {user ? (
                   <Button variant="ghost" fullWidth onClick={handleLogout}>
                     Log out ({user?.name?.split(' ')?.[0]})
@@ -349,7 +345,7 @@ export function Navbar() {
                     </Link>
                     <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button variant="primary" fullWidth>
-                        Sign up with college email
+                        Start Creating ✦
                       </Button>
                     </Link>
                   </div>

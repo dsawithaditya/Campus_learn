@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
-import { GlobalProgressBar, BackToTopButton, SplashScreen } from './components/GlobalExtras';
+import { BackToTopButton, SplashScreen } from './components/GlobalExtras';
 import { AppRoutes } from './routes';
 import { useAppStore } from './store/useAppStore';
 
@@ -14,8 +14,10 @@ export function App() {
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
     }
   }, [theme]);
 
@@ -24,7 +26,7 @@ export function App() {
       {/* Accessibility: Skip to main content */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-primary text-white rounded-md shadow-lift"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-blue-600 text-white rounded-md shadow-lift"
       >
         Skip to main content
       </a>

@@ -41,15 +41,15 @@ export function CourseCard({ course, className = '' }) {
     <div
       onClick={handleCardClick}
       onMouseMove={handleMouseMove}
-      className={`glass-card group relative overflow-hidden cursor-pointer flex flex-col justify-between transition-all duration-300 ${className}`}
+      className={`glass-card p-4 group relative overflow-hidden cursor-pointer flex flex-col justify-between transition-all duration-300 ${className}`}
       style={{
         backgroundImage:
-          'radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(249,115,22,0.12), transparent 40%)',
+          'radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(59,130,246,0.1), transparent 40%)',
       }}
     >
       <div>
         {/* Thumbnail 16:10 with zoom */}
-        <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-zinc-800/80 mb-4">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-slate-100 dark:bg-zinc-800/80 mb-3.5">
           <motion.img
             src={course?.thumbnail}
             alt={course?.title || 'Course thumbnail'}
@@ -62,10 +62,10 @@ export function CourseCard({ course, className = '' }) {
             {category && (
               <span
                 style={{
-                  backgroundColor: `${category?.color || '#f97316'}EE`,
+                  backgroundColor: `${category?.color || '#3b82f6'}`,
                   color: '#FFFFFF',
                 }}
-                className="text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm"
+                className="text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm"
               >
                 {category?.name}
               </span>
@@ -77,11 +77,11 @@ export function CourseCard({ course, className = '' }) {
               onClick={handleHeartClick}
               whileTap={{ scale: 1.3 }}
               aria-label={isSaved ? 'Remove from saved' : 'Save course'}
-              className="pointer-events-auto w-8 h-8 rounded-full bg-zinc-900/80 backdrop-blur-md flex items-center justify-center shadow-md text-zinc-300 hover:text-orange-500 transition-colors border border-white/10"
+              className="pointer-events-auto w-8 h-8 rounded-full bg-white/90 dark:bg-zinc-900/80 backdrop-blur-md flex items-center justify-center shadow-md text-slate-400 hover:text-rose-500 transition-colors border border-slate-200/60 dark:border-white/10"
             >
               <Heart
                 className={`w-4 h-4 transition-colors ${
-                  isSaved ? 'fill-orange-500 text-orange-500' : 'text-zinc-300'
+                  isSaved ? 'fill-rose-500 text-rose-500' : 'text-slate-400'
                 }`}
                 strokeWidth={isSaved ? 0 : 2}
               />
@@ -89,11 +89,11 @@ export function CourseCard({ course, className = '' }) {
           </div>
 
           {/* Level Tag & Free Pill at bottom */}
-          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-medium text-white pointer-events-none">
-            <span className="bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded-md border border-white/10">
+          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-semibold text-white pointer-events-none">
+            <span className="bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-white/10">
               {course?.level}
             </span>
-            <span className="bg-gradient-to-r from-orange-500 to-amber-500 font-bold px-2.5 py-0.5 rounded-md shadow-sm text-white">
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 font-bold px-2.5 py-0.5 rounded-full shadow-sm text-white">
               {course?.price || 'Free'}
             </span>
           </div>
@@ -102,23 +102,23 @@ export function CourseCard({ course, className = '' }) {
         {/* Content */}
         <div className="space-y-2">
           {/* Title (max 2 lines) */}
-          <h3 className="font-heading font-bold text-[17px] text-zinc-100 line-clamp-2 leading-snug group-hover:text-orange-400 transition-colors">
+          <h3 className="font-heading font-bold text-base text-slate-900 dark:text-zinc-100 line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
             {course?.title}
           </h3>
 
-          <p className="text-zinc-400 text-xs sm:text-[13px] line-clamp-2 leading-relaxed">
+          <p className="text-slate-600 dark:text-zinc-400 text-xs sm:text-[13px] line-clamp-2 leading-relaxed">
             {course?.shortDescription}
           </p>
 
           {/* Meta details */}
-          <div className="flex items-center gap-3 text-xs text-zinc-500 pt-1 pb-2">
-            <span className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-orange-400" strokeWidth={2} />
+          <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-zinc-500 pt-1 pb-1">
+            <span className="flex items-center gap-1 font-medium">
+              <Clock className="w-3.5 h-3.5 text-blue-500" strokeWidth={2} />
               {course?.durationHours} hrs
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1">
-              <BookOpen className="w-3.5 h-3.5 text-orange-400" strokeWidth={2} />
+            <span className="flex items-center gap-1 font-medium">
+              <BookOpen className="w-3.5 h-3.5 text-blue-500" strokeWidth={2} />
               {course?.lessonsCount} lessons
             </span>
           </div>
@@ -126,15 +126,15 @@ export function CourseCard({ course, className = '' }) {
       </div>
 
       {/* Footer: Mentor & Rating */}
-      <div className="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
+      <div className="pt-3 mt-2 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
         {mentor && (
           <div className="flex items-center gap-2">
             <img
               src={mentor?.avatar}
               alt={mentor?.name || 'Mentor'}
-              className="w-6 h-6 rounded-full object-cover border border-white/20"
+              className="w-6 h-6 rounded-full object-cover border border-slate-200 dark:border-white/20"
             />
-            <span className="text-xs font-medium text-zinc-300 truncate max-w-[110px]">
+            <span className="text-xs font-semibold text-slate-700 dark:text-zinc-300 truncate max-w-[110px]">
               {mentor?.name}
             </span>
           </div>

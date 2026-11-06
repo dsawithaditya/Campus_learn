@@ -24,14 +24,11 @@ const setStoredValue = (key, value) => {
   }
 };
 
-// Initial theme detection
+// Initial theme detection: Default to light mode matching the Skillcamp design
 const getInitialTheme = () => {
   const saved = getStoredValue('campus_theme', null);
   if (saved === 'dark' || saved === 'light') return saved;
-  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'light';
-  }
-  return 'dark'; // Default to modern obsidian & ember dark mode
+  return 'light'; // Default to clean, modern, vibrant light mode
 };
 
 export const useAppStore = create((set, get) => ({

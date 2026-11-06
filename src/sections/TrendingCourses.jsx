@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Flame } from 'lucide-react';
+import { ArrowRight, Flame, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { CourseCard } from '../components/CourseCard';
 import { Tabs } from '../components/Tabs';
@@ -8,11 +8,12 @@ import { Skeleton } from '../components/Skeleton';
 import coursesData from '../data/courses.json';
 
 const filterTabs = [
-  { id: 'all', label: 'All Fields' },
+  { id: 'all', label: 'All Skill Camps' },
   { id: 'tech', label: 'Tech & Coding' },
-  { id: 'art', label: 'Arts & Design' },
+  { id: 'art', label: 'Art & Design' },
   { id: 'sports', label: 'Sports & Fitness' },
-  { id: 'music', label: 'Music & Singing' },
+  { id: 'music', label: 'Music & Vocals' },
+  { id: 'gaming', label: 'Gaming & Esports' },
 ];
 
 export function TrendingCourses() {
@@ -23,7 +24,7 @@ export function TrendingCourses() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 600);
+    }, 400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -37,74 +38,66 @@ export function TrendingCourses() {
       if (activeTab === 'sports') return course?.categoryId === 'sports';
       if (activeTab === 'music')
         return course?.categoryId === 'music' || course?.categoryId === 'singing';
+      if (activeTab === 'gaming') return course?.categoryId === 'gaming';
       return true;
     })
     ?.slice(0, 8) || [];
 
   return (
-    <section className="section-padding">
+    <section className="py-20 relative">
       <div className="container-custom">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-400 mb-2">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
               <Flame className="w-4 h-4 text-orange-500" strokeWidth={2} />
-              <span>Trending on Campus</span>
+              <span>Trending Bootcamps</span>
             </div>
-            <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[40px] text-zinc-100 leading-[1.15]">
-              Most Popular Peer Courses
+            <h2 className="font-heading font-black text-3xl sm:text-4xl text-slate-900 dark:text-white leading-[1.15]">
+              Most Popular Peer Camps
             </h2>
           </div>
 
           <button
             type="button"
             onClick={() => navigate('/explore')}
-            className="text-sm font-semibold text-orange-400 hover:text-orange-300 hover:underline flex items-center gap-1.5 group self-start md:self-auto"
+            className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1 group self-start md:self-auto cursor-pointer"
           >
-            <span>Explore all {safeCourses.length} courses</span>
+            <span>Browse all 100+ bootcamps</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
 
-        {/* Tab Filters */}
+        {/* Filter Tabs */}
         <div className="mb-8">
           <Tabs
             tabs={filterTabs}
             activeTab={activeTab}
-            onChange={(tabId) => setActiveTab(tabId)}
-            id="trending"
+            onChange={setActiveTab}
+            id="trending-filter-tabs"
           />
         </div>
 
-        {/* Courses Grid: 4-col desktop, 2-col tablet */}
+        {/* Course Cards Grid */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((n) => (
-              <Skeleton key={n} variant="card" />
+            {[1, 2, 3, 4].map((i) => (
+              <Skeleton key={i} variant="card" />
             ))}
           </div>
         ) : (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-            >
-              {filteredCourses?.map((course, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <AnimatePresence mode="popLayout">
+              {filteredCourses.map((course, index) => (
                 <div
-                  key={course?.id || idx}
-                  className={`animate-fade-up ${
-                    idx === 0 ? 'delay-1' : idx === 1 ? 'delay-2' : idx === 2 ? 'delay-3' : ''
-                  }`}
+                  key={course?.id}
+                  className={`animate-fade-up delay-${(index % 3) + 1}`}
                 >
                   <CourseCard course={course} />
                 </div>
               ))}
-            </motion.div>
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
         )}
       </div>
     </section>
