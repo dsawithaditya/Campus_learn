@@ -4,7 +4,6 @@ import { ArrowRight, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SkillCamp3DScene } from '../components/SkillCamp3DScene';
 import { Modal } from '../components/Modal';
-import categoriesData from '../data/categories.json';
 
 // Direct course slug mapping for all 8 3D icons
 const CATEGORY_COURSE_SLUGS = {
@@ -22,8 +21,6 @@ export function Hero() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const safeCategories = Array.isArray(categoriesData) ? categoriesData : [];
-
   const handleSelectCategory = (catId) => {
     const slug = CATEGORY_COURSE_SLUGS[catId];
     if (slug) {
@@ -34,7 +31,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-center items-center pt-20 pb-16 overflow-hidden select-none">
+    <section className="relative min-h-[98vh] flex flex-col justify-center items-center pt-24 pb-24 select-none">
       {/* Soft Ambient Pastel Background Auroras */}
       <div className="absolute top-10 left-1/4 w-[600px] h-[400px] bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-blue-200/35 blur-3xl rounded-full pointer-events-none -z-20" />
       <div className="absolute bottom-10 right-1/4 w-[550px] h-[350px] bg-gradient-to-l from-amber-200/40 via-rose-200/30 to-indigo-200/30 blur-3xl rounded-full pointer-events-none -z-20" />
@@ -96,28 +93,6 @@ export function Hero() {
             <Play className="w-4 h-4 text-blue-600 fill-blue-600" />
             <span>Watch Experience</span>
           </button>
-        </motion.div>
-
-        {/* Quick Category Chips bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-2 pointer-events-auto"
-        >
-          {safeCategories.map((cat) => (
-            <button
-              key={cat?.id}
-              onClick={() => handleSelectCategory(cat?.id)}
-              className="text-xs px-3.5 py-1.5 rounded-full font-semibold transition-all flex items-center gap-1.5 bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
-            >
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: cat?.color || '#3b82f6' }}
-              />
-              <span>{cat?.name}</span>
-            </button>
-          ))}
         </motion.div>
       </div>
 

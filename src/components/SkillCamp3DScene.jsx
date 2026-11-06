@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import confetti from 'canvas-confetti';
 
-// 8 Skill Categories matching the exact prompt and reference design
+// 8 Skill Categories safely positioned so they are never clipped or cut off
 const CATEGORIES = [
   {
     id: 'tech',
@@ -10,8 +9,8 @@ const CATEGORIES = [
     desc: 'Web dev, DSA, microchips & AI',
     color: '#38BDF8',
     glowColor: 0x38bdf8,
-    pos: [-4.6, 2.3, 0.2], // Top Left
-    scale: 1.05,
+    pos: [-4.2, 2.1, 0.2], // Top Left
+    scale: 0.94,
   },
   {
     id: 'singing',
@@ -19,8 +18,8 @@ const CATEGORIES = [
     desc: 'Vocal ranges, pitch & stage mic',
     color: '#F472B6',
     glowColor: 0xf472b6,
-    pos: [0.1, 3.3, 0.3], // Top Center
-    scale: 1.05,
+    pos: [0.0, 2.35, 0.3], // Top Center
+    scale: 0.94,
   },
   {
     id: 'music',
@@ -28,8 +27,8 @@ const CATEGORIES = [
     desc: 'FL Studio, beats, mixing & studio gear',
     color: '#A78BFA',
     glowColor: 0xa78bfa,
-    pos: [4.8, 2.6, 0.2], // Top Right
-    scale: 1.05,
+    pos: [4.2, 2.1, 0.2], // Top Right
+    scale: 0.94,
   },
   {
     id: 'dance',
@@ -37,8 +36,8 @@ const CATEGORIES = [
     desc: 'Ballet, hip-hop, pirouettes & rhythms',
     color: '#C084FC',
     glowColor: 0xc084fc,
-    pos: [-5.2, -0.4, 0.3], // Center Left
-    scale: 1.05,
+    pos: [-4.6, 0.15, 0.3], // Center Left
+    scale: 0.94,
   },
   {
     id: 'sports',
@@ -46,8 +45,8 @@ const CATEGORIES = [
     desc: 'Dumbbells, track sprints & basketball',
     color: '#34D399',
     glowColor: 0x34d399,
-    pos: [5.1, 0.2, 0.2], // Center Right
-    scale: 1.05,
+    pos: [4.6, 0.2, 0.2], // Center Right
+    scale: 0.94,
   },
   {
     id: 'art',
@@ -55,8 +54,8 @@ const CATEGORIES = [
     desc: 'Painter palette, UI/UX & illustration',
     color: '#FB923C',
     glowColor: 0xfb923c,
-    pos: [-4.5, -2.8, 0.1], // Bottom Left
-    scale: 1.05,
+    pos: [-3.8, -1.75, 0.2], // Bottom Left (Safe from bottom edge)
+    scale: 0.92,
   },
   {
     id: 'photography',
@@ -64,8 +63,8 @@ const CATEGORIES = [
     desc: 'Cinematic reels, lenses & camera gear',
     color: '#2DD4BF',
     glowColor: 0x2dd4bf,
-    pos: [-0.1, -3.2, 0.2], // Bottom Center
-    scale: 1.05,
+    pos: [0.0, -1.85, 0.2], // Bottom Center (Safe from bottom edge)
+    scale: 0.92,
   },
   {
     id: 'gaming',
@@ -73,8 +72,8 @@ const CATEGORIES = [
     desc: 'Gamepads, RGB rigs & trophy cups',
     color: '#F87171',
     glowColor: 0xf87171,
-    pos: [4.6, -2.5, 0.3], // Bottom Right
-    scale: 1.05,
+    pos: [3.8, -1.7, 0.3], // Bottom Right (Safe from bottom edge)
+    scale: 0.92,
   },
 ];
 
@@ -961,18 +960,6 @@ export function SkillCamp3DScene({ onSelectCategory }) {
           item.bounceSpring = 1.0;
           item.spinAnim = Math.PI * 2;
 
-          // Joyful pastel confetti burst at click position
-          const normX = e.clientX / window.innerWidth;
-          const normY = e.clientY / window.innerHeight;
-
-          confetti({
-            particleCount: 50,
-            spread: 75,
-            origin: { x: normX, y: normY },
-            colors: ['#38BDF8', '#F472B6', '#A78BFA', '#C084FC', '#34D399', '#FB923C', '#FCD34D'],
-            disableForReducedMotion: true,
-          });
-
           if (onSelectCategory) {
             onSelectCategory(catId);
           }
@@ -1003,8 +990,8 @@ export function SkillCamp3DScene({ onSelectCategory }) {
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, mouse.y * 0.45, 0.05);
       camera.lookAt(0, 0, 0);
 
-      // When scrolling down, ALL 3D icons should smoothly move down in sync with scroll
-      const scrollDownOffset = scrollY * 0.008;
+      // Downward parallax on scroll, safely bounded so models never get cut off at bottom
+      const scrollDownOffset = Math.min(scrollY * 0.002, 0.45);
 
       // Animate each of the 8 3D models
       categoryGroups.forEach((item) => {
@@ -1014,11 +1001,11 @@ export function SkillCamp3DScene({ onSelectCategory }) {
         const floatY = Math.sin(elapsedTime * 1.6 + item.floatPhase) * 0.14;
         const floatRot = Math.cos(elapsedTime * 1.3 + item.floatPhase) * 0.07;
 
-        // All 3D icons move DOWN as you scroll down
+        // All 3D icons move DOWN as you scroll down, securely within view
         item.group.position.y = item.basePos.y + floatY - scrollDownOffset;
 
         // Spread slightly outwards for depth
-        const scrollSpreadX = Math.sign(item.basePos.x) * (scrollY * 0.0018);
+        const scrollSpreadX = Math.sign(item.basePos.x) * Math.min(scrollY * 0.001, 0.25);
         item.group.position.x = item.basePos.x + scrollSpreadX;
 
         // Spring Bounce & Spin decay
