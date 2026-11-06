@@ -10,8 +10,8 @@ const CATEGORIES = [
     desc: 'Web dev, DSA, microchips & AI',
     color: '#38BDF8',
     glowColor: 0x38bdf8,
-    pos: [-4.6, 2.2, 0], // Top Left
-    scale: 0.95,
+    pos: [-4.6, 2.3, 0.2], // Top Left
+    scale: 1.05,
   },
   {
     id: 'singing',
@@ -19,8 +19,8 @@ const CATEGORIES = [
     desc: 'Vocal ranges, pitch & stage mic',
     color: '#F472B6',
     glowColor: 0xf472b6,
-    pos: [0.2, 3.2, 0.2], // Top Center
-    scale: 0.95,
+    pos: [0.1, 3.3, 0.3], // Top Center
+    scale: 1.05,
   },
   {
     id: 'music',
@@ -28,8 +28,8 @@ const CATEGORIES = [
     desc: 'FL Studio, beats, mixing & studio gear',
     color: '#A78BFA',
     glowColor: 0xa78bfa,
-    pos: [4.8, 2.6, 0.1], // Top Right
-    scale: 0.95,
+    pos: [4.8, 2.6, 0.2], // Top Right
+    scale: 1.05,
   },
   {
     id: 'dance',
@@ -37,8 +37,8 @@ const CATEGORIES = [
     desc: 'Ballet, hip-hop, pirouettes & rhythms',
     color: '#C084FC',
     glowColor: 0xc084fc,
-    pos: [-5.2, -0.4, 0.2], // Center Left
-    scale: 0.95,
+    pos: [-5.2, -0.4, 0.3], // Center Left
+    scale: 1.05,
   },
   {
     id: 'sports',
@@ -46,8 +46,8 @@ const CATEGORIES = [
     desc: 'Dumbbells, track sprints & basketball',
     color: '#34D399',
     glowColor: 0x34d399,
-    pos: [5.1, 0.2, 0.1], // Center Right
-    scale: 0.95,
+    pos: [5.1, 0.2, 0.2], // Center Right
+    scale: 1.05,
   },
   {
     id: 'art',
@@ -55,8 +55,8 @@ const CATEGORIES = [
     desc: 'Painter palette, UI/UX & illustration',
     color: '#FB923C',
     glowColor: 0xfb923c,
-    pos: [-4.5, -2.8, 0], // Bottom Left
-    scale: 0.95,
+    pos: [-4.5, -2.8, 0.1], // Bottom Left
+    scale: 1.05,
   },
   {
     id: 'photography',
@@ -64,8 +64,8 @@ const CATEGORIES = [
     desc: 'Cinematic reels, lenses & camera gear',
     color: '#2DD4BF',
     glowColor: 0x2dd4bf,
-    pos: [-0.2, -3.2, 0.1], // Bottom Center
-    scale: 0.95,
+    pos: [-0.1, -3.2, 0.2], // Bottom Center
+    scale: 1.05,
   },
   {
     id: 'gaming',
@@ -73,10 +73,41 @@ const CATEGORIES = [
     desc: 'Gamepads, RGB rigs & trophy cups',
     color: '#F87171',
     glowColor: 0xf87171,
-    pos: [4.5, -2.6, 0.2], // Bottom Right
-    scale: 0.95,
+    pos: [4.6, -2.5, 0.3], // Bottom Right
+    scale: 1.05,
   },
 ];
+
+// Helper: True 3D Rounded Box with fully curved fillet edges on all axes
+function createRoundedBoxGeometry(w, h, d, r = 0.1, bevelSegments = 5) {
+  const shape = new THREE.Shape();
+  const radius = Math.min(r, w / 2 - 0.01, h / 2 - 0.01, d / 2 - 0.01);
+  const x = -w / 2;
+  const y = -h / 2;
+
+  shape.moveTo(x + radius, y);
+  shape.lineTo(x + w - radius, y);
+  shape.quadraticCurveTo(x + w, y, x + w, y + radius);
+  shape.lineTo(x + w, y + h - radius);
+  shape.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+  shape.lineTo(x + radius, y + h);
+  shape.quadraticCurveTo(x, y + h, x, y + h - radius);
+  shape.lineTo(x, y + radius);
+  shape.quadraticCurveTo(x, y, x + radius, y);
+
+  const extrudeSettings = {
+    depth: Math.max(0.01, d - radius * 2),
+    bevelEnabled: true,
+    bevelSegments: bevelSegments,
+    steps: 1,
+    bevelSize: radius,
+    bevelThickness: radius,
+  };
+
+  const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+  geo.center();
+  return geo;
+}
 
 export function SkillCamp3DScene({ onSelectCategory }) {
   const containerRef = useRef(null);
@@ -92,8 +123,8 @@ export function SkillCamp3DScene({ onSelectCategory }) {
 
     const width = container.clientWidth;
     const height = container.clientHeight;
-    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    camera.position.set(0, 0, 14.5);
+    const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
+    camera.position.set(0, 0, 15.2);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -103,545 +134,689 @@ export function SkillCamp3DScene({ onSelectCategory }) {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
 
-    // --- 2. Studio Lighting for Clay / Toy 3D Finish ---
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    // --- 2. Advanced Studio Lighting for Claymorphic 3D Toys ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfff8ee, 2.2);
-    keyLight.position.set(8, 12, 10);
+    // Warm Sun Key Light
+    const keyLight = new THREE.DirectionalLight(0xfff7ed, 2.6);
+    keyLight.position.set(9, 14, 11);
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xe0e7ff, 1.2);
-    fillLight.position.set(-10, -6, 8);
+    // Soft Lavender Fill Light
+    const fillLight = new THREE.DirectionalLight(0xc7d2fe, 1.8);
+    fillLight.position.set(-11, -5, 9);
     scene.add(fillLight);
 
-    const backRimLight = new THREE.DirectionalLight(0xffd1dc, 1.4);
-    backRimLight.position.set(0, 10, -8);
+    // Vibrant Pink/Magenta Rim Light from behind
+    const backRimLight = new THREE.DirectionalLight(0xf472b6, 2.0);
+    backRimLight.position.set(2, 9, -9);
     scene.add(backRimLight);
 
-    // --- Materials Helpers ---
-    const createClayMaterial = (color, roughness = 0.35, metalness = 0.08) => {
+    // Warm Peach Ground Bounce
+    const bounceLight = new THREE.DirectionalLight(0xfef3c7, 1.2);
+    bounceLight.position.set(0, -10, 6);
+    scene.add(bounceLight);
+
+    // --- Materials Helpers (High-Gloss Clay / Toy Finish) ---
+    const createToyClayMaterial = (color, roughness = 0.24, clearcoat = 0.6) => {
       return new THREE.MeshPhysicalMaterial({
         color: new THREE.Color(color),
         roughness,
-        metalness,
-        clearcoat: 0.35,
-        clearcoatRoughness: 0.2,
+        metalness: 0.04,
+        clearcoat,
+        clearcoatRoughness: 0.12,
+        sheen: 0.5,
+        sheenRoughness: 0.25,
+        sheenColor: new THREE.Color(0xffffff),
       });
     };
 
-    const goldMat = new THREE.MeshStandardMaterial({
-      color: 0xffcb45,
-      metalness: 0.75,
-      roughness: 0.25,
+    const goldMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0xfbbf24),
+      metalness: 0.85,
+      roughness: 0.2,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.1,
     });
 
-    const chromeMat = new THREE.MeshStandardMaterial({
-      color: 0xe2e8f0,
-      metalness: 0.9,
-      roughness: 0.15,
+    const chromeMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0xf1f5f9),
+      metalness: 0.95,
+      roughness: 0.12,
+      clearcoat: 0.9,
     });
 
-    // --- 3. Build Procedural 3D Models ---
+    // Helper: Soft circular contact shadow beneath models
+    const createContactShadow = (radius = 0.9, opacity = 0.18) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128;
+      canvas.height = 128;
+      const ctx = canvas.getContext('2d');
+      const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+      grad.addColorStop(0, `rgba(15, 23, 42, ${opacity})`);
+      grad.addColorStop(0.5, `rgba(15, 23, 42, ${opacity * 0.4})`);
+      grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 128, 128);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      const geo = new THREE.PlaneGeometry(radius * 2, radius * 2);
+      const mat = new THREE.MeshBasicMaterial({
+        map: texture,
+        transparent: true,
+        depthWrite: false,
+      });
+      const shadow = new THREE.Mesh(geo, mat);
+      shadow.rotation.x = -Math.PI / 2;
+      return shadow;
+    };
+
+    // --- 3. Build Curved & Polished Procedural 3D Models ---
     const categoryGroups = [];
     const interactiveMeshes = [];
 
-    // Model 1: Tech & Coding (Laptop, Binary bits & Microchip)
+    // ==========================================
+    // Model 1: Tech & Coding (Rounded Laptop & Chip)
+    // ==========================================
     const buildTechModel = () => {
       const group = new THREE.Group();
 
-      // Laptop Base
-      const baseMat = createClayMaterial(0x334155, 0.4);
-      const baseGeo = new THREE.BoxGeometry(1.9, 0.1, 1.4);
+      // Rounded Laptop Base
+      const baseGeo = createRoundedBoxGeometry(2.1, 0.14, 1.5, 0.12, 6);
+      const baseMat = createToyClayMaterial(0x1e293b, 0.3); // deep rounded clay slate
       const baseMesh = new THREE.Mesh(baseGeo, baseMat);
       group.add(baseMesh);
 
-      // Keyboard area
-      const kbGeo = new THREE.BoxGeometry(1.6, 0.04, 0.7);
-      const kbMat = createClayMaterial(0x1e293b);
+      // Keyboard area with soft teal rounded keys
+      const kbGeo = createRoundedBoxGeometry(1.8, 0.04, 0.8, 0.08, 4);
+      const kbMat = createToyClayMaterial(0x0f172a, 0.25);
       const kbMesh = new THREE.Mesh(kbGeo, kbMat);
-      kbMesh.position.set(0, 0.06, -0.15);
+      kbMesh.position.set(0, 0.08, -0.16);
       group.add(kbMesh);
 
       // Trackpad
-      const padGeo = new THREE.BoxGeometry(0.6, 0.02, 0.35);
-      const padMat = createClayMaterial(0x475569);
+      const padGeo = createRoundedBoxGeometry(0.65, 0.02, 0.4, 0.05, 4);
+      const padMat = createToyClayMaterial(0x38bdf8, 0.2);
       const padMesh = new THREE.Mesh(padGeo, padMat);
-      padMesh.position.set(0, 0.06, 0.4);
+      padMesh.position.set(0, 0.08, 0.45);
       group.add(padMesh);
 
-      // Laptop Screen (Tilted)
+      // Rounded Laptop Screen Lid (tilted back 110 deg)
       const screenPivot = new THREE.Group();
-      screenPivot.position.set(0, 0.05, -0.7);
+      screenPivot.position.set(0, 0.07, -0.72);
 
-      const lidMat = createClayMaterial(0x2563eb, 0.35);
-      const lidGeo = new THREE.BoxGeometry(1.9, 1.3, 0.08);
+      const lidGeo = createRoundedBoxGeometry(2.1, 1.45, 0.1, 0.12, 6);
+      const lidMat = createToyClayMaterial(0x2563eb, 0.22); // vibrant electric blue
       const lidMesh = new THREE.Mesh(lidGeo, lidMat);
-      lidMesh.position.set(0, 0.65, 0);
+      lidMesh.position.set(0, 0.72, 0);
 
-      // Glowing Screen Display with </> symbol
-      const displayMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-      const displayGeo = new THREE.BoxGeometry(1.7, 1.1, 0.02);
-      const displayMesh = new THREE.Mesh(displayGeo, displayMat);
-      displayMesh.position.set(0, 0.65, 0.05);
+      // Glowing Cyan Display Surface with curved corners
+      const screenGeo = createRoundedBoxGeometry(1.88, 1.25, 0.02, 0.06, 4);
+      const screenMat = new THREE.MeshBasicMaterial({ color: 0x0284c7 });
+      const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+      screenMesh.position.set(0, 0.72, 0.06);
 
-      // 3D Bracket `<`
-      const bracketMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      const b1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.38), bracketMat);
+      // Glowing Neon Pink/White `</>` Code Logo on Screen
+      const codeGroup = new THREE.Group();
+      codeGroup.position.set(0, 0.72, 0.09);
+
+      const bracketMat = new THREE.MeshBasicMaterial({ color: 0xf472b6 }); // vibrant pink
+      const slashMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+      // `<`
+      const b1 = new THREE.Mesh(createRoundedBoxGeometry(0.38, 0.07, 0.04, 0.03, 3), bracketMat);
       b1.rotation.z = Math.PI / 4;
-      b1.position.set(-0.35, 0.75, 0.08);
-      const b2 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.38), bracketMat);
+      b1.position.set(-0.38, 0.12, 0);
+      const b2 = new THREE.Mesh(createRoundedBoxGeometry(0.38, 0.07, 0.04, 0.03, 3), bracketMat);
       b2.rotation.z = -Math.PI / 4;
-      b2.position.set(-0.35, 0.55, 0.08);
+      b2.position.set(-0.38, -0.12, 0);
 
-      // 3D Slash `/`
-      const slash = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.5), bracketMat);
+      // `/`
+      const slash = new THREE.Mesh(createRoundedBoxGeometry(0.55, 0.07, 0.04, 0.03, 3), slashMat);
       slash.rotation.z = Math.PI / 6;
-      slash.position.set(0, 0.65, 0.08);
+      slash.position.set(0, 0, 0);
 
-      // 3D Bracket `>`
-      const b3 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.38), bracketMat);
+      // `>`
+      const b3 = new THREE.Mesh(createRoundedBoxGeometry(0.38, 0.07, 0.04, 0.03, 3), bracketMat);
       b3.rotation.z = -Math.PI / 4;
-      b3.position.set(0.35, 0.75, 0.08);
-      const b4 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.38), bracketMat);
+      b3.position.set(0.38, 0.12, 0);
+      const b4 = new THREE.Mesh(createRoundedBoxGeometry(0.38, 0.07, 0.04, 0.03, 3), bracketMat);
       b4.rotation.z = Math.PI / 4;
-      b4.position.set(0.35, 0.55, 0.08);
+      b4.position.set(0.38, -0.12, 0);
 
-      screenPivot.add(lidMesh, displayMesh, b1, b2, slash, b3, b4);
-      screenPivot.rotation.x = -0.3; // Open 110 deg
+      codeGroup.add(b1, b2, slash, b3, b4);
+      screenPivot.add(lidMesh, screenMesh, codeGroup);
+      screenPivot.rotation.x = -0.32; // Open lid
       group.add(screenPivot);
 
-      // Floating CPU Chip beside laptop
+      // Floating Curved CPU Chip
       const chipGroup = new THREE.Group();
-      chipGroup.position.set(1.4, 0.7, 0.2);
-      const chipBody = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.1, 0.65), createClayMaterial(0x818cf8));
-      const core = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.12, 0.35), goldMat);
-      chipGroup.add(chipBody, core);
+      chipGroup.position.set(1.5, 0.8, 0.3);
+      const chipBody = new THREE.Mesh(
+        createRoundedBoxGeometry(0.7, 0.14, 0.7, 0.1, 4),
+        createToyClayMaterial(0x7c3aed, 0.2) // royal purple
+      );
+      const chipCore = new THREE.Mesh(
+        createRoundedBoxGeometry(0.38, 0.16, 0.38, 0.06, 4),
+        goldMat
+      );
+      chipGroup.add(chipBody, chipCore);
 
-      // Floating binary digits 0 & 1
-      const zero = new THREE.Mesh(new THREE.TorusGeometry(0.18, 0.05, 12, 24), createClayMaterial(0x60a5fa));
-      zero.position.set(-1.2, 0.9, 0.3);
+      // 8 Gold Rounded Pins on CPU sides
+      for (let i = 0; i < 4; i++) {
+        const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.18, 12), goldMat);
+        pin.rotation.z = Math.PI / 2;
+        pin.position.set(-0.42, 0, -0.22 + i * 0.15);
+        const pinR = pin.clone();
+        pinR.position.x = 0.42;
+        chipGroup.add(pin, pinR);
+      }
+
+      // Puffy Floating 3D Binary Numbers 0 and 1
+      const zero = new THREE.Mesh(
+        new THREE.TorusGeometry(0.2, 0.08, 16, 28),
+        createToyClayMaterial(0x38bdf8, 0.2)
+      );
+      zero.position.set(-1.3, 1.0, 0.4);
       zero.rotation.y = 0.4;
-      const one = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.35), createClayMaterial(0x60a5fa));
-      one.position.set(-1.1, 0.4, 0.5);
+      zero.rotation.x = 0.2;
 
-      group.add(chipGroup, zero, one);
-      group.rotation.set(0.25, 0.4, -0.05);
+      const one = new THREE.Mesh(
+        createRoundedBoxGeometry(0.12, 0.45, 0.12, 0.05, 4),
+        createToyClayMaterial(0x38bdf8, 0.2)
+      );
+      one.position.set(-1.15, 0.45, 0.55);
+
+      // Shadow
+      const shadow = createContactShadow(1.4, 0.22);
+      shadow.position.y = -0.15;
+      group.add(shadow, chipGroup, zero, one);
+
+      group.rotation.set(0.22, 0.38, -0.06);
       return group;
     };
 
-    // Model 2: Singing & Vocals (Vintage Mic + Music Notes)
+    // ==========================================
+    // Model 2: Singing & Vocals (Vintage Mic & Notes)
+    // ==========================================
     const buildSingingModel = () => {
       const group = new THREE.Group();
 
-      // Capsule Grille (Sphere top + Cylinder middle + Sphere bottom)
       const micHead = new THREE.Group();
-      const grilleMat = new THREE.MeshStandardMaterial({
-        color: 0xf472b6,
-        metalness: 0.35,
-        roughness: 0.3,
-      });
+      const pinkMicMat = createToyClayMaterial(0xf472b6, 0.22); // pastel candy rose
 
-      const cylGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.7, 24);
-      const cylMesh = new THREE.Mesh(cylGeo, grilleMat);
+      // Rounded Capsule Grille (Hemisphere top + Cylinder + Hemisphere bottom)
+      const cylGeo = new THREE.CylinderGeometry(0.44, 0.44, 0.75, 32);
+      const cylMesh = new THREE.Mesh(cylGeo, pinkMicMat);
+      const topCap = new THREE.Mesh(new THREE.SphereGeometry(0.44, 32, 24), pinkMicMat);
+      topCap.position.y = 0.375;
+      const botCap = new THREE.Mesh(new THREE.SphereGeometry(0.44, 32, 24), pinkMicMat);
+      botCap.position.y = -0.375;
 
-      const topSphere = new THREE.Mesh(new THREE.SphereGeometry(0.42, 24, 16), grilleMat);
-      topSphere.position.y = 0.35;
-      const botSphere = new THREE.Mesh(new THREE.SphereGeometry(0.42, 24, 16), grilleMat);
-      botSphere.position.y = -0.35;
-
-      // Chrome bands around grille
-      const band1 = new THREE.Mesh(new THREE.TorusGeometry(0.43, 0.04, 16, 32), chromeMat);
+      // Chrome Ring Bands
+      const band1 = new THREE.Mesh(new THREE.TorusGeometry(0.45, 0.045, 16, 36), chromeMat);
       band1.rotation.x = Math.PI / 2;
-      const band2 = new THREE.Mesh(new THREE.TorusGeometry(0.43, 0.04, 16, 32), chromeMat);
-      band2.rotation.x = Math.PI / 2;
-      band2.position.y = 0.2;
+      const band2 = band1.clone();
+      band2.position.y = 0.22;
+      const band3 = band1.clone();
+      band3.position.y = -0.22;
 
-      micHead.add(cylMesh, topSphere, botSphere, band1, band2);
+      micHead.add(cylMesh, topCap, botCap, band1, band2, band3);
 
-      // Swivel Mount U-bracket
+      // Swivel Mount U-Bracket
       const uBracket = new THREE.Mesh(
-        new THREE.TorusGeometry(0.6, 0.06, 16, 32, Math.PI),
-        createClayMaterial(0xfb7185)
+        new THREE.TorusGeometry(0.66, 0.07, 16, 36, Math.PI),
+        goldMat
       );
       uBracket.rotation.z = Math.PI;
-      uBracket.position.y = -0.2;
+      uBracket.position.y = -0.22;
 
-      // Stand Neck & Round Base
-      const standPole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.6), chromeMat);
-      standPole.position.y = -0.9;
-      const standBase = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.55, 0.12, 24), createClayMaterial(0xf43f5e));
-      standBase.position.y = -1.2;
+      // Chrome Pole and Rounded Heavy Table Base
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.7, 24), chromeMat);
+      pole.position.y = -0.95;
 
-      group.add(micHead, uBracket, standPole, standBase);
+      const baseGeo = createRoundedBoxGeometry(1.2, 0.16, 1.2, 0.15, 6);
+      const baseMesh = new THREE.Mesh(baseGeo, createToyClayMaterial(0xfb7185, 0.25));
+      baseMesh.position.y = -1.35;
 
-      // Floating 3D Musical Notes ♪ ♫
-      const noteMat = createClayMaterial(0xf472b6);
+      group.add(micHead, uBracket, pole, baseMesh);
+
+      // 3D Puffy Musical Notes ♪
+      const noteMat = createToyClayMaterial(0xf472b6, 0.18);
       const note1 = new THREE.Group();
-      const head1 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 12), noteMat);
-      head1.scale.set(1.2, 0.9, 0.8);
-      const stem1 = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.35), noteMat);
-      stem1.position.set(0.1, 0.18, 0);
-      const flag1 = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.08, 0.04), noteMat);
-      flag1.position.set(0.18, 0.32, 0);
-      note1.add(head1, stem1, flag1);
-      note1.position.set(0.7, 0.4, 0.3);
-      note1.rotation.z = -0.2;
+      const nHead = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 16), noteMat);
+      nHead.scale.set(1.25, 0.85, 0.85);
+      const nStem = new THREE.Mesh(createRoundedBoxGeometry(0.05, 0.42, 0.05, 0.02, 3), noteMat);
+      nStem.position.set(0.12, 0.2, 0);
+      const nFlag = new THREE.Mesh(createRoundedBoxGeometry(0.18, 0.08, 0.05, 0.03, 3), noteMat);
+      nFlag.position.set(0.2, 0.38, 0);
+      note1.add(nHead, nStem, nFlag);
+      note1.position.set(0.85, 0.5, 0.35);
+      note1.rotation.z = -0.25;
 
       const note2 = note1.clone();
-      note2.position.set(-0.7, 0.6, -0.2);
-      note2.rotation.z = 0.3;
+      note2.position.set(-0.8, 0.8, -0.15);
+      note2.rotation.z = 0.35;
 
-      group.add(note1, note2);
-      group.rotation.set(0.15, -0.2, 0.1);
+      const shadow = createContactShadow(1.1, 0.2);
+      shadow.position.y = -1.45;
+      group.add(shadow, note1, note2);
+
+      group.rotation.set(0.12, -0.22, 0.08);
       return group;
     };
 
-    // Model 3: Music Production (Studio Headphones & DJ Mixer)
+    // ==========================================
+    // Model 3: Music Production (Studio Headphones & Mixer)
+    // ==========================================
     const buildMusicModel = () => {
       const group = new THREE.Group();
 
-      // Studio Headphones
+      // Curved Studio Headphones
       const hpGroup = new THREE.Group();
-      hpGroup.position.set(0, 0.5, 0);
+      hpGroup.position.set(0, 0.6, 0);
 
-      // Pastel rainbow headband arch
+      // Thick Puffy Rainbow Headband Arch
       const bandCurve = new THREE.Mesh(
-        new THREE.TorusGeometry(0.85, 0.09, 16, 32, Math.PI),
-        createClayMaterial(0xa78bfa, 0.3)
+        new THREE.TorusGeometry(0.92, 0.12, 20, 40, Math.PI),
+        createToyClayMaterial(0xa78bfa, 0.22) // lilac clay
       );
       hpGroup.add(bandCurve);
 
-      // Earcups
-      const earcupMat = createClayMaterial(0xc4b5fd);
-      const cushionMat = createClayMaterial(0x7c3aed, 0.4);
+      // Plush Cushioned Earcups with Rounded Fillets
+      const cupMat = createToyClayMaterial(0xc4b5fd, 0.2);
+      const cushionMat = createToyClayMaterial(0x6366f1, 0.3); // deep indigo
 
       const leftCup = new THREE.Group();
-      const cupMeshL = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.22, 24), earcupMat);
-      cupMeshL.rotation.z = Math.PI / 2;
-      const cushionL = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.1, 16, 24), cushionMat);
-      cushionL.rotation.y = Math.PI / 2;
-      cushionL.position.x = 0.1;
-      leftCup.add(cupMeshL, cushionL);
-      leftCup.position.set(-0.85, 0, 0);
+      const cupBody = new THREE.Mesh(
+        createRoundedBoxGeometry(0.45, 0.45, 0.25, 0.12, 5),
+        cupMat
+      );
+      cupBody.rotation.y = Math.PI / 2;
+
+      const cushion = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.11, 16, 28), cushionMat);
+      cushion.rotation.y = Math.PI / 2;
+      cushion.position.x = 0.12;
+
+      leftCup.add(cupBody, cushion);
+      leftCup.position.set(-0.95, 0, 0);
 
       const rightCup = leftCup.clone();
-      rightCup.position.set(0.85, 0, 0);
+      rightCup.position.set(0.95, 0, 0);
       rightCup.scale.set(-1, 1, 1);
 
       hpGroup.add(leftCup, rightCup);
       group.add(hpGroup);
 
-      // DJ Mixer Console Board
-      const mixerBase = new THREE.Mesh(
-        new THREE.BoxGeometry(1.8, 0.18, 1.2),
-        createClayMaterial(0x6366f1)
-      );
+      // DJ Sound Mixer Board with Rounded Beveled Edges
+      const mixerGeo = createRoundedBoxGeometry(2.0, 0.22, 1.35, 0.14, 6);
+      const mixerBase = new THREE.Mesh(mixerGeo, createToyClayMaterial(0x7c3aed, 0.25));
       mixerBase.position.set(0, -0.65, 0.2);
       mixerBase.rotation.x = 0.25;
 
-      // Equalizer Sliders & Soundwave
-      const sliderMat = goldMat;
-      const s1 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.15, 0.08), sliderMat);
-      s1.position.set(-0.4, -0.52, 0.3);
-      const s2 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.15, 0.08), sliderMat);
-      s2.position.set(0, -0.58, 0.3);
-      const s3 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.15, 0.08), sliderMat);
-      s3.position.set(0.4, -0.5, 0.3);
+      // 3 Equalizer Slider Knobs in Gold and Coral
+      const s1 = new THREE.Mesh(createRoundedBoxGeometry(0.12, 0.18, 0.1, 0.04, 3), goldMat);
+      s1.position.set(-0.45, -0.5, 0.35);
+      const s2 = new THREE.Mesh(createRoundedBoxGeometry(0.12, 0.18, 0.1, 0.04, 3), createToyClayMaterial(0xf43f5e));
+      s2.position.set(0, -0.58, 0.35);
+      const s3 = new THREE.Mesh(createRoundedBoxGeometry(0.12, 0.18, 0.1, 0.04, 3), goldMat);
+      s3.position.set(0.45, -0.48, 0.35);
 
-      // Glowing audio bars (waveform)
+      // Glowing Audio Waveform bar
       const waveBar = new THREE.Mesh(
-        new THREE.BoxGeometry(1.2, 0.08, 0.02),
+        createRoundedBoxGeometry(1.3, 0.09, 0.04, 0.03, 3),
         new THREE.MeshBasicMaterial({ color: 0x38bdf8 })
       );
-      waveBar.position.set(0, -0.4, 0.35);
+      waveBar.position.set(0, -0.38, 0.4);
 
-      group.add(mixerBase, s1, s2, s3, waveBar);
-      group.rotation.set(0.15, -0.3, 0.05);
+      const shadow = createContactShadow(1.5, 0.2);
+      shadow.position.set(0, -0.85, 0.2);
+      group.add(shadow, mixerBase, s1, s2, s3, waveBar);
+
+      group.rotation.set(0.15, -0.28, 0.06);
       return group;
     };
 
-    // Model 4: Dance & Choreography (Ballerina & Spiral Ribbons)
+    // ==========================================
+    // Model 4: Dance & Choreography (Ballerina & Spiral Ribbon)
+    // ==========================================
     const buildDanceModel = () => {
       const group = new THREE.Group();
-      const skinMat = createClayMaterial(0xfbcfe8, 0.4);
-      const dressMat = createClayMaterial(0xc084fc, 0.3);
+      const skinMat = createToyClayMaterial(0xfbcfe8, 0.3); // soft rose skin
+      const dressMat = createToyClayMaterial(0xc084fc, 0.2); // lilac silk
 
-      // Head with cute ballet bun
-      const head = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 16), skinMat);
-      head.position.y = 0.85;
-      const bun = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 12), dressMat);
-      bun.position.set(0, 1.05, -0.08);
+      // Rounded Head with Ballerina Hair Bun
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.26, 24, 20), skinMat);
+      head.position.y = 0.9;
+      const bun = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 16), dressMat);
+      bun.position.set(0, 1.12, -0.09);
 
-      // Torso
-      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.14, 0.45, 16), dressMat);
-      torso.position.y = 0.52;
+      // Graceful Torso
+      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.15, 0.48, 24), dressMat);
+      torso.position.y = 0.55;
 
-      // Flared Tutu Skirt
-      const tutu = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.72, 0.2, 0.28, 24, 1, true),
-        dressMat
-      );
-      tutu.position.y = 0.35;
-      tutu.rotation.x = Math.PI; // upside-down flared cone
+      // Fluffy Flared Double Tutu Skirt
+      const tutuGeo = new THREE.CylinderGeometry(0.8, 0.22, 0.3, 32, 2, true);
+      const tutu = new THREE.Mesh(tutuGeo, dressMat);
+      tutu.position.y = 0.38;
+      tutu.rotation.x = Math.PI;
 
-      // Graceful curved arms
+      // Outstretched Curved Arms
       const armCurveL = new THREE.Mesh(
-        new THREE.TorusGeometry(0.4, 0.05, 12, 24, Math.PI * 0.75),
+        new THREE.TorusGeometry(0.42, 0.06, 16, 28, Math.PI * 0.75),
         skinMat
       );
-      armCurveL.position.set(-0.35, 0.65, 0);
+      armCurveL.position.set(-0.36, 0.68, 0);
       armCurveL.rotation.z = Math.PI / 4;
 
       const armCurveR = new THREE.Mesh(
-        new THREE.TorusGeometry(0.4, 0.05, 12, 24, Math.PI * 0.75),
+        new THREE.TorusGeometry(0.42, 0.06, 16, 28, Math.PI * 0.75),
         skinMat
       );
-      armCurveR.position.set(0.35, 0.65, 0);
+      armCurveR.position.set(0.36, 0.68, 0);
       armCurveR.rotation.z = -Math.PI / 4;
 
-      // Pirouette legs with pointe shoes
-      const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.04, 0.75), skinMat);
-      leg1.position.set(-0.08, -0.15, 0);
-      const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.04, 0.65), skinMat);
-      leg2.position.set(0.15, 0, 0.2);
-      leg2.rotation.x = 0.6; // Arabesque lift
-      leg2.rotation.z = -0.3;
+      // Pirouette Pointe Legs
+      const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.045, 0.8, 20), skinMat);
+      leg1.position.set(-0.08, -0.16, 0);
+      const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.045, 0.72, 20), skinMat);
+      leg2.position.set(0.18, 0.02, 0.22);
+      leg2.rotation.x = 0.65;
+      leg2.rotation.z = -0.32;
 
       group.add(head, bun, torso, tutu, armCurveL, armCurveR, leg1, leg2);
 
       // Flowing 3D Spiral Ribbon Coils
       const ribbonCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-1.1, -0.7, 0.3),
-        new THREE.Vector3(-0.8, -0.2, -0.4),
-        new THREE.Vector3(0.1, 0.3, 0.6),
-        new THREE.Vector3(0.9, 0.8, -0.2),
-        new THREE.Vector3(1.1, 1.2, 0.4),
+        new THREE.Vector3(-1.2, -0.8, 0.35),
+        new THREE.Vector3(-0.85, -0.2, -0.45),
+        new THREE.Vector3(0.1, 0.35, 0.65),
+        new THREE.Vector3(0.95, 0.85, -0.25),
+        new THREE.Vector3(1.15, 1.3, 0.45),
       ]);
-      const ribbonGeo = new THREE.TubeGeometry(ribbonCurve, 32, 0.05, 8, false);
-      const ribbonMesh = new THREE.Mesh(ribbonGeo, createClayMaterial(0xf472b6, 0.3));
+      const ribbonGeo = new THREE.TubeGeometry(ribbonCurve, 40, 0.06, 10, false);
+      const ribbonMesh = new THREE.Mesh(ribbonGeo, createToyClayMaterial(0xf472b6, 0.2));
       group.add(ribbonMesh);
 
-      group.rotation.set(0.1, 0.2, -0.1);
+      const shadow = createContactShadow(1.1, 0.18);
+      shadow.position.y = -0.7;
+      group.add(shadow);
+
+      group.rotation.set(0.1, 0.18, -0.08);
       return group;
     };
 
-    // Model 5: Sports & Fitness (Dumbbell, Stopwatch & Basketball)
+    // ==========================================
+    // Model 5: Sports & Fitness (Rounded Dumbbell & Basketball)
+    // ==========================================
     const buildSportsModel = () => {
       const group = new THREE.Group();
 
-      // Dumbbell (Hexagonal pastel ends + silver bar)
+      // Rounded Hex Dumbbell
       const dbGroup = new THREE.Group();
-      const weightMat = createClayMaterial(0x34d399);
+      const weightMat = createToyClayMaterial(0x34d399, 0.22); // pastel emerald
 
-      const w1 = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.32, 6), weightMat);
-      w1.rotation.z = Math.PI / 2;
+      const wGeo = createRoundedBoxGeometry(0.5, 0.8, 0.8, 0.18, 5);
+      const w1 = new THREE.Mesh(wGeo, weightMat);
       w1.position.x = -0.65;
-
-      const w2 = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.32, 6), weightMat);
-      w2.rotation.z = Math.PI / 2;
+      const w2 = new THREE.Mesh(wGeo, weightMat);
       w2.position.x = 0.65;
 
-      const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 1.1), chromeMat);
+      const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 1.15, 24), chromeMat);
       handle.rotation.z = Math.PI / 2;
 
       dbGroup.add(w1, w2, handle);
-      dbGroup.position.set(-0.3, 0.4, 0);
-      dbGroup.rotation.set(0.3, 0.2, 0.5);
+      dbGroup.position.set(-0.35, 0.45, 0.1);
+      dbGroup.rotation.set(0.35, 0.2, 0.5);
 
       // Sports Stopwatch
       const swGroup = new THREE.Group();
-      const swBody = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.45, 0.14, 24), createClayMaterial(0x10b981));
-      swBody.rotation.x = Math.PI / 2;
-      const swFace = new THREE.Mesh(new THREE.CircleGeometry(0.36, 24), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-      swFace.position.z = 0.08;
-      const needle = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.22, 0.01), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
-      needle.position.set(0.04, 0.08, 0.09);
-      needle.rotation.z = -0.4;
-      const topPusher = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.2), goldMat);
-      topPusher.position.y = 0.52;
+      const swBody = new THREE.Mesh(
+        createRoundedBoxGeometry(0.9, 0.9, 0.2, 0.35, 5),
+        createToyClayMaterial(0x059669, 0.2)
+      );
+      const swFace = new THREE.Mesh(new THREE.CircleGeometry(0.36, 32), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      swFace.position.z = 0.12;
+
+      const needle = new THREE.Mesh(createRoundedBoxGeometry(0.04, 0.24, 0.02, 0.01, 2), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
+      needle.position.set(0.04, 0.08, 0.14);
+      needle.rotation.z = -0.45;
+
+      const topPusher = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.2, 16), goldMat);
+      topPusher.position.y = 0.55;
 
       swGroup.add(swBody, swFace, needle, topPusher);
-      swGroup.position.set(0.8, -0.1, 0.2);
+      swGroup.position.set(0.85, -0.05, 0.25);
 
-      // Textured Basketball
-      const ballMat = createClayMaterial(0xf97316, 0.5);
-      const basketball = new THREE.Mesh(new THREE.SphereGeometry(0.46, 24, 24), ballMat);
-      basketball.position.set(-0.2, -0.65, 0.3);
+      // Textured Orange Basketball
+      const ballMat = createToyClayMaterial(0xf97316, 0.35);
+      const basketball = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 28), ballMat);
+      basketball.position.set(-0.25, -0.65, 0.35);
 
-      // Black rib lines on ball
-      const rib1 = new THREE.Mesh(new THREE.TorusGeometry(0.462, 0.02, 12, 32), new THREE.MeshBasicMaterial({ color: 0x18181b }));
+      // Curved rubber ribs
+      const rib1 = new THREE.Mesh(new THREE.TorusGeometry(0.505, 0.025, 12, 36), new THREE.MeshBasicMaterial({ color: 0x0f172a }));
       const rib2 = rib1.clone();
       rib2.rotation.y = Math.PI / 2;
       basketball.add(rib1, rib2);
 
-      group.add(dbGroup, swGroup, basketball);
-      group.rotation.set(0.1, -0.2, 0);
+      const shadow = createContactShadow(1.6, 0.2);
+      shadow.position.y = -1.15;
+      group.add(shadow, dbGroup, swGroup, basketball);
+
+      group.rotation.set(0.1, -0.2, 0.05);
       return group;
     };
 
-    // Model 6: Art & Design (Painter Palette & Brushes)
+    // ==========================================
+    // Model 6: Art & Design (Rounded Palette & Chubby Brush)
+    // ==========================================
     const buildArtModel = () => {
       const group = new THREE.Group();
 
-      // Wooden Artist Palette
+      // Thick Rounded Artist Palette with Smooth Bevels
       const paletteShape = new THREE.Shape();
-      paletteShape.absarc(0, 0, 0.9, 0, Math.PI * 2, false);
-      // Thumbhole
+      paletteShape.absarc(0, 0, 0.95, 0, Math.PI * 2, false);
       const hole = new THREE.Path();
-      hole.absarc(0.4, -0.3, 0.2, 0, Math.PI * 2, true);
+      hole.absarc(0.42, -0.32, 0.22, 0, Math.PI * 2, true);
       paletteShape.holes.push(hole);
 
       const paletteGeo = new THREE.ExtrudeGeometry(paletteShape, {
-        depth: 0.08,
+        depth: 0.12,
         bevelEnabled: true,
-        bevelSegments: 4,
+        bevelSegments: 6,
         steps: 1,
-        bevelSize: 0.04,
-        bevelThickness: 0.04,
+        bevelSize: 0.09,
+        bevelThickness: 0.09,
       });
-      const paletteMat = createClayMaterial(0xfde047, 0.45);
+      paletteGeo.center();
+
+      const paletteMat = createToyClayMaterial(0xfef08a, 0.3); // warm banana clay
       const paletteMesh = new THREE.Mesh(paletteGeo, paletteMat);
       group.add(paletteMesh);
 
-      // 5 Vibrant Paint Blobs
+      // 5 Glossy Paint Droplets
       const paintColors = [0xef4444, 0x3b82f6, 0x10b981, 0xf59e0b, 0x8b5cf6];
-      const angles = [0.8, 1.4, 2.1, 2.7, 3.4];
+      const angles = [0.75, 1.35, 2.05, 2.75, 3.45];
       paintColors.forEach((col, idx) => {
-        const blobGeo = new THREE.SphereGeometry(0.15, 16, 12);
-        blobGeo.scale(1, 0.5, 1);
-        const blobMesh = new THREE.Mesh(blobGeo, createClayMaterial(col, 0.2, 0.1));
+        const blobGeo = new THREE.SphereGeometry(0.18, 20, 16);
+        blobGeo.scale(1, 0.55, 1);
+        const blobMesh = new THREE.Mesh(blobGeo, createToyClayMaterial(col, 0.15, 0.9));
         const a = angles[idx];
-        blobMesh.position.set(Math.cos(a) * 0.65, Math.sin(a) * 0.65, 0.12);
+        blobMesh.position.set(Math.cos(a) * 0.68, Math.sin(a) * 0.68, 0.16);
         group.add(blobMesh);
       });
 
-      // Slanted Artist Paintbrush
+      // Chubby Slanted Paintbrush
       const brushGroup = new THREE.Group();
-      const bHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.03, 1.2), createClayMaterial(0xd97706));
-      const ferrule = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.18), chromeMat);
-      ferrule.position.y = 0.65;
-      const tip = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.22, 16), createClayMaterial(0x3b82f6));
-      tip.position.y = 0.8;
+      const bHandle = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.06, 0.045, 1.3, 20),
+        createToyClayMaterial(0xd97706, 0.3)
+      );
+      const ferrule = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.22, 20), chromeMat);
+      ferrule.position.y = 0.72;
+      const tip = new THREE.Mesh(
+        new THREE.ConeGeometry(0.08, 0.26, 20),
+        createToyClayMaterial(0x3b82f6, 0.15, 0.9)
+      );
+      tip.position.y = 0.9;
       brushGroup.add(bHandle, ferrule, tip);
-      brushGroup.position.set(0.1, 0.2, 0.3);
-      brushGroup.rotation.set(0.2, 0.4, 0.8);
+      brushGroup.position.set(0.12, 0.2, 0.35);
+      brushGroup.rotation.set(0.2, 0.4, 0.85);
 
-      group.add(brushGroup);
-      group.rotation.set(0.3, 0.3, -0.2);
+      const shadow = createContactShadow(1.3, 0.2);
+      shadow.position.y = -0.3;
+      group.add(shadow, brushGroup);
+
+      group.rotation.set(0.32, 0.28, -0.18);
       return group;
     };
 
-    // Model 7: Photography & Video (Camera & Film Reel)
+    // ==========================================
+    // Model 7: Photography & Video (Rounded Retro Camera)
+    // ==========================================
     const buildPhotographyModel = () => {
       const group = new THREE.Group();
 
-      // Retro Camera Body
-      const bodyMat = createClayMaterial(0xf97316, 0.35); // warm coral
-      const bodyGeo = new THREE.BoxGeometry(1.6, 1.1, 0.7);
+      // Rounded Camera Body
+      const bodyGeo = createRoundedBoxGeometry(1.75, 1.2, 0.8, 0.16, 6);
+      const bodyMat = createToyClayMaterial(0xf97316, 0.24); // warm coral/peach clay
       const cameraBody = new THREE.Mesh(bodyGeo, bodyMat);
 
-      // Silver top casing
-      const topPlate = new THREE.Mesh(new THREE.BoxGeometry(1.62, 0.25, 0.72), chromeMat);
-      topPlate.position.y = 0.58;
+      // Silver Top Plate with Rounded Chamfer
+      const topGeo = createRoundedBoxGeometry(1.78, 0.28, 0.82, 0.1, 5);
+      const topPlate = new THREE.Mesh(topGeo, chromeMat);
+      topPlate.position.y = 0.64;
 
-      // Shutter button & dial
-      const shutterBtn = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.15), goldMat);
-      shutterBtn.position.set(-0.5, 0.75, 0);
+      // Shutter Button & Knurled Dial
+      const shutterBtn = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.18, 20), goldMat);
+      shutterBtn.position.set(-0.55, 0.82, 0);
 
       // Viewfinder
-      const vf = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.2, 0.15), createClayMaterial(0x18181b));
-      vf.position.set(0, 0.72, 0);
+      const vf = new THREE.Mesh(
+        createRoundedBoxGeometry(0.34, 0.22, 0.18, 0.05, 4),
+        createToyClayMaterial(0x0f172a, 0.3)
+      );
+      vf.position.set(0, 0.8, 0);
 
-      // Camera Lens with glass element
-      const lensBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.46, 0.46, 0.5, 24), chromeMat);
+      // Multi-Ring Glossy Camera Lens
+      const lensGroup = new THREE.Group();
+      lensGroup.position.set(0, 0, 0.48);
+
+      const lensBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.55, 32), chromeMat);
       lensBarrel.rotation.x = Math.PI / 2;
-      lensBarrel.position.set(0, 0, 0.5);
+
+      const outerRing = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.05, 16, 36), createToyClayMaterial(0x1e293b, 0.2));
+      outerRing.position.z = 0.28;
 
       const glass = new THREE.Mesh(
-        new THREE.SphereGeometry(0.38, 24, 16),
+        new THREE.SphereGeometry(0.42, 32, 24),
         new THREE.MeshPhysicalMaterial({
-          color: 0x1e1b4b,
-          roughness: 0.1,
-          metalness: 0.2,
+          color: 0x0f172a,
+          roughness: 0.08,
+          metalness: 0.3,
           clearcoat: 1.0,
+          clearcoatRoughness: 0.05,
         })
       );
-      glass.position.set(0, 0, 0.7);
+      glass.position.z = 0.22;
 
-      // Film Reel
-      const filmReel = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.12, 16), createClayMaterial(0x475569));
-      filmReel.rotation.x = 0.5;
-      filmReel.position.set(0.9, -0.4, 0.3);
+      lensGroup.add(lensBarrel, outerRing, glass);
 
-      group.add(cameraBody, topPlate, shutterBtn, vf, lensBarrel, glass, filmReel);
-      group.rotation.set(0.1, -0.25, 0.05);
+      // Cinema Film Reel
+      const filmReel = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.45, 0.45, 0.14, 24),
+        createToyClayMaterial(0x475569, 0.25)
+      );
+      filmReel.rotation.x = 0.55;
+      filmReel.position.set(0.95, -0.45, 0.35);
+
+      const shadow = createContactShadow(1.4, 0.22);
+      shadow.position.y = -0.75;
+
+      group.add(shadow, cameraBody, topPlate, shutterBtn, vf, lensGroup, filmReel);
+      group.rotation.set(0.12, -0.25, 0.05);
       return group;
     };
 
-    // Model 8: Gaming & Esports (Gamepad Controller & Trophy)
+    // ==========================================
+    // Model 8: Gaming & Esports (Rounded Gamepad & Trophy)
+    // ==========================================
     const buildGamingModel = () => {
       const group = new THREE.Group();
 
-      // Ergonomic Gamepad Body
-      const bodyMat = createClayMaterial(0x1e1b4b, 0.35); // dark gamer navy
-      const mainBody = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.8, 0.45), bodyMat);
+      // Ergonomic Gamepad Body with Rounded Bevels
+      const bodyGeo = createRoundedBoxGeometry(1.7, 0.85, 0.5, 0.22, 6);
+      const bodyMat = createToyClayMaterial(0x1e1b4b, 0.25); // dark violet gamer clay
+      const mainBody = new THREE.Mesh(bodyGeo, bodyMat);
 
-      // Curved Left & Right Grips
-      const gripL = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.16, 0.9, 16), bodyMat);
-      gripL.position.set(-0.8, -0.35, 0);
-      gripL.rotation.z = -0.3;
+      // Rounded Grips
+      const gripGeo = createRoundedBoxGeometry(0.5, 0.95, 0.45, 0.2, 5);
+      const gripL = new THREE.Mesh(gripGeo, bodyMat);
+      gripL.position.set(-0.85, -0.38, 0);
+      gripL.rotation.z = -0.32;
 
-      const gripR = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.16, 0.9, 16), bodyMat);
-      gripR.position.set(0.8, -0.35, 0);
-      gripR.rotation.z = 0.3;
+      const gripR = new THREE.Mesh(gripGeo, bodyMat);
+      gripR.position.set(0.85, -0.38, 0);
+      gripR.rotation.z = 0.32;
 
       // Illuminated Thumbsticks (Blue & Pink)
-      const stickMatL = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.2 });
-      const stickL = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.12, 0.16), stickMatL);
-      stickL.position.set(-0.35, -0.15, 0.25);
+      const stickMatL = new THREE.MeshPhysicalMaterial({ color: 0x38bdf8, roughness: 0.15, clearcoat: 0.8 });
+      const stickL = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.13, 0.18, 24), stickMatL);
+      stickL.position.set(-0.38, -0.16, 0.28);
 
-      const stickMatR = new THREE.MeshStandardMaterial({ color: 0xf472b6, roughness: 0.2 });
-      const stickR = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.12, 0.16), stickMatR);
-      stickR.position.set(0.35, -0.15, 0.25);
+      const stickMatR = new THREE.MeshPhysicalMaterial({ color: 0xf472b6, roughness: 0.15, clearcoat: 0.8 });
+      const stickR = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.13, 0.18, 24), stickMatR);
+      stickR.position.set(0.38, -0.16, 0.28);
 
-      // Glowing D-Pad cross
-      const dpadH = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.1, 0.08), new THREE.MeshBasicMaterial({ color: 0xec4899 }));
-      dpadH.position.set(-0.45, 0.15, 0.24);
-      const dpadV = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.36, 0.08), new THREE.MeshBasicMaterial({ color: 0xec4899 }));
-      dpadV.position.set(-0.45, 0.15, 0.24);
+      // Neon D-Pad Cross with Rounded Caps
+      const dpadH = new THREE.Mesh(createRoundedBoxGeometry(0.38, 0.11, 0.1, 0.04, 3), new THREE.MeshBasicMaterial({ color: 0xec4899 }));
+      dpadH.position.set(-0.48, 0.16, 0.26);
+      const dpadV = new THREE.Mesh(createRoundedBoxGeometry(0.11, 0.38, 0.1, 0.04, 3), new THREE.MeshBasicMaterial({ color: 0xec4899 }));
+      dpadV.position.set(-0.48, 0.16, 0.26);
 
-      // 4 Action Buttons
-      const btnGeo = new THREE.SphereGeometry(0.06, 12, 8);
+      // 4 Action Buttons (Y, A, X, B)
+      const btnGeo = new THREE.SphereGeometry(0.07, 16, 12);
       const bY = new THREE.Mesh(btnGeo, new THREE.MeshBasicMaterial({ color: 0xfacc15 }));
-      bY.position.set(0.45, 0.26, 0.25);
+      bY.position.set(0.48, 0.28, 0.27);
       const bA = new THREE.Mesh(btnGeo, new THREE.MeshBasicMaterial({ color: 0x22c55e }));
-      bA.position.set(0.45, 0.04, 0.25);
+      bA.position.set(0.48, 0.04, 0.27);
       const bX = new THREE.Mesh(btnGeo, new THREE.MeshBasicMaterial({ color: 0x3b82f6 }));
-      bX.position.set(0.34, 0.15, 0.25);
+      bX.position.set(0.36, 0.16, 0.27);
       const bB = new THREE.Mesh(btnGeo, new THREE.MeshBasicMaterial({ color: 0xef4444 }));
-      bB.position.set(0.56, 0.15, 0.25);
+      bB.position.set(0.6, 0.16, 0.27);
 
       group.add(mainBody, gripL, gripR, stickL, stickR, dpadH, dpadV, bY, bA, bX, bB);
 
-      // Golden Trophy Cup
+      // Golden Victory Trophy Cup
       const trophyGroup = new THREE.Group();
-      const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.15, 0.5, 16), goldMat);
-      const base = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 0.2, 16), createClayMaterial(0x334155));
-      base.position.y = -0.35;
-      const handleL = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.04, 12, 16, Math.PI), goldMat);
+      const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.16, 0.55, 24), goldMat);
+      const base = new THREE.Mesh(
+        createRoundedBoxGeometry(0.55, 0.24, 0.55, 0.08, 4),
+        createToyClayMaterial(0x334155, 0.2)
+      );
+      base.position.y = -0.4;
+
+      const handleL = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.045, 14, 24, Math.PI), goldMat);
       handleL.rotation.y = Math.PI / 2;
-      handleL.position.set(-0.35, 0.05, 0);
+      handleL.position.set(-0.38, 0.08, 0);
 
-      trophyGroup.add(cup, base, handleL);
-      trophyGroup.position.set(1.1, 0.5, 0.2);
-      trophyGroup.rotation.set(0.2, -0.4, 0.2);
+      const handleR = handleL.clone();
+      handleR.position.x = 0.38;
+      handleR.rotation.y = -Math.PI / 2;
 
-      group.add(trophyGroup);
-      group.rotation.set(0.2, -0.3, 0.15);
+      trophyGroup.add(cup, base, handleL, handleR);
+      trophyGroup.position.set(1.15, 0.55, 0.25);
+      trophyGroup.rotation.set(0.18, -0.42, 0.18);
+
+      const shadow = createContactShadow(1.5, 0.22);
+      shadow.position.y = -0.95;
+
+      group.add(shadow, trophyGroup);
+      group.rotation.set(0.2, -0.32, 0.14);
       return group;
     };
 
@@ -669,7 +844,7 @@ export function SkillCamp3DScene({ onSelectCategory }) {
 
       // Invisible hit sphere for reliable click & hover detection
       const hitSphere = new THREE.Mesh(
-        new THREE.SphereGeometry(1.6, 12, 12),
+        new THREE.SphereGeometry(1.65, 12, 12),
         new THREE.MeshBasicMaterial({ visible: false })
       );
       hitSphere.userData = { categoryId: cat.id, index: idx };
@@ -692,39 +867,47 @@ export function SkillCamp3DScene({ onSelectCategory }) {
       });
     });
 
-    // --- 4. Floating Decorative 3D Stars & Pastel Candy Particles ---
+    // --- 4. Floating Decorative 3D Puffy Stars & Pastel Candies ---
     const starShape = new THREE.Shape();
     const starPts = 4;
     for (let i = 0; i < starPts * 2; i++) {
-      const r = i % 2 === 0 ? 0.35 : 0.12;
+      const r = i % 2 === 0 ? 0.38 : 0.14;
       const angle = (i * Math.PI) / starPts;
       if (i === 0) starShape.moveTo(Math.cos(angle) * r, Math.sin(angle) * r);
       else starShape.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
     }
-    const starGeo = new THREE.ExtrudeGeometry(starShape, { depth: 0.08, bevelEnabled: false });
-    const starColors = [0xfacc15, 0xf472b6, 0x60a5fa, 0x34d399, 0xa78bfa];
+    const starGeo = new THREE.ExtrudeGeometry(starShape, {
+      depth: 0.1,
+      bevelEnabled: true,
+      bevelSegments: 4,
+      bevelSize: 0.05,
+      bevelThickness: 0.05,
+    });
+    starGeo.center();
 
+    const starColors = [0xfacc15, 0xf472b6, 0x60a5fa, 0x34d399, 0xa78bfa];
     const decorParticles = [];
-    for (let i = 0; i < 24; i++) {
+
+    for (let i = 0; i < 28; i++) {
       const col = starColors[i % starColors.length];
       let mesh;
       if (i % 2 === 0) {
-        mesh = new THREE.Mesh(starGeo, createClayMaterial(col, 0.3));
+        mesh = new THREE.Mesh(starGeo, createToyClayMaterial(col, 0.2, 0.8));
       } else {
-        mesh = new THREE.Mesh(new THREE.SphereGeometry(0.14, 12, 12), createClayMaterial(col, 0.25));
+        mesh = new THREE.Mesh(new THREE.SphereGeometry(0.16, 16, 14), createToyClayMaterial(col, 0.15, 0.9));
       }
 
-      const x = (Math.random() - 0.5) * 16;
-      const y = (Math.random() - 0.5) * 9;
-      const z = (Math.random() - 0.5) * 4 - 0.5;
+      const x = (Math.random() - 0.5) * 16.5;
+      const y = (Math.random() - 0.5) * 9.5;
+      const z = (Math.random() - 0.5) * 3.5 - 0.2;
 
       mesh.position.set(x, y, z);
       scene.add(mesh);
       decorParticles.push({
         mesh,
         baseY: y,
-        speed: 0.5 + Math.random() * 0.8,
-        rotSpeed: (Math.random() - 0.5) * 2,
+        speed: 0.6 + Math.random() * 0.7,
+        rotSpeed: (Math.random() - 0.5) * 2.2,
       });
     }
 
@@ -779,15 +962,14 @@ export function SkillCamp3DScene({ onSelectCategory }) {
           item.spinAnim = Math.PI * 2;
 
           // Joyful pastel confetti burst at click position
-          const rect = container.getBoundingClientRect();
           const normX = e.clientX / window.innerWidth;
           const normY = e.clientY / window.innerHeight;
 
           confetti({
-            particleCount: 45,
-            spread: 70,
+            particleCount: 50,
+            spread: 75,
             origin: { x: normX, y: normY },
-            colors: ['#38BDF8', '#F472B6', '#A78BFA', '#C084FC', '#34D399', '#FB923C'],
+            colors: ['#38BDF8', '#F472B6', '#A78BFA', '#C084FC', '#34D399', '#FB923C', '#FCD34D'],
             disableForReducedMotion: true,
           });
 
@@ -817,8 +999,8 @@ export function SkillCamp3DScene({ onSelectCategory }) {
       const elapsedTime = clock.getElapsedTime();
 
       // Camera parallax tilt based on mouse position
-      camera.position.x = THREE.MathUtils.lerp(camera.position.x, mouse.x * 0.6, 0.05);
-      camera.position.y = THREE.MathUtils.lerp(camera.position.y, mouse.y * 0.4, 0.05);
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, mouse.x * 0.7, 0.05);
+      camera.position.y = THREE.MathUtils.lerp(camera.position.y, mouse.y * 0.45, 0.05);
       camera.lookAt(0, 0, 0);
 
       // Scroll parallax factor
@@ -829,12 +1011,12 @@ export function SkillCamp3DScene({ onSelectCategory }) {
         const isHovered = currentHovered === item.id;
 
         // Gentle floating oscillation
-        const floatY = Math.sin(elapsedTime * 1.5 + item.floatPhase) * 0.12;
-        const floatRot = Math.cos(elapsedTime * 1.2 + item.floatPhase) * 0.06;
+        const floatY = Math.sin(elapsedTime * 1.6 + item.floatPhase) * 0.14;
+        const floatRot = Math.cos(elapsedTime * 1.3 + item.floatPhase) * 0.07;
 
         // Scroll divergence: models float outwards smoothly as user scrolls
-        const scrollOffsetX = (item.basePos.x / 5) * scrollParallax;
-        const scrollOffsetY = (item.basePos.y / 3) * scrollParallax * 0.8;
+        const scrollOffsetX = (item.basePos.x / 4.8) * scrollParallax;
+        const scrollOffsetY = (item.basePos.y / 3) * scrollParallax * 0.85;
 
         item.group.position.x = item.basePos.x + scrollOffsetX;
         item.group.position.y = item.basePos.y + floatY - scrollOffsetY;
@@ -853,10 +1035,10 @@ export function SkillCamp3DScene({ onSelectCategory }) {
         }
 
         // Scale: Base scale * hover boost * bounce impact
-        const targetScale = item.baseScale * (isHovered ? 1.22 : 1.0) + item.bounceSpring * 0.45;
+        const targetScale = item.baseScale * (isHovered ? 1.25 : 1.0) + item.bounceSpring * 0.45;
         item.group.scale.lerp(
           new THREE.Vector3(targetScale, targetScale, targetScale),
-          0.12
+          0.14
         );
 
         // Rotation: Base + float + hover tilt + spin
@@ -866,9 +1048,9 @@ export function SkillCamp3DScene({ onSelectCategory }) {
 
       // Animate floating decorative stars & candy
       decorParticles.forEach((p, idx) => {
-        p.mesh.position.y = p.baseY + Math.sin(elapsedTime * p.speed + idx) * 0.25 - scrollParallax * 0.5;
-        p.mesh.rotation.z += 0.008 * p.rotSpeed;
-        p.mesh.rotation.y += 0.005;
+        p.mesh.position.y = p.baseY + Math.sin(elapsedTime * p.speed + idx) * 0.28 - scrollParallax * 0.55;
+        p.mesh.rotation.z += 0.01 * p.rotSpeed;
+        p.mesh.rotation.y += 0.006;
       });
 
       renderer.render(scene, camera);
@@ -909,7 +1091,7 @@ export function SkillCamp3DScene({ onSelectCategory }) {
       {/* Floating Interactive Hover Tooltip */}
       {hoveredCategory && (
         <div
-          className="fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-full mb-3 px-4 py-2 rounded-2xl bg-white/95 backdrop-blur-md shadow-2xl border border-slate-200/80 transition-opacity duration-150 animate-bounce-subtle"
+          className="fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-full mb-3 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md shadow-2xl border border-slate-200/80 transition-opacity duration-150 animate-bounce-subtle"
           style={{
             left: `${mousePos.x}px`,
             top: `${mousePos.y - 15}px`,
@@ -917,10 +1099,10 @@ export function SkillCamp3DScene({ onSelectCategory }) {
         >
           <div className="flex items-center gap-2">
             <span
-              className="w-2.5 h-2.5 rounded-full"
+              className="w-3 h-3 rounded-full"
               style={{ backgroundColor: hoveredCategory.color }}
             />
-            <p className="font-heading font-extrabold text-xs text-slate-900 tracking-tight">
+            <p className="font-heading font-black text-xs text-slate-900 tracking-tight">
               {hoveredCategory.name}
             </p>
           </div>
