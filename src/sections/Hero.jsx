@@ -10,7 +10,7 @@ export function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-center pt-28 pb-16 overflow-hidden">
+    <section className="relative min-h-[92vh] flex flex-col justify-center pt-36 sm:pt-40 pb-16 overflow-hidden">
       {/* Top Ambient Glow in Blaze Orange & Amber */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-[#FF6B00]/[0.12] via-[#F59E0B]/[0.05] to-transparent blur-3xl pointer-events-none -z-10" />
 
@@ -56,20 +56,20 @@ export function Hero() {
           </motion.div>
 
           {/* Right Column: Interactive 3D Glass Orb & Floating Feature Cards */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
+          <div className="lg:col-span-5 relative flex items-center justify-center pt-6 sm:pt-8">
             {/* Ambient Radial Blaze Orange Backlight Glow & Warm Shadow Aura behind Orb */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-gradient-to-tr from-[#FF6B00]/22 via-[#F59E0B]/12 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-[#FF6B00]/15 rounded-full blur-2xl pointer-events-none -z-10" />
 
-            {/* Moveable Floating Card 1: Top-Left (Live Project Cohorts) */}
+            {/* Moveable Floating Card 1: Top-Left (Live Project Cohorts) - Constrained strictly below top bar */}
             <motion.div
               drag
-              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
-              dragElastic={0.25}
-              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              dragConstraints={{ left: -50, right: 80, top: 0, bottom: 90 }}
+              dragElastic={0.06}
+              whileDrag={{ scale: 1.08, zIndex: 30, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
               whileHover={{ scale: 1.06 }}
               animate={{
-                y: [-8, 8, -8],
+                y: [-5, 5, -5],
                 x: [-3, 3, -3],
                 rotate: [-1, 1, -1],
               }}
@@ -78,7 +78,7 @@ export function Hero() {
                 x: { repeat: Infinity, duration: 5.4, ease: 'easeInOut' },
                 rotate: { repeat: Infinity, duration: 6.2, ease: 'easeInOut' },
               }}
-              className="absolute -top-4 -left-6 sm:top-2 sm:-left-8 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
+              className="absolute top-12 left-0 sm:top-14 sm:-left-6 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/90 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
               title="Click & drag me anywhere!"
             >
               <div className="w-8 h-8 rounded-xl bg-[#FF6B00]/15 border border-[#FF6B00]/30 flex items-center justify-center text-[#FF6B00]">
@@ -93,12 +93,12 @@ export function Hero() {
             {/* Moveable Floating Card 2: Mid-Left (Senior Mentors) */}
             <motion.div
               drag
-              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
-              dragElastic={0.25}
-              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              dragConstraints={{ left: -50, right: 80, top: -40, bottom: 80 }}
+              dragElastic={0.06}
+              whileDrag={{ scale: 1.08, zIndex: 30, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
               whileHover={{ scale: 1.06 }}
               animate={{
-                y: [8, -8, 8],
+                y: [5, -5, 5],
                 x: [3, -3, 3],
                 rotate: [1, -1, 1],
               }}
@@ -107,7 +107,7 @@ export function Hero() {
                 x: { repeat: Infinity, duration: 6.0, ease: 'easeInOut', delay: 0.5 },
                 rotate: { repeat: Infinity, duration: 5.8, ease: 'easeInOut' },
               }}
-              className="absolute top-1/2 -left-8 sm:-left-12 -translate-y-1/2 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
+              className="absolute top-[52%] -left-6 sm:-left-12 -translate-y-1/2 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/90 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
               title="Click & drag me anywhere!"
             >
               <div className="w-8 h-8 rounded-xl bg-[#FF6B00]/15 border border-[#FF6B00]/30 flex items-center justify-center text-[#FF6B00]">
@@ -122,12 +122,12 @@ export function Hero() {
             {/* Moveable Floating Card 3: Bottom-Left (Verified Credentials) */}
             <motion.div
               drag
-              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
-              dragElastic={0.25}
-              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              dragConstraints={{ left: -50, right: 80, top: -60, bottom: 40 }}
+              dragElastic={0.06}
+              whileDrag={{ scale: 1.08, zIndex: 30, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
               whileHover={{ scale: 1.06 }}
               animate={{
-                y: [-7, 7, -7],
+                y: [-5, 5, -5],
                 x: [2, -2, 2],
                 rotate: [-1, 1, -1],
               }}
@@ -136,7 +136,7 @@ export function Hero() {
                 x: { repeat: Infinity, duration: 5.8, ease: 'easeInOut', delay: 0.8 },
                 rotate: { repeat: Infinity, duration: 6.5, ease: 'easeInOut' },
               }}
-              className="absolute -bottom-6 left-0 sm:bottom-0 sm:-left-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
+              className="absolute -bottom-2 left-0 sm:bottom-4 sm:-left-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/90 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
               title="Click & drag me anywhere!"
             >
               <div className="w-8 h-8 rounded-xl bg-[#FF6B00]/15 border border-[#FF6B00]/30 flex items-center justify-center text-[#FF6B00]">
@@ -148,15 +148,15 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* Moveable Floating Card 4: Top-Right (Active Campus Network) */}
+            {/* Moveable Floating Card 4: Top-Right (Active Campus Network) - Constrained strictly below top bar */}
             <motion.div
               drag
-              dragConstraints={{ left: -120, right: 120, top: -100, bottom: 100 }}
-              dragElastic={0.25}
-              whileDrag={{ scale: 1.08, zIndex: 50, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
+              dragConstraints={{ left: -80, right: 50, top: 0, bottom: 90 }}
+              dragElastic={0.06}
+              whileDrag={{ scale: 1.08, zIndex: 30, boxShadow: '0 25px 50px rgba(0,0,0,0.95), 0 0 35px rgba(255,255,255,0.2)' }}
               whileHover={{ scale: 1.06 }}
               animate={{
-                y: [6, -6, 6],
+                y: [5, -5, 5],
                 x: [-2, 2, -2],
                 rotate: [0.8, -0.8, 0.8],
               }}
@@ -165,7 +165,7 @@ export function Hero() {
                 x: { repeat: Infinity, duration: 5.2, ease: 'easeInOut', delay: 1.4 },
                 rotate: { repeat: Infinity, duration: 6.8, ease: 'easeInOut' },
               }}
-              className="hidden sm:flex absolute -top-3 right-0 sm:top-4 sm:-right-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              className="hidden sm:flex absolute top-12 right-0 sm:top-14 sm:-right-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/90 border border-white/15 backdrop-blur-xl shadow-2xl items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
               title="Click & drag me anywhere!"
             >
               <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
