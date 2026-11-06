@@ -11,8 +11,8 @@ export function Hero() {
 
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-center pt-28 pb-16 overflow-hidden">
-      {/* Top Ambient Glow matching Zephyr */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-white/[0.06] to-transparent blur-3xl pointer-events-none -z-10" />
+      {/* Top Ambient Glow in Blaze Orange & Amber */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-[#FF6B00]/[0.12] via-[#F59E0B]/[0.05] to-transparent blur-3xl pointer-events-none -z-10" />
 
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -57,8 +57,9 @@ export function Hero() {
 
           {/* Right Column: Interactive 3D Glass Orb & Floating Feature Cards */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
-            {/* Ambient Radial Backlight Glow behind Orb */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-gradient-to-tr from-white/[0.07] via-zinc-400/[0.04] to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+            {/* Ambient Radial Blaze Orange Backlight Glow & Warm Shadow Aura behind Orb */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-gradient-to-tr from-[#FF6B00]/22 via-[#F59E0B]/12 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-[#FF6B00]/15 rounded-full blur-2xl pointer-events-none -z-10" />
 
             {/* Moveable Floating Card 1: Top-Left (Live Project Cohorts) */}
             <motion.div
@@ -77,10 +78,10 @@ export function Hero() {
                 x: { repeat: Infinity, duration: 5.4, ease: 'easeInOut' },
                 rotate: { repeat: Infinity, duration: 6.2, ease: 'easeInOut' },
               }}
-              className="absolute -top-4 -left-6 sm:top-2 sm:-left-8 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              className="absolute -top-4 -left-6 sm:top-2 sm:-left-8 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
               title="Click & drag me anywhere!"
             >
-              <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+              <div className="w-8 h-8 rounded-xl bg-[#FF6B00]/15 border border-[#FF6B00]/30 flex items-center justify-center text-[#FF6B00]">
                 <Code2 className="w-4 h-4" />
               </div>
               <div>
@@ -106,10 +107,10 @@ export function Hero() {
                 x: { repeat: Infinity, duration: 6.0, ease: 'easeInOut', delay: 0.5 },
                 rotate: { repeat: Infinity, duration: 5.8, ease: 'easeInOut' },
               }}
-              className="absolute top-1/2 -left-8 sm:-left-12 -translate-y-1/2 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              className="absolute top-1/2 -left-8 sm:-left-12 -translate-y-1/2 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
               title="Click & drag me anywhere!"
             >
-              <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+              <div className="w-8 h-8 rounded-xl bg-[#FF6B00]/15 border border-[#FF6B00]/30 flex items-center justify-center text-[#FF6B00]">
                 <Users className="w-4 h-4" />
               </div>
               <div>
@@ -135,10 +136,10 @@ export function Hero() {
                 x: { repeat: Infinity, duration: 5.8, ease: 'easeInOut', delay: 0.8 },
                 rotate: { repeat: Infinity, duration: 6.5, ease: 'easeInOut' },
               }}
-              className="absolute -bottom-6 left-0 sm:bottom-0 sm:-left-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-900/85 border border-white/15 backdrop-blur-xl shadow-2xl flex items-center gap-3 hover:border-white/35 transition-colors cursor-grab active:cursor-grabbing select-none"
+              className="absolute -bottom-6 left-0 sm:bottom-0 sm:-left-4 z-20 px-3.5 py-2.5 rounded-2xl bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/50 backdrop-blur-xl shadow-2xl flex items-center gap-3 transition-colors cursor-grab active:cursor-grabbing select-none hover:shadow-[0_0_25px_rgba(255,107,0,0.2)]"
               title="Click & drag me anywhere!"
             >
-              <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+              <div className="w-8 h-8 rounded-xl bg-[#FF6B00]/15 border border-[#FF6B00]/30 flex items-center justify-center text-[#FF6B00]">
                 <Trophy className="w-4 h-4" />
               </div>
               <div>

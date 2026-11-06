@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Procedural studio softbox environment map generator for photorealistic chrome & optical crystal glass
+// Procedural studio softbox environment map tuned for B&W + Blaze Orange & Amber luxury reflections
 function createStudioEnvironment(renderer) {
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
   pmremGenerator.compileEquirectangularShader();
@@ -11,39 +11,39 @@ function createStudioEnvironment(renderer) {
   canvas.height = 512;
   const ctx = canvas.getContext('2d');
 
-  // Ambient gradient
+  // Ambient deep charcoal gradient (#0A0A0A base)
   const bgGrad = ctx.createLinearGradient(0, 0, 0, 512);
-  bgGrad.addColorStop(0, '#0a0a12');
-  bgGrad.addColorStop(0.35, '#181824');
-  bgGrad.addColorStop(0.5, '#2e3046'); // horizon soft fill
-  bgGrad.addColorStop(0.65, '#181824');
-  bgGrad.addColorStop(1, '#06060a');
+  bgGrad.addColorStop(0, '#0a0a0a');
+  bgGrad.addColorStop(0.35, '#141416');
+  bgGrad.addColorStop(0.5, '#221d18'); // warm ember horizon fill
+  bgGrad.addColorStop(0.65, '#141416');
+  bgGrad.addColorStop(1, '#080808');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, 1024, 512);
 
-  // Softbox 1: Overhead key softbox (smooth diffuse white)
-  const g1 = ctx.createRadialGradient(512, 100, 10, 512, 100, 240);
+  // Softbox 1: Overhead key softbox (champagne white / silver rim)
+  const g1 = ctx.createRadialGradient(512, 90, 10, 512, 90, 240);
   g1.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
-  g1.addColorStop(0.4, 'rgba(230, 240, 255, 0.6)');
+  g1.addColorStop(0.4, 'rgba(255, 245, 235, 0.6)');
   g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
   ctx.fillStyle = g1;
   ctx.fillRect(200, 0, 624, 280);
 
-  // Softbox 2: Left rim light (cool silver / ice-blue reflection)
-  const g2 = ctx.createRadialGradient(160, 256, 5, 160, 256, 220);
-  g2.addColorStop(0, 'rgba(215, 235, 255, 0.85)');
-  g2.addColorStop(0.5, 'rgba(160, 195, 250, 0.35)');
+  // Softbox 2: Left rim light (Vibrant Blaze Orange #FF6B00 reflection)
+  const g2 = ctx.createRadialGradient(160, 256, 5, 160, 256, 230);
+  g2.addColorStop(0, 'rgba(255, 107, 0, 0.95)');
+  g2.addColorStop(0.4, 'rgba(245, 158, 11, 0.5)');
   g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
   ctx.fillStyle = g2;
-  ctx.fillRect(0, 80, 360, 350);
+  ctx.fillRect(0, 60, 360, 380);
 
-  // Softbox 3: Right rim light (warm silver reflection)
-  const g3 = ctx.createRadialGradient(864, 256, 5, 864, 256, 220);
-  g3.addColorStop(0, 'rgba(255, 250, 245, 0.85)');
-  g3.addColorStop(0.5, 'rgba(220, 210, 235, 0.35)');
+  // Softbox 3: Right rim light (Luminous Amber #F59E0B reflection)
+  const g3 = ctx.createRadialGradient(864, 256, 5, 864, 256, 230);
+  g3.addColorStop(0, 'rgba(245, 158, 11, 0.9)');
+  g3.addColorStop(0.4, 'rgba(255, 180, 50, 0.45)');
   g3.addColorStop(1, 'rgba(0, 0, 0, 0)');
   ctx.fillStyle = g3;
-  ctx.fillRect(664, 80, 360, 350);
+  ctx.fillRect(664, 60, 360, 380);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.mapping = THREE.EquirectangularReflectionMapping;
@@ -69,7 +69,7 @@ export function Zephyr3DOrb() {
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 0, 7.8);
+    camera.position.set(0, 0.1, 7.8);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -79,38 +79,64 @@ export function Zephyr3DOrb() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
 
-    // Apply procedural studio environment map
+    // Apply procedural B&W + Blaze Orange studio environment map
     const envMap = createStudioEnvironment(renderer);
     scene.environment = envMap;
 
-    // Main Group containing all 3D artifacts
+    // Main Group containing all 3D orb artifacts
     const mainGroup = new THREE.Group();
     scene.add(mainGroup);
 
-    // --- 1. Outer Crystalline Optical Glass Sphere ---
+    // --- 1. Soft Elliptical Ground Contact Shadow & Amber Bounce ---
+    const shadowCanvas = document.createElement('canvas');
+    shadowCanvas.width = 256;
+    shadowCanvas.height = 256;
+    const sCtx = shadowCanvas.getContext('2d');
+    const sGrad = sCtx.createRadialGradient(128, 128, 10, 128, 128, 124);
+    sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.95)');
+    sGrad.addColorStop(0.3, 'rgba(0, 0, 0, 0.8)');
+    sGrad.addColorStop(0.65, 'rgba(255, 107, 0, 0.16)'); // Warm Blaze Orange bounce shadow
+    sGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    sCtx.fillStyle = sGrad;
+    sCtx.fillRect(0, 0, 256, 256);
+    const shadowTexture = new THREE.CanvasTexture(shadowCanvas);
+
+    const shadowGeo = new THREE.PlaneGeometry(5.4, 5.4);
+    const shadowMat = new THREE.MeshBasicMaterial({
+      map: shadowTexture,
+      transparent: true,
+      opacity: 0.92,
+      depthWrite: false,
+    });
+    const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
+    shadowMesh.rotation.x = -Math.PI / 2;
+    shadowMesh.position.y = -2.35;
+    scene.add(shadowMesh);
+
+    // --- 2. Outer Crystalline Optical Glass Sphere ---
     const sphereGeo = new THREE.SphereGeometry(2.18, 64, 64);
     const glassMaterial = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
       metalness: 0.02,
       roughness: 0.05,
-      transmission: 0.95, // Truly crystal clear transmission
-      thickness: 1.1,
-      ior: 1.5,
-      reflectivity: 0.85,
+      transmission: 0.95, // Crystal clear transmission to show Blaze core
+      thickness: 1.15,
+      ior: 1.51,
+      reflectivity: 0.88,
       clearcoat: 1.0,
       clearcoatRoughness: 0.04,
       transparent: true,
       opacity: 1.0,
-      attenuationColor: new THREE.Color(0xdbeafe), // Subtle celestial ice tint in glass depth
-      attenuationDistance: 4.5,
+      attenuationColor: new THREE.Color(0xffedd5), // Delicate warm amber depth tint
+      attenuationDistance: 4.8,
     });
     const outerSphere = new THREE.Mesh(sphereGeo, glassMaterial);
     mainGroup.add(outerSphere);
 
-    // --- 2. Ethereal Fresnel Rim Glow (Edge Silhouette) ---
+    // --- 3. Vibrant Blaze Orange & Amber Fresnel Rim Glow Shader ---
     const rimGlowGeo = new THREE.SphereGeometry(2.19, 64, 64);
     const rimGlowMaterial = new THREE.ShaderMaterial({
       vertexShader: `
@@ -128,9 +154,14 @@ export function Zephyr3DOrb() {
         varying vec3 vViewDir;
         void main() {
           float fresnel = 1.0 - max(dot(vNormal, vViewDir), 0.0);
-          float rim = pow(fresnel, 3.0);
-          vec3 rimColor = mix(vec3(0.65, 0.78, 1.0), vec3(1.0, 1.0, 1.0), rim);
-          gl_FragColor = vec4(rimColor, rim * 0.75);
+          float rim = pow(fresnel, 2.7);
+          // Transition from fiery Blaze Orange (#FF6B00) to Golden Amber (#F59E0B) and pure silver rim
+          vec3 orangeColor = vec3(1.0, 0.42, 0.0);
+          vec3 amberColor = vec3(1.0, 0.72, 0.15);
+          vec3 whiteRim = vec3(1.0, 0.96, 0.9);
+          vec3 rimColor = mix(orangeColor, amberColor, smoothstep(0.2, 0.7, rim));
+          rimColor = mix(rimColor, whiteRim, smoothstep(0.7, 1.0, rim));
+          gl_FragColor = vec4(rimColor, rim * 0.92);
         }
       `,
       transparent: true,
@@ -141,51 +172,52 @@ export function Zephyr3DOrb() {
     const rimGlowMesh = new THREE.Mesh(rimGlowGeo, rimGlowMaterial);
     mainGroup.add(rimGlowMesh);
 
-    // --- 3. Precision Polished Materials ---
+    // --- 4. Precision Polished Materials ---
     const chromeMaterial = new THREE.MeshStandardMaterial({
       color: 0xf4f4f6,
       metalness: 0.98,
       roughness: 0.08,
-      envMapIntensity: 1.6,
+      envMapIntensity: 1.7,
     });
 
     const titaniumMaterial = new THREE.MeshStandardMaterial({
-      color: 0xa1a1aa,
-      metalness: 0.92,
-      roughness: 0.16,
-      envMapIntensity: 1.2,
+      color: 0x52525b,
+      metalness: 0.94,
+      roughness: 0.14,
+      envMapIntensity: 1.3,
     });
 
-    const darkAccentMaterial = new THREE.MeshStandardMaterial({
-      color: 0x3f3f46,
-      metalness: 0.85,
-      roughness: 0.25,
-      envMapIntensity: 1.0,
+    const blazeAccentMaterial = new THREE.MeshStandardMaterial({
+      color: 0xff6b00,
+      emissive: 0xff6b00,
+      emissiveIntensity: 0.85,
+      metalness: 0.9,
+      roughness: 0.2,
     });
 
-    // --- 4. Gyroscopic Inner Mechanism Group ---
+    // --- 5. Gyroscopic Inner Mechanism Group ---
     const gyroGroup = new THREE.Group();
     mainGroup.add(gyroGroup);
 
-    // A. Outer Gimbal Ring (with precision notches)
+    // A. Outer Gimbal Ring (Polished Chrome with Blaze Orange tick marks)
     const outerRingGeo = new THREE.TorusGeometry(1.68, 0.045, 32, 120);
     const outerRing = new THREE.Mesh(outerRingGeo, chromeMaterial);
     gyroGroup.add(outerRing);
 
-    // Notched tick marks around outer gimbal ring
-    const notchGeo = new THREE.BoxGeometry(0.015, 0.06, 0.02);
+    // 36 Blaze Orange tick marks
+    const notchGeo = new THREE.BoxGeometry(0.016, 0.065, 0.02);
     const notchGroup = new THREE.Group();
     const notchCount = 36;
     for (let i = 0; i < notchCount; i++) {
       const angle = (i / notchCount) * Math.PI * 2;
-      const notch = new THREE.Mesh(notchGeo, darkAccentMaterial);
+      const notch = new THREE.Mesh(notchGeo, blazeAccentMaterial);
       notch.position.set(Math.cos(angle) * 1.68, Math.sin(angle) * 1.68, 0);
       notch.rotation.z = angle;
       notchGroup.add(notch);
     }
     outerRing.add(notchGroup);
 
-    // B. Inner Gimbal Ring (counter-axis tilt)
+    // B. Inner Gimbal Ring (Brushed Titanium on counter-axis tilt)
     const innerRingGeo = new THREE.TorusGeometry(1.42, 0.038, 32, 100);
     const innerRing = new THREE.Mesh(innerRingGeo, titaniumMaterial);
     innerRing.rotation.x = Math.PI / 3;
@@ -193,73 +225,78 @@ export function Zephyr3DOrb() {
 
     // C. Iconic Diagonal Slashed Emblem (Ø symbol matching Zephyr and Navbar)
     const emblemGroup = new THREE.Group();
-    const emblemRingGeo = new THREE.TorusGeometry(1.12, 0.045, 32, 100);
+    const emblemRingGeo = new THREE.TorusGeometry(1.12, 0.048, 32, 100);
     const emblemRing = new THREE.Mesh(emblemRingGeo, chromeMaterial);
     emblemGroup.add(emblemRing);
 
-    const slashGeo = new THREE.CylinderGeometry(0.04, 0.04, 2.5, 32);
+    const slashGeo = new THREE.CylinderGeometry(0.042, 0.042, 2.5, 32);
     const slashMesh = new THREE.Mesh(slashGeo, chromeMaterial);
     slashMesh.rotation.z = Math.PI / 4;
     emblemGroup.add(slashMesh);
     gyroGroup.add(emblemGroup);
 
-    // D. Delicate Equator Laser / Orbital Guide Ring
-    const equatorGeo = new THREE.TorusGeometry(1.26, 0.015, 16, 100);
+    // D. Luminous Blaze Orange Equator Orbital Laser Track
+    const equatorGeo = new THREE.TorusGeometry(1.26, 0.018, 16, 100);
     const equatorMat = new THREE.MeshBasicMaterial({
-      color: 0x93c5fd,
+      color: 0xff6b00,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.85,
     });
     const equatorRing = new THREE.Mesh(equatorGeo, equatorMat);
     equatorRing.rotation.x = Math.PI / 2;
     gyroGroup.add(equatorRing);
 
-    // --- 5. Radiant Luminous Singularity Core ---
+    // --- 6. Radiant Luminous Blaze Singularity Core ---
     const coreGroup = new THREE.Group();
     gyroGroup.add(coreGroup);
 
-    // Inner Glowing Core Orb
-    const innerCoreGeo = new THREE.SphereGeometry(0.38, 32, 32);
+    // Inner Glowing Blaze Orange Sun Core
+    const innerCoreGeo = new THREE.SphereGeometry(0.4, 32, 32);
     const innerCoreMat = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      emissive: 0xdbeafe,
-      emissiveIntensity: 1.1,
+      color: 0xff6b00,
+      emissive: 0xff6b00,
+      emissiveIntensity: 2.2, // Glowing vibrant blaze orange
       roughness: 0.15,
-      metalness: 0.4,
+      metalness: 0.2,
     });
     const innerCore = new THREE.Mesh(innerCoreGeo, innerCoreMat);
     coreGroup.add(innerCore);
 
-    // Outer Geodesic Icosahedron Cage around Core
-    const cageGeo = new THREE.IcosahedronGeometry(0.62, 1);
+    // Outer Geodesic Icosahedron Cage in Golden Amber
+    const cageGeo = new THREE.IcosahedronGeometry(0.64, 1);
     const cageMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
       metalness: 0.95,
       roughness: 0.1,
       wireframe: true,
-      emissive: 0x60a5fa,
-      emissiveIntensity: 0.35,
+      emissive: 0xf59e0b,
+      emissiveIntensity: 0.9, // Warm amber cage glow
     });
     const cageMesh = new THREE.Mesh(cageGeo, cageMat);
     coreGroup.add(cageMesh);
 
-    // Omni light emitted outward from inside the core
-    const coreLight = new THREE.PointLight(0xffffff, 2.2, 8);
+    // Warm Blaze Orange Omni Point Light emitted from core outwards
+    const coreLight = new THREE.PointLight(0xff6b00, 3.2, 9);
     coreLight.position.set(0, 0, 0);
     coreGroup.add(coreLight);
 
-    // --- 6. Floating Prismatic Satellites & Cosmic Shards ---
+    // Secondary Warm Amber Fill Point Light
+    const amberFillLight = new THREE.PointLight(0xf59e0b, 1.8, 6);
+    amberFillLight.position.set(0, 0.4, 0.4);
+    coreGroup.add(amberFillLight);
+
+    // --- 7. Floating Prismatic Satellites & Ember Shards ---
     const satGroup = new THREE.Group();
     mainGroup.add(satGroup);
 
-    const shardGeo = new THREE.OctahedronGeometry(0.045, 0);
+    const shardGeo = new THREE.OctahedronGeometry(0.048, 0);
     const shardMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      metalness: 0.92,
-      roughness: 0.12,
-      emissive: 0x93c5fd,
-      emissiveIntensity: 0.4,
-      envMapIntensity: 1.5,
+      metalness: 0.95,
+      roughness: 0.1,
+      emissive: 0xff6b00,
+      emissiveIntensity: 0.75, // Glowing blaze embers
+      envMapIntensity: 1.6,
     });
 
     const satellites = [];
@@ -274,7 +311,7 @@ export function Zephyr3DOrb() {
       satGroup.add(mesh);
     }
 
-    // Micro stardust points
+    // Micro stardust points with warm champagne & amber tint
     const starCount = 80;
     const starGeo = new THREE.BufferGeometry();
     const starPositions = new Float32Array(starCount * 3);
@@ -288,28 +325,28 @@ export function Zephyr3DOrb() {
     }
     starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
     const starMat = new THREE.PointsMaterial({
-      color: 0xffffff,
-      size: 0.03,
+      color: 0xffe4cc,
+      size: 0.032,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.7,
       blending: THREE.AdditiveBlending,
     });
     const starPoints = new THREE.Points(starGeo, starMat);
     mainGroup.add(starPoints);
 
-    // --- 7. Balanced Key & Rim Studio Lights ---
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    // --- 8. Balanced Key & Rim Studio Lights ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
     keyLight.position.set(4, 5, 5);
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0x93c5fd, 1.2);
-    fillLight.position.set(-5, -3, -3);
+    const fillLight = new THREE.DirectionalLight(0xff6b00, 1.4);
+    fillLight.position.set(-5, -2, -3);
     scene.add(fillLight);
 
-    // --- 8. Smooth Interactive Controls & Inertia Physics ---
+    // --- 9. Smooth Interactive Controls & Inertia Physics ---
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
@@ -364,19 +401,13 @@ export function Zephyr3DOrb() {
     window.addEventListener('mouseup', handleMouseUp);
     container.addEventListener('mousedown', handleMouseDown);
 
-    // --- 9. Animation Loop ---
+    // --- 10. Animation Loop ---
     let animId = null;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
       const elapsed = clock.getElapsedTime();
-
-      // Zero-Gravity Weightless Floating / Bobbing on the 3D Orb
-      const floatY = Math.sin(elapsed * 1.25) * 0.22;
-      const floatX = Math.cos(elapsed * 0.85) * 0.1;
-      mainGroup.position.y = floatY;
-      mainGroup.position.x = floatX;
 
       // Inertia drag damping
       if (!isDragging) {
@@ -393,7 +424,7 @@ export function Zephyr3DOrb() {
       }
 
       // Synchronized Differential Mechanics
-      gyroGroup.rotation.y = elapsed * 0.12;
+      gyroGroup.rotation.y = elapsed * 0.14;
       outerRing.rotation.z = Math.sin(elapsed * 0.6) * 0.15;
       innerRing.rotation.y = -elapsed * 0.22;
       innerRing.rotation.z = Math.cos(elapsed * 0.5) * 0.2;
@@ -401,10 +432,13 @@ export function Zephyr3DOrb() {
       emblemGroup.rotation.x = Math.sin(elapsed * 0.4) * 0.18;
 
       // Core pulsating breathing
-      const corePulse = 1.0 + Math.sin(elapsed * 2.2) * 0.08;
+      const corePulse = 1.0 + Math.sin(elapsed * 2.5) * 0.09;
       coreGroup.scale.set(corePulse, corePulse, corePulse);
       cageMesh.rotation.y = -elapsed * 0.45;
       cageMesh.rotation.x = elapsed * 0.3;
+
+      // Contact shadow subtle pulse with breathing
+      shadowMesh.scale.set(1.0 + Math.sin(elapsed * 2.5) * 0.03, 1.0 + Math.sin(elapsed * 2.5) * 0.03, 1.0);
 
       // Orbiting satellites animation
       satellites.forEach((sat) => {
@@ -414,8 +448,8 @@ export function Zephyr3DOrb() {
           Math.sin(curAngle) * Math.sin(sat.tilt) * sat.radius * 0.45 + Math.sin(elapsed * 1.2 + sat.phase) * 0.12,
           Math.sin(curAngle) * sat.radius
         );
-        sat.mesh.rotation.x += 0.015;
-        sat.mesh.rotation.y += 0.02;
+        sat.mesh.rotation.x += 0.02;
+        sat.mesh.rotation.y += 0.025;
       });
 
       // Subtle stardust rotation
@@ -441,6 +475,9 @@ export function Zephyr3DOrb() {
       }
       renderer.dispose();
       envMap.dispose();
+      shadowTexture.dispose();
+      shadowGeo.dispose();
+      shadowMat.dispose();
       sphereGeo.dispose();
       rimGlowGeo.dispose();
       outerRingGeo.dispose();
@@ -457,7 +494,7 @@ export function Zephyr3DOrb() {
       rimGlowMaterial.dispose();
       chromeMaterial.dispose();
       titaniumMaterial.dispose();
-      darkAccentMaterial.dispose();
+      blazeAccentMaterial.dispose();
       equatorMat.dispose();
       innerCoreMat.dispose();
       cageMat.dispose();

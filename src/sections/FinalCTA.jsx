@@ -6,9 +6,9 @@ export function FinalCTA() {
   const navigate = useNavigate();
 
   return (
-    <section className="py-28 sm:py-36 relative overflow-hidden text-center bg-black">
-      {/* Subtle Central Ambient Spotlight */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-white/[0.04] blur-3xl rounded-full pointer-events-none -z-10" />
+    <section className="py-28 sm:py-36 relative overflow-hidden text-center">
+      {/* Central Ambient Blaze Orange Spotlight */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#FF6B00]/[0.14] via-[#F59E0B]/[0.08] to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
 
       <div className="container-custom max-w-3xl">
         <h2 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08] mb-6">

@@ -11,14 +11,14 @@ export function App() {
   const [splashFinished, setSplashFinished] = useState(false);
 
   useEffect(() => {
-    // Permanently enforce Zephyr dark mode
+    // Enforce B&W + Blaze Orange dark theme (#0A0A0A / #F4F4F5)
     document.documentElement.classList.add('dark');
     document.documentElement.classList.remove('light');
-    document.documentElement.style.backgroundColor = '#000000';
+    document.documentElement.style.backgroundColor = '#0A0A0A';
     document.documentElement.style.colorScheme = 'dark';
     if (document.body) {
-      document.body.style.backgroundColor = '#000000';
-      document.body.style.color = '#ffffff';
+      document.body.style.backgroundColor = '#0A0A0A';
+      document.body.style.color = '#F4F4F5';
     }
   }, []);
 
