@@ -1,23 +1,51 @@
 import { useState, useEffect } from 'react';
 
+/**
+ * High-performance Scroll Progress Hook
+ * - rAF-throttled to avoid layout thrashing
+ * - Compatible with Lenis virtual scroll & native window scroll
+ * - Quantized to avoid excessive React re-renders
+ */
 export function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
+  const [state, setState] = useState({ progress: 0, scrollY: 0 });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const currentProgress = totalHeight > 0 ? (currentScrollY / totalHeight) : 0;
-      setScrollY(currentScrollY);
-      setProgress(Math.min(Math.max(currentProgress, 0), 1));
+    let rafId = 0;
+
+    const read = () => {
+      rafId = 0;
+      const y = window.__lenis ? window.__lenis.scroll : window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const p = total > 0 ? Math.min(1, Math.max(0, y / total)) : 0;
+      const qy = Math.round(y / 15) * 15;
+      const qp = Math.round(p * 100) / 100;
+      setState((prev) =>
+        prev.scrollY === qy && prev.progress === qp ? prev : { progress: qp, scrollY: qy }
+      );
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => {
+      if (!rafId) rafId = requestAnimationFrame(read);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    let unbindLenis;
+    if (window.__lenis) {
+      window.__lenis.on('scroll', onScroll);
+      unbindLenis = () => window.__lenis.off('scroll', onScroll);
+    }
+
+    read();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (unbindLenis) unbindLenis();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
-  return { progress, scrollY };
+  return state;
 }
-

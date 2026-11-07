@@ -150,7 +150,7 @@ export function FinalCTA() {
           opacity: inView ? 1 : 0,
           transition: 'opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s',
         }}
-        className="absolute top-12 left-1/2 -translate-x-1/2 w-[540px] h-[340px] bg-radial-[circle,rgba(255,107,0,0.22)_0%,rgba(245,158,11,0.06)_45%,transparent_72%] blur-3xl pointer-events-none"
+        className="absolute top-12 left-1/2 -translate-x-1/2 w-[540px] h-[340px] bg-[radial-gradient(circle,rgba(255,107,0,0.22)_0%,rgba(245,158,11,0.06)_45%,transparent_72%)] blur-3xl pointer-events-none"
       />
 
       <div className="container-custom relative z-10">

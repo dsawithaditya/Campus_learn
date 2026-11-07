@@ -10,6 +10,9 @@ import {
   GlobalProgressBar,
   GlobalClickBurst,
   CustomCursorGlow,
+  CustomCursor,
+  SmoothScroll,
+  ScrollReveal,
 } from './components/GlobalExtras';
 import { AppRoutes } from './routes';
 import { useAppStore } from './store/useAppStore';
@@ -63,6 +66,9 @@ export function App() {
 
       {/* Ambient Blaze Orange Cursor Spotlight */}
       <CustomCursorGlow />
+      <CustomCursor />
+      <SmoothScroll />
+      <ScrollReveal />
 
       {/* Top Scroll Progress Laser Bar */}
       <GlobalProgressBar />

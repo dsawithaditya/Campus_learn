@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import Lenis from 'lenis';
 import { useScrollProgress } from '../hooks/useScrollProgress';
 
 /**
@@ -101,7 +102,8 @@ export function BackToTopButton() {
 
   const scrollToTop = () => {
     setIsLaunching(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.5 });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => setIsLaunching(false), 650);
   };
 
@@ -215,45 +217,60 @@ export function GrailFloatingPill() {
 }
 
 /**
- * Grail-Inspired 3D Framed Collector Card Preloader (_root_o5e3l_2)
- * Features 3D floating card with corner cutouts, live 0% -> 100% tabular counter,
- * and 3D perspective book-open reveal into the Obsidian Hero stage
+ * High-Performance Grail-Inspired 3D Framed Collector Card Preloader
+ * - Zero React re-renders during 0% -> 100% count via direct DOM manipulation
+ * - Snappy, luxury 540ms count with smooth cubic curve
+ * - Clean composite-only aperture reveal (zero blur-filter hitching)
  */
 export function SplashScreen({ onFinish }) {
   const [visible, setVisible] = useState(true);
-  const [pct, setPct] = useState(0);
   const [opening, setOpening] = useState(false);
   const groupRef = useRef(null);
+  const pctTextRef = useRef(null);
+  const ringRef = useRef(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      setVisible(false);
+      if (onFinish) onFinish();
+      return undefined;
+    }
+
     let rafId = 0;
     const start = performance.now();
-    const loadDuration = 780; // Crisp, fast load to 100%
+    const loadDuration = 540; // High-energy, crisp load
 
     const step = (now) => {
       const elapsed = now - start;
       const p = Math.min(1, elapsed / loadDuration);
-      const eased = 1 - Math.pow(1 - p, 3);
-      const currentPct = Math.round(eased * 100);
-      setPct(currentPct);
+      // Fast acceleration curve to 75%, then graceful settle to 100%
+      const eased = 1 - Math.pow(1 - p, 2.5);
+      const currentPct = Math.min(100, Math.round(eased * 100));
 
-      // Gentle 3D float matching Grail's floatSpeed & tiltX/tiltY
+      if (pctTextRef.current) {
+        pctTextRef.current.textContent = `${currentPct}%`;
+      }
+      if (ringRef.current) {
+        ringRef.current.style.strokeDashoffset = `${107 - (currentPct / 100) * 107}`;
+      }
+
+      // Micro 3D float during counting
       if (groupRef.current && p < 1) {
         const t = elapsed / 1000;
-        const rx = Math.sin(t * 2.4) * 7;
-        const ry = Math.cos(t * 2.0) * 11;
-        const rz = Math.sin(t * 1.6) * -3;
-        groupRef.current.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg)`;
+        const rx = Math.sin(t * 2.8) * 5;
+        const ry = Math.cos(t * 2.2) * 8;
+        groupRef.current.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
       }
 
       if (p < 1) {
         rafId = requestAnimationFrame(step);
       } else {
         setOpening(true);
+        if (onFinish) onFinish();
         setTimeout(() => {
           setVisible(false);
-          if (onFinish) onFinish();
-        }, 420);
+        }, 320);
       }
     };
 
@@ -269,40 +286,38 @@ export function SplashScreen({ onFinish }) {
           aria-live="polite"
           aria-label="Loading Campus Learn"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] } }}
+          exit={{ opacity: 0, transition: { duration: 0.32, ease: [0.16, 1, 0.3, 1] } }}
           className="fixed inset-0 z-[100] bg-[#070709] flex items-center justify-center pointer-events-none select-none overflow-hidden"
           style={{ perspective: '1400px' }}
         >
           {/* Ambient radial aura */}
-          <div className="absolute w-[520px] h-[520px] rounded-full bg-gradient-to-b from-[#FF6B00]/[0.22] via-[#F59E0B]/[0.08] to-transparent blur-3xl pointer-events-none" />
+          <div className="absolute w-[520px] h-[520px] rounded-full bg-gradient-to-b from-[#FF6B00]/[0.20] via-[#F59E0B]/[0.06] to-transparent blur-3xl pointer-events-none" />
 
-          {/* 3D Floating Collector Card Group (_group_o5e3l_23 / _art_o5e3l_44) */}
+          {/* 3D Floating Collector Card Group */}
           <motion.div
             ref={groupRef}
             animate={
               opening
                 ? {
-                    rotateY: -115,
-                    scale: 3.2,
+                    scale: 1.08,
+                    y: -14,
                     opacity: 0,
-                    filter: 'blur(8px)',
                   }
                 : {
-                    rotateY: 0,
                     scale: 1,
+                    y: 0,
                     opacity: 1,
-                    filter: 'blur(0px)',
                   }
             }
-            transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
-            style={{ transformStyle: 'preserve-3d' }}
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformStyle: 'preserve-3d', willChange: 'transform, opacity' }}
             className="relative w-[220px] h-[296px] sm:w-[248px] sm:h-[334px] rounded-[20px] bg-[#0D0D12] shadow-[0_28px_80px_rgba(0,0,0,0.95),0_0_50px_rgba(255,107,0,0.28)] overflow-hidden flex flex-col items-center justify-between py-9 px-6"
           >
-            {/* Grail Ornate Frame Border (_frame_o5e3l_54) */}
+            {/* Grail Ornate Frame Border */}
             <div className="absolute inset-0 border-[10px] border-[#FF6B00]/80 pointer-events-none" />
             <div className="absolute inset-[13px] border border-[#FFA057]/25 pointer-events-none" />
 
-            {/* Grail 4 Circular Corner Cutouts (_corner_o5e3l_59) */}
+            {/* Grail 4 Circular Corner Cutouts */}
             <div className="absolute -left-9 -top-9 w-20 h-20 rounded-full bg-[#FF6B00]/80 pointer-events-none" />
             <div className="absolute -right-9 -top-9 w-20 h-20 rounded-full bg-[#FF6B00]/80 pointer-events-none" />
             <div className="absolute -left-9 -bottom-9 w-20 h-20 rounded-full bg-[#FF6B00]/80 pointer-events-none" />
@@ -313,11 +328,12 @@ export function SplashScreen({ onFinish }) {
               CAMPUS LEARN
             </span>
 
-            {/* Central Orbital Slashed Mark (_mark_o5e3l_66) */}
+            {/* Central Orbital Slashed Mark */}
             <div className="relative z-10 w-20 h-20 rounded-full border border-[#FF6B00]/40 bg-zinc-950/90 flex items-center justify-center shadow-[0_0_30px_rgba(255,107,0,0.35)]">
               <svg viewBox="0 0 48 48" className="w-12 h-12 fill-none">
                 <circle cx="24" cy="24" r="17" className="stroke-white/20" strokeWidth="2.2" />
                 <circle
+                  ref={ringRef}
                   cx="24"
                   cy="24"
                   r="17"
@@ -325,7 +341,7 @@ export function SplashScreen({ onFinish }) {
                   strokeWidth="2.4"
                   strokeLinecap="round"
                   strokeDasharray="107"
-                  strokeDashoffset={107 - (pct / 100) * 107}
+                  strokeDashoffset="107"
                   style={{ filter: 'drop-shadow(0 0 6px rgba(255,107,0,0.8))' }}
                 />
                 <line
@@ -340,13 +356,16 @@ export function SplashScreen({ onFinish }) {
               </svg>
             </div>
 
-            {/* Grail Uppercase Light Editorial Serif LOADING + Tabular % (_txt_o5e3l_74) */}
+            {/* Uppercase Editorial Serif LOADING + Tabular % */}
             <div className="relative z-10 text-center">
               <div className="font-grail-serif text-[34px] sm:text-[38px] text-[#FFA057] leading-[0.88] tracking-[-0.01em]">
                 Loading
               </div>
-              <div className="font-grail-serif text-[38px] sm:text-[42px] text-white tabular-nums leading-[0.9] mt-1">
-                {pct}%
+              <div
+                ref={pctTextRef}
+                className="font-grail-serif text-[38px] sm:text-[42px] text-white tabular-nums leading-[0.9] mt-1"
+              >
+                0%
               </div>
             </div>
           </motion.div>
@@ -415,3 +434,249 @@ export function CustomCursorGlow() {
   );
 }
 
+
+/**
+ * Lenis-powered inertial smooth scrolling (disabled for reduced-motion users).
+ * - Instant startup (static import, no chunk-loading delay)
+ * - Calibrated duration (0.88s) and wheel multiplier (1.05) for instant responsiveness without floatiness
+ * - Exposes instance on window.__lenis for perfect sync across all sections
+ */
+export function SmoothScroll() {
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    const lenis = new Lenis({
+      duration: 0.88,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.0,
+      syncTouch: false,
+    });
+
+    window.__lenis = lenis;
+    document.documentElement.classList.add('lenis');
+
+    let rafId = 0;
+    const raf = (time) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      delete window.__lenis;
+      document.documentElement.classList.remove('lenis');
+    };
+  }, []);
+
+  return null;
+}
+
+/**
+ * Obsidian + Blaze Orange magnetic cursor.
+ * - Core dot follows the pointer instantly; ring trails with spring easing.
+ * - Ring morphs per context: hover (expand + ember fill), press (contract),
+ *   text (I-beam), drag (chevrons), hidden when leaving the window.
+ * - Direct transform on SVG ticks avoids expensive CSS variable invalidations.
+ */
+export function CustomCursor() {
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const ticksRef = useRef(null);
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    if (window.matchMedia?.('(pointer: coarse)').matches) return undefined;
+    setEnabled(true);
+    document.documentElement.classList.add('has-custom-cursor');
+    return () => document.documentElement.classList.remove('has-custom-cursor');
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return undefined;
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    const ticks = ticksRef.current;
+    if (!dot || !ring) return undefined;
+
+    const pos = { x: -100, y: -100 };
+    const ringPos = { x: -100, y: -100 };
+    let mode = 'default';
+    let pressed = false;
+    let visible = false;
+    let spin = 0;
+    let rafId = 0;
+
+    const INTERACTIVE =
+      'a,button,[role="button"],select,summary,label[for],.cursor-pointer,[data-cursor="hover"]';
+    const TEXT =
+      'input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),textarea,[contenteditable="true"]';
+
+    const applyMode = () => {
+      ring.dataset.mode = mode;
+      ring.dataset.pressed = pressed ? '1' : '0';
+      dot.dataset.mode = mode;
+    };
+
+    const onMove = (e) => {
+      pos.x = e.clientX;
+      pos.y = e.clientY;
+      if (!visible) {
+        visible = true;
+        ringPos.x = pos.x;
+        ringPos.y = pos.y;
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
+      }
+    };
+
+    const onOver = (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      let next = 'default';
+      if (t.closest(TEXT)) next = 'text';
+      else if (t.closest('.cursor-grab, [data-cursor="drag"]')) next = 'drag';
+      else if (t.closest(INTERACTIVE)) next = 'hover';
+      if (next !== mode) {
+        mode = next;
+        applyMode();
+      }
+    };
+
+    const onDown = () => {
+      pressed = true;
+      applyMode();
+    };
+    const onUp = () => {
+      pressed = false;
+      applyMode();
+    };
+    const onLeave = () => {
+      visible = false;
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    };
+
+    const loop = () => {
+      rafId = requestAnimationFrame(loop);
+      const dx = pos.x - ringPos.x;
+      const dy = pos.y - ringPos.y;
+      ringPos.x += dx * 0.22;
+      ringPos.y += dy * 0.22;
+      spin = (spin + 0.6 + Math.min(6, Math.hypot(dx, dy) * 0.05)) % 360;
+
+      // Velocity squash/stretch along motion direction
+      const speed = Math.min(1, Math.hypot(dx, dy) / 90);
+      const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+      const stretch = 1 + speed * 0.2;
+      const squash = 1 - speed * 0.1;
+
+      dot.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%)`;
+      ring.style.transform = `translate3d(${ringPos.x}px, ${ringPos.y}px, 0) translate(-50%, -50%) rotate(${angle.toFixed(1)}deg) scale(${stretch.toFixed(3)}, ${squash.toFixed(3)}) rotate(${(-angle).toFixed(1)}deg)`;
+      if (ticks) {
+        ticks.style.transform = `rotate(${spin.toFixed(1)}deg)`;
+      }
+    };
+
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerover', onOver, { passive: true });
+    window.addEventListener('pointerdown', onDown, { passive: true });
+    window.addEventListener('pointerup', onUp, { passive: true });
+    document.documentElement.addEventListener('pointerleave', onLeave);
+    rafId = requestAnimationFrame(loop);
+    applyMode();
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerover', onOver);
+      window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointerup', onUp);
+      document.documentElement.removeEventListener('pointerleave', onLeave);
+    };
+  }, [enabled]);
+
+  if (!enabled) return null;
+
+  return (
+    <>
+      <div ref={ringRef} aria-hidden="true" className="cl-cursor-ring" style={{ opacity: 0 }}>
+        <svg viewBox="0 0 48 48" className="cl-cursor-ring-svg">
+          <circle cx="24" cy="24" r="21" className="cl-ring-base" />
+          <g ref={ticksRef} className="cl-ring-ticks">
+            <line x1="24" y1="1" x2="24" y2="6" />
+            <line x1="24" y1="42" x2="24" y2="47" />
+            <line x1="1" y1="24" x2="6" y2="24" />
+            <line x1="42" y1="24" x2="47" y2="24" />
+          </g>
+          <g className="cl-ring-drag">
+            <path d="M9 18l-6 6 6 6M39 18l6 6-6 6" />
+          </g>
+        </svg>
+      </div>
+      <div ref={dotRef} aria-hidden="true" className="cl-cursor-dot" style={{ opacity: 0 }} />
+    </>
+  );
+}
+
+/**
+ * Optimized Scroll-reveal for section headings and [data-reveal] elements.
+ * - Debounced mutation scanner avoids layout thrashing
+ * - Single observer instance with automatic unobserve once revealed
+ */
+export function ScrollReveal() {
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    const SELECTOR = 'main h2, main [data-reveal]';
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('cl-in');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+    );
+
+    const seen = new WeakSet();
+    const scan = () => {
+      document.querySelectorAll(SELECTOR).forEach((el) => {
+        if (seen.has(el)) return;
+        seen.add(el);
+        el.classList.add('cl-reveal');
+        io.observe(el);
+      });
+    };
+
+    scan();
+
+    let moTimer = 0;
+    const debouncedScan = () => {
+      if (moTimer) return;
+      moTimer = requestAnimationFrame(() => {
+        moTimer = 0;
+        scan();
+      });
+    };
+
+    const mo = new MutationObserver(debouncedScan);
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+      if (moTimer) cancelAnimationFrame(moTimer);
+    };
+  }, []);
+
+  return null;
+}

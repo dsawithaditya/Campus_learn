@@ -301,7 +301,7 @@ export function GrailSpiralDeck() {
                 <div className="flex items-start justify-between mb-4">
                   {/* Shield Crest Emblem */}
                   <div
-                    className="w-12 h-13 rounded-2xl flex items-center justify-center border shadow-lg transition-transform duration-300 group-hover:scale-105"
+                    className="w-12 h-[52px] rounded-2xl flex items-center justify-center border shadow-lg transition-transform duration-300 group-hover:scale-105"
                     style={{
                       backgroundColor: `${item.accent}18`,
                       borderColor: `${item.accent}45`,

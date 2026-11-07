@@ -186,7 +186,7 @@ export function TrendingCourses() {
           transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
           className="relative rounded-3xl bg-gradient-to-b from-zinc-950/90 to-black/90 border border-white/[0.08] p-6 sm:p-9 mb-14 overflow-hidden"
         >
-          <div className="absolute inset-0 bg-radial-[circle_at_50%_50%,rgba(255,107,0,0.12)_0%,transparent_70%] pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,0,0.12)_0%,transparent_70%)] pointer-events-none" />
 
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div>

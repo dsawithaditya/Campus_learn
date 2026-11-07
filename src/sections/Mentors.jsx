@@ -68,7 +68,7 @@ export function Mentors() {
         {activeMentor && (
           <div className="relative rounded-[28px] bg-[#060608] border border-white/10 p-6 sm:p-10 mb-14 overflow-hidden select-none shadow-[0_28px_70px_rgba(0,0,0,0.9)]">
             {/* Ambient Stage Spotlight */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[320px] rounded-full bg-radial-[circle,rgba(255,107,0,0.18)_0%,transparent_70%] blur-2xl pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[320px] rounded-full bg-[radial-gradient(circle,rgba(255,107,0,0.18)_0%,transparent_70%)] blur-2xl pointer-events-none" />
 
             {/* Top Bar: One-liner Bio + Grail Animated (01) Parentheses Counter (_topbar_1pamk_164) */}
             <div className="relative z-10 flex items-start justify-between gap-6 mb-8 sm:mb-12">
@@ -147,7 +147,7 @@ export function Mentors() {
               {/* Soft Radial Scrim (_scrim_1pamk_138) */}
               <div
                 aria-hidden="true"
-                className="w-3/4 h-16 bg-radial-[circle,rgba(0,0,0,0.85)_0%,transparent_70%] blur-xl pointer-events-none z-[2] -mt-6"
+                className="w-3/4 h-16 bg-[radial-gradient(circle,rgba(0,0,0,0.85)_0%,transparent_70%)] blur-xl pointer-events-none z-[2] -mt-6"
               />
 
               {/* Giant Foreground Domain Epithet (_nameFront_1pamk_13) */}

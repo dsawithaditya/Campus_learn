@@ -99,13 +99,16 @@ export function Hero() {
   useEffect(() => {
     const el = headlineRef.current;
     if (!el) return;
+    el.style.willChange = 'transform, opacity';
     let rafId = 0;
 
     const onScroll = () => {
-      cancelAnimationFrame(rafId);
+      if (rafId) return;
       rafId = requestAnimationFrame(() => {
+        rafId = 0;
         const y = window.scrollY;
         const vh = window.innerHeight || 800;
+        if (y > vh * 0.8) return;
         const prog = Math.min(1, Math.max(0, y / (vh * 0.65)));
         const scale = 1 - 0.24 * prog;
         const ty = -y * 0.14;
@@ -117,7 +120,7 @@ export function Hero() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      cancelAnimationFrame(rafId);
+      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
@@ -151,7 +154,7 @@ export function Hero() {
 
       {/* Ambient Radial Vignette & Blaze Orange Glow Layers */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[920px] h-[480px] bg-gradient-to-b from-[#FF6B00]/[0.16] via-[#F59E0B]/[0.06] to-transparent blur-3xl pointer-events-none z-[1]" />
-      <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_0%,#070709_86%] pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#070709_86%)] pointer-events-none z-[1]" />
 
       <div className="container-custom relative z-10">
         {/* Grail ColonTitle Chapter Header */}

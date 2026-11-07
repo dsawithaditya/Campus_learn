@@ -107,17 +107,19 @@ export function MentorCTA() {
     const el = wrapRef.current;
     if (!el) return undefined;
 
-    const onScroll = () => {
+    let rafId = 0;
+    const update = () => {
+      rafId = 0;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 800;
 
-      // n goes from 0 (when top of el is at bottom of viewport) to 1 (when top reaches top of viewport)
+      // Skip calculation if far off-screen to save CPU cycles
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+
       const n = (vh - rect.top) / vh;
       const progress = Math.min(1, Math.max(0, n));
       const off = 1 - progress;
       const rot = 1 - progress;
-
-      // Parallax ratio across section
       const par = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
 
       el.style.setProperty('--g8off', off.toFixed(3));
@@ -125,13 +127,18 @@ export function MentorCTA() {
       el.style.setProperty('--g8par', par.toFixed(3));
     };
 
+    const onScroll = () => {
+      if (!rafId) rafId = requestAnimationFrame(update);
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-    onScroll();
+    update();
 
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -323,7 +330,7 @@ export function MentorCTA() {
         {/* Ambient Warm Golden/Amber Torch Glow in Obsidian Stage */}
         <div
           aria-hidden="true"
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-radial-[circle,rgba(255,107,0,0.06)_0%,transparent_70%] pointer-events-none -z-10"
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(255,107,0,0.06)_0%,transparent_70%)] pointer-events-none -z-10"
         />
 
         {/* 
@@ -347,7 +354,7 @@ export function MentorCTA() {
           <div
             ref={orbitTrackRef}
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/[0.12] pointer-events-none -z-5 transition-all duration-300"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/[0.12] pointer-events-none -z-[5] transition-all duration-300"
             style={{ width: '640px', height: '640px' }}
           />
 
@@ -419,7 +426,7 @@ export function MentorCTA() {
                       WebkitMaskRepeat: 'no-repeat',
                       maskRepeat: 'no-repeat',
                     }}
-                    className={`w-full h-full relative overflow-hidden bg-[#111116] border transition-all duration-300 group-hover:scale-115 shadow-[0_14px_36px_rgba(0,0,0,0.88)] ${
+                    className={`w-full h-full relative overflow-hidden bg-[#111116] border transition-all duration-300 group-hover:scale-[1.15] shadow-[0_14px_36px_rgba(0,0,0,0.88)] ${
                       isSelected
                         ? 'border-[#FF6B00] shadow-[0_0_28px_rgba(255,107,0,0.45)]'
                         : 'border-white/20'
