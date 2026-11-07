@@ -1,15 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
   <defs>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.9"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="1" flood-color="#FF6B00" flood-opacity="0.4"/>
+    <filter id="cursor-glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000000" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1.8" flood-color="#FF6B00" flood-opacity="0.5"/>
     </filter>
   </defs>
-  <!-- Outer glowing obsidian blade -->
-  <path d="M3 2L10.5 21L14.2 13.8L21.5 10.5L3 2Z" fill="#09090D" stroke="#FF6B00" stroke-width="1.75" stroke-linejoin="round" filter="url(#shadow)"/>
-  <!-- Amber accent facet -->
-  <polygon points="3,2 8,11 11,8" fill="#FFA057" opacity="0.85"/>
-  <!-- White precision target pip -->
-  <circle cx="3.5" cy="2.5" r="1.1" fill="#FFFFFF"/>
-</svg>
 
+  <!-- Outer Precision Ring (Blaze Orange with dark obsidian border) -->
+  <circle cx="16" cy="16" r="11" 
+          stroke="#09090D" 
+          stroke-width="3" 
+          opacity="0.95" />
+  <circle cx="16" cy="16" r="11" 
+          stroke="#FF6B00" 
+          stroke-width="1.6" 
+          filter="url(#cursor-glow)" />
+
+  <!-- 4-Axis Technical Reticle Micro-Ticks (Unique Guild Tech Signature) -->
+  <line x1="16" y1="2" x2="16" y2="4.5" stroke="#FFA057" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="27.5" x2="16" y2="30" stroke="#FFA057" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="2" y1="16" x2="4.5" y2="16" stroke="#FFA057" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="27.5" y1="16" x2="30" y2="16" stroke="#FFA057" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Center Precision Obsidian + Blaze Orange Core Dot -->
+  <circle cx="16" cy="16" r="2.8" fill="#09090D" />
+  <circle cx="16" cy="16" r="2.2" fill="#FF6B00" />
+  <circle cx="16" cy="16" r="0.9" fill="#FFFFFF" />
+</svg>

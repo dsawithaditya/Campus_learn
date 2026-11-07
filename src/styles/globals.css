@@ -36,12 +36,13 @@
 
 @layer base {
   /* 
-    Obsidian & Blaze Orange Custom Hardware Cursors 
-    Provides dual fallback: SVG asset + inline URI fallback
+    Obsidian & Blaze Orange Custom Reticle Ring-and-Dot Cursors 
+    Unique celestial reticle design matching website theme with exact 16 16 center hotspot
   */
   html, body, * {
-    cursor: url('/cursors/arrow-default.svg') 3 2, 
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Cpath d='M3 2L10.5 21L14.2 13.8L21.5 10.5L3 2Z' fill='%2309090D' stroke='%23FF6B00' stroke-width='1.75' stroke-linejoin='round'/%3E%3Cpolygon points='3,2 8,11 11,8' fill='%23FFA057' opacity='0.85'/%3E%3Ccircle cx='3.5' cy='2.5' r='1.1' fill='%23FFFFFF'/%3E%3C/svg%3E") 3 2, 
+    cursor: url('/cursors/cursor-default.svg') 16 16, 
+            url('/cursors/arrow-default.svg') 16 16, 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Ccircle cx='16' cy='16' r='11' stroke='%2309090D' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='11' stroke='%23FF6B00' stroke-width='1.6'/%3E%3Cline x1='16' y1='2' x2='16' y2='4.5' stroke='%23FFA057' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='16' y1='27.5' x2='16' y2='30' stroke='%23FFA057' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='2' y1='16' x2='4.5' y2='16' stroke='%23FFA057' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='27.5' y1='16' x2='30' y2='16' stroke='%23FFA057' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%2309090D'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%23FF6B00'/%3E%3Ccircle cx='16' cy='16' r='0.9' fill='%23FFFFFF'/%3E%3C/svg%3E") 16 16, 
             auto;
   }
 
@@ -58,21 +59,22 @@
   .btn-zephyr-secondary,
   .btn-glossy-white,
   [tabindex]:not([tabindex="-1"]) {
-    cursor: url('/cursors/arrow-pointer.svg') 3 2, 
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Cpath d='M3 2L10.5 21L14.2 13.8L21.5 10.5L3 2Z' fill='%23FF6B00' stroke='%23FFFFFF' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpolygon points='3,2 8,11 11,8' fill='%23FFF2E8' opacity='0.95'/%3E%3Ccircle cx='14' cy='14' r='2.2' fill='%23FFA057' stroke='%2309090D' stroke-width='1.2'/%3E%3C/svg%3E") 3 2, 
+    cursor: url('/cursors/cursor-pointer.svg') 16 16, 
+            url('/cursors/arrow-pointer.svg') 16 16, 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Ccircle cx='16' cy='16' r='12' fill='rgba(255,107,0,0.22)' stroke='%2309090D' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='12' stroke='%23FFA057' stroke-width='2'/%3E%3Cline x1='16' y1='1' x2='16' y2='4' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round'/%3E%3Cline x1='16' y1='28' x2='16' y2='31' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round'/%3E%3Cline x1='1' y1='16' x2='4' y2='16' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round'/%3E%3Cline x1='28' y1='16' x2='31' y2='16' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%2309090D'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23FFFFFF'/%3E%3Ccircle cx='16' cy='16' r='1.3' fill='%23FF6B00'/%3E%3C/svg%3E") 16 16, 
             pointer !important;
   }
 
   .cursor-grab {
-    cursor: url('/cursors/arrow-grab.svg') 12 12, 
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Crect x='5' y='7' width='18' height='14' rx='4' fill='%2309090D' stroke='%23FF6B00' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='14' r='1.5' fill='%23FFA057'/%3E%3Ccircle cx='14' cy='14' r='1.5' fill='%23FFA057'/%3E%3Ccircle cx='18' cy='14' r='1.5' fill='%23FFA057'/%3E%3C/svg%3E") 12 12, 
+    cursor: url('/cursors/cursor-grab.svg') 16 16, 
+            url('/cursors/arrow-grab.svg') 16 16, 
             grab !important;
   }
 
   .cursor-grabbing,
   .cursor-grab:active {
-    cursor: url('/cursors/arrow-grabbing.svg') 12 12, 
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Crect x='6' y='8' width='16' height='12' rx='3.5' fill='%23FF6B00' stroke='%23FFFFFF' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='14' r='1.3' fill='%2309090D'/%3E%3Ccircle cx='14' cy='14' r='1.3' fill='%2309090D'/%3E%3Ccircle cx='18' cy='14' r='1.3' fill='%2309090D'/%3E%3C/svg%3E") 12 12, 
+    cursor: url('/cursors/cursor-grabbing.svg') 16 16, 
+            url('/cursors/arrow-grabbing.svg') 16 16, 
             grabbing !important;
   }
 
@@ -84,8 +86,8 @@
   input[type="url"],
   input[type="password"],
   textarea {
-    cursor: url('/cursors/arrow-text.svg') 12 12, 
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M8 4H16M12 4V20M8 20H16' stroke='%23FF6B00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 12 12, 
+    cursor: url('/cursors/cursor-text.svg') 16 16, 
+            url('/cursors/arrow-text.svg') 16 16, 
             text !important;
   }
 
