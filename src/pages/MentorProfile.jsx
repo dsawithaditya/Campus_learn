@@ -87,13 +87,8 @@ export default function MentorProfile() {
                   </span>
                 </div>
 
-                <p className="text-sm font-semibold text-orange-400 flex items-center gap-1.5">
-                  <GraduationCap className="w-4 h-4" />
-                  <span>{mentor?.college}</span>
-                </p>
-
-                <p className="text-xs sm:text-sm text-muted dark:text-muted-dark">
-                  {mentor?.branch} • {mentor?.year}
+                <p className="text-sm font-semibold text-[#FF6B00] flex items-center gap-1.5 font-mono">
+                  <span>{mentor?.expertise || 'Domain Lead & Mentor'}</span>
                 </p>
 
                 {/* Follower & Rating counts */}

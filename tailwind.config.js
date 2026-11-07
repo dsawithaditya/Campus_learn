@@ -74,10 +74,31 @@ export default {
         }
       },
       fontFamily: {
-        display: ['"Syne"', '"Plus Jakarta Sans"', 'sans-serif'],
-        heading: ['"Plus Jakarta Sans"', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
-        mono: ['"Space Grotesk"', 'ui-monospace', 'monospace'],
+        display: ['"Clash Display"', '"Cabinet Grotesk"', '"Syne"', 'sans-serif'],
+        heading: ['"Cabinet Grotesk"', '"Clash Display"', '"Plus Jakarta Sans"', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        body: ['"Satoshi"', '"General Sans"', '"Inter"', 'sans-serif'],
+        mono: ['"Space Grotesk"', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+        floatSlow: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 28s linear infinite',
+        shimmer: 'shimmer 6s ease infinite',
+        'float-slow': 'floatSlow 5s ease-in-out infinite',
       },
       borderRadius: {
         sm: '10px',

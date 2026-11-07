@@ -164,12 +164,12 @@ export default function Explore() {
               <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-zinc-100">
                 Explore Peer Courses
               </h1>
-              <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+              <p className="text-xs sm:text-sm text-zinc-400 mt-1 font-mono">
                 Showing{' '}
-                <span className="font-bold text-orange-400">
+                <span className="font-bold text-[#FF6B00]">
                   {filteredCourses.length}
                 </span>{' '}
-                college-created courses
+                peer cohorts across domains
               </p>
             </div>
 

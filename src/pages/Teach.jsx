@@ -84,10 +84,10 @@ export default function Teach() {
             <Sparkles className="w-4 h-4 text-orange-400" />
             <span>Campus Mentorship Initiative</span>
           </div>
-          <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-text dark:text-text-dark tracking-tight mb-4">
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
             Become a Campus Mentor
           </h1>
-          <p className="text-muted dark:text-muted-dark text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+          <p className="text-zinc-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             Pass on the lessons you learned the hard way. Guide juniors in tech, sports, music and college societies.
           </p>
         </div>
@@ -106,10 +106,10 @@ export default function Teach() {
                 <div className="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20 flex items-center justify-center mx-auto sm:mx-0 shadow-soft">
                   {Icon && <Icon className="w-5 h-5" strokeWidth={2} />}
                 </div>
-                <h3 className="font-heading font-bold text-base text-text dark:text-text-dark">
+                <h3 className="font-heading font-bold text-base text-zinc-100">
                   {b?.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-muted dark:text-muted-dark leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                   {b?.desc}
                 </p>
               </div>

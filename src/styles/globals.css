@@ -37,10 +37,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #0A0A0A !important;
+    font-family: 'Satoshi', 'General Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #070709 !important;
     color: #F4F4F5 !important;
     color-scheme: dark;
+    font-feature-settings: "ss01", "ss02", "cv01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -62,22 +65,30 @@
   }
 
   h1, .font-display {
-    font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
-    letter-spacing: -0.035em;
+    font-family: 'Clash Display', 'Cabinet Grotesk', 'Syne', sans-serif;
+    letter-spacing: -0.03em;
     color: #F4F4F5;
     text-rendering: optimizeLegibility;
   }
 
   h2, h3, h4, h5, h6, .font-heading {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Cabinet Grotesk', 'Clash Display', 'Plus Jakarta Sans', sans-serif;
     letter-spacing: -0.025em;
     color: #F4F4F5;
     text-rendering: optimizeLegibility;
   }
 
+  .font-editorial {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
   .font-mono, code, .stat-num {
-    font-family: 'Space Grotesk', ui-monospace, monospace;
-    letter-spacing: -0.015em;
+    font-family: 'Space Grotesk', 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
   }
 
   /* Sleek minimalist scrollbar */
@@ -220,7 +231,112 @@
 .zephyr-divider {
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 107, 0, 0.3) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 107, 0, 0.35) 50%, transparent 100%);
+}
+
+/* Glass Card (used across Explore, CourseDetail, Dashboard, MentorProfile, Teach, Auth) */
+.glass-card {
+  background: rgba(14, 14, 18, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.85),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 107, 0, 0.32);
+}
+
+/* Interactive Primary Button (used by Button.jsx & Dashboard) */
+.btn-interactive {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8533 50%, #F59E0B 100%);
+  background-size: 200% 200%;
+  color: #ffffff;
+  font-weight: 600;
+  border: 1px solid rgba(255, 150, 70, 0.65);
+  box-shadow: 0 0 24px rgba(255, 107, 0, 0.35),
+              0 6px 16px rgba(0, 0, 0, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-interactive:hover {
+  background-position: 100% 50%;
+  box-shadow: 0 0 36px rgba(255, 107, 0, 0.58),
+              0 8px 22px rgba(0, 0, 0, 0.65),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  filter: brightness(1.05);
+}
+
+/* Auth & CTA Split Gradient Background */
+.cta-gradient {
+  background: radial-gradient(circle at 20% 20%, rgba(255, 107, 0, 0.28) 0%, transparent 55%),
+              radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 55%),
+              linear-gradient(135deg, #120c08 0%, #09090b 55%, #160d06 100%);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Animated Shimmer Text */
+.text-shimmer-orange {
+  background: linear-gradient(
+    110deg,
+    #FFFFFF 0%,
+    #FFE4CC 25%,
+    #FF6B00 50%,
+    #FFA057 75%,
+    #FFFFFF 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: textShimmer 5.5s linear infinite;
+}
+
+@keyframes textShimmer {
+  to {
+    background-position: 250% center;
+  }
+}
+
+/* Fade Up Utility Animations */
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUpIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.delay-1 {
+  animation-delay: 60ms;
+}
+.delay-2 {
+  animation-delay: 120ms;
+}
+.delay-3 {
+  animation-delay: 180ms;
+}
+
+/* Hide scrollbars cleanly */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @layer utilities {

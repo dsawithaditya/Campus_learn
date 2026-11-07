@@ -69,15 +69,15 @@ export function Navbar() {
         >
           {/* Brand Logo & Name */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-7 h-7 rounded-full border border-[#FF6B00]/40 bg-zinc-900 flex items-center justify-center text-white text-xs font-bold transition-transform group-hover:scale-105 group-hover:border-[#FF6B00] shadow-[0_0_12px_rgba(255,107,0,0.3)]">
+            <div className="relative w-7 h-7 rounded-full border border-[#FF6B00]/50 bg-zinc-900 flex items-center justify-center text-white text-xs font-bold transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:border-[#FF6B00] shadow-[0_0_14px_rgba(255,107,0,0.35)]">
               {/* Circular slashed emblem with Blaze Orange slash */}
               <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-[2]">
                 <circle cx="12" cy="12" r="9" className="stroke-white/80" />
                 <line x1="5" y1="19" x2="19" y2="5" className="stroke-[#FF6B00]" strokeWidth="2.5" />
               </svg>
             </div>
-            <span className="font-heading font-bold text-sm sm:text-base tracking-tight text-white flex items-center gap-1">
-              Campus <span className="text-[#FF6B00] font-normal">Learn</span>
+            <span className="font-display font-bold text-sm sm:text-base tracking-tight text-white flex items-baseline gap-1">
+              Campus <span className="font-editorial italic text-[#FF6B00] font-normal text-lg leading-none">Learn</span>
             </span>
           </Link>
 

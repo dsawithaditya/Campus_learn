@@ -169,7 +169,7 @@ export default function CourseDetail() {
                       />
                     </div>
                     <span className="font-semibold text-zinc-200 underline decoration-dotted">
-                      {mentor?.name} ({mentor?.college})
+                      {mentor?.name} • {mentor?.expertise || 'Domain Lead'}
                     </span>
                   </Link>
                 )}

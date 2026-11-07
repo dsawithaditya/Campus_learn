@@ -3,7 +3,12 @@ import { BrowserRouter, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
-import { BackToTopButton, SplashScreen } from './components/GlobalExtras';
+import {
+  BackToTopButton,
+  SplashScreen,
+  GlobalProgressBar,
+  GlobalClickBurst,
+} from './components/GlobalExtras';
 import { AppRoutes } from './routes';
 import { useAppStore } from './store/useAppStore';
 
@@ -53,6 +58,12 @@ export function App() {
       >
         Skip to main content
       </a>
+
+      {/* Top Scroll Progress Laser Bar */}
+      <GlobalProgressBar />
+
+      {/* Global Click Shockwave & Sparks */}
+      <GlobalClickBurst />
 
       {/* Splash Screen */}
       <SplashScreen onFinish={() => setSplashFinished(true)} />
