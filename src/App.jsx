@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -41,6 +41,10 @@ function ScrollToTopAndHash() {
 export function App() {
   const [splashFinished, setSplashFinished] = useState(false);
 
+  const handleSplashFinish = useCallback(() => {
+    setSplashFinished(true);
+  }, []);
+
   useEffect(() => {
     // Enforce high-contrast Obsidian + Blaze Orange dark theme (#070709 / #F4F4F5)
     document.documentElement.classList.add('dark');
@@ -77,7 +81,7 @@ export function App() {
       <GlobalClickBurst />
 
       {/* Splash Screen */}
-      <SplashScreen onFinish={() => setSplashFinished(true)} />
+      <SplashScreen onFinish={handleSplashFinish} />
 
       {/* Sticky Glass Navbar */}
       <Navbar />

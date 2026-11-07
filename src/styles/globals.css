@@ -604,13 +604,8 @@ html.lenis { scroll-behavior: auto !important; }
 
 /* ============================================================
    Obsidian + Blaze Orange magnetic cursor
-   Native cursor hidden only when JS cursor is active (fine pointers)
+   Hardware SVG cursor remains active as reliable baseline
    ============================================================ */
-html.has-custom-cursor:not(#_),
-html.has-custom-cursor *:not(#_) {
-  cursor: none !important;
-}
-
 .cl-cursor-dot,
 .cl-cursor-ring {
   position: fixed;

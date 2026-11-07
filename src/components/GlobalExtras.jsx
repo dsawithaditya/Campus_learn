@@ -228,18 +228,30 @@ export function SplashScreen({ onFinish }) {
   const groupRef = useRef(null);
   const pctTextRef = useRef(null);
   const ringRef = useRef(null);
+  const onFinishRef = useRef(onFinish);
+
+  useEffect(() => {
+    onFinishRef.current = onFinish;
+  });
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
       setVisible(false);
-      if (onFinish) onFinish();
+      if (onFinishRef.current) onFinishRef.current();
       return undefined;
     }
 
+    // Safety fallback: guaranteed to dismiss after 1.2s max so it can NEVER get stuck
+    const safetyTimer = setTimeout(() => {
+      setOpening(true);
+      if (onFinishRef.current) onFinishRef.current();
+      setTimeout(() => setVisible(false), 240);
+    }, 1200);
+
     let rafId = 0;
     const start = performance.now();
-    const loadDuration = 540; // High-energy, crisp load
+    const loadDuration = 480; // High-energy, crisp 480ms load
 
     const step = (now) => {
       const elapsed = now - start;
@@ -266,17 +278,21 @@ export function SplashScreen({ onFinish }) {
       if (p < 1) {
         rafId = requestAnimationFrame(step);
       } else {
+        clearTimeout(safetyTimer);
         setOpening(true);
-        if (onFinish) onFinish();
+        if (onFinishRef.current) onFinishRef.current();
         setTimeout(() => {
           setVisible(false);
-        }, 320);
+        }, 280);
       }
     };
 
     rafId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(rafId);
-  }, [onFinish]);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(safetyTimer);
+    };
+  }, []); // Run ONCE on mount!
 
   return (
     <AnimatePresence>
