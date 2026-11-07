@@ -618,13 +618,7 @@ html.lenis { scroll-behavior: auto !important; }
 }
 
 .cl-cursor-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ff6b00;
-  box-shadow: 0 0 0 2px #09090d, 0 0 14px rgba(255, 107, 0, 0.85);
-  transition: opacity 0.25s ease, width 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    height 0.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, border-radius 0.2s ease;
+  display: none !important;
 }
 .cl-cursor-dot::after {
   content: '';
