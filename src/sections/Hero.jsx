@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -19,7 +19,14 @@ import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button
 import ShapeGrid from '../components/ShapeGrid';
 import { Modal } from '../components/Modal';
 import { OrangeHorizonLight } from '../components/OrangeHorizonLight';
-import { SplitTextReveal, ScrambleText, Magnetic } from '../components/AnimatedText';
+import { GrailSpiralDeck } from '../components/GrailSpiralDeck';
+import {
+  SplitTextReveal,
+  GrailLetterRise,
+  ColonTitle,
+  ScrambleText,
+  Magnetic,
+} from '../components/AnimatedText';
 import categoriesData from '../data/categories.json';
 
 const iconMap = {
@@ -73,25 +80,68 @@ const highlightCards = [
   },
 ];
 
+// Grail Section 2 Staggered Offset Editorial Lines (rr in grail-home.js)
+const manifestoLines = [
+  { text: "Everyone's out", ml: 'lg:ml-[36vw]' },
+  { text: "shipping. You're", ml: 'lg:ml-[18vw]' },
+  { text: 'watching old slides', ml: 'lg:ml-[10vw]' },
+  { text: 'on a screen.', ml: 'lg:ml-[34vw]' },
+];
+
 export function Hero() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const navigate = useNavigate();
+  const headlineRef = useRef(null);
 
   const safeCategories = Array.isArray(categoriesData) ? categoriesData : [];
 
+  // Grail Hero Headline scroll-linked scale & parallax (ar in grail-home.js)
+  useEffect(() => {
+    const el = headlineRef.current;
+    if (!el) return;
+    let rafId = 0;
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const vh = window.innerHeight || 800;
+        const prog = Math.min(1, Math.max(0, y / (vh * 0.65)));
+        const scale = 1 - 0.24 * prog;
+        const ty = -y * 0.14;
+        const opacity = Math.max(0.15, 1 - prog * 0.85);
+        el.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+        el.style.opacity = opacity.toFixed(2);
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   return (
-    <div className="relative pt-24 sm:pt-32 pb-16 overflow-hidden min-h-[92vh]">
+    <div className="relative pt-24 sm:pt-28 pb-16 overflow-hidden min-h-screen">
+      {/* Grail 3-Layer Progressive Top Blur Scrim (_scrim_bwga5_388) */}
+      <div className="grail-scrim-top" aria-hidden="true">
+        <div className="grail-scrim-b1" />
+        <div className="grail-scrim-b2" />
+        <div className="grail-scrim-grad" />
+      </div>
+
       {/* Interactive ShapeGrid Canvas */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
         <ShapeGrid
           shape="square"
           direction="diagonal"
-          lineColor="rgba(255, 255, 255, 0.06)"
+          lineColor="rgba(255, 255, 255, 0.055)"
           hoverColor="#FF6B00"
           hoverFillColor="#FF6B00"
           fillOpacity={0.15}
-          cellSize={42}
-          speed={0.35}
+          cellSize={44}
+          speed={0.32}
           glow={0.4}
           clickCascade={true}
           fade={0.88}
@@ -100,21 +150,28 @@ export function Hero() {
       </div>
 
       {/* Ambient Radial Vignette & Blaze Orange Glow Layers */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-[#FF6B00]/[0.16] via-[#F59E0B]/[0.06] to-transparent blur-3xl pointer-events-none z-[1]" />
-      <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_0%,#0A0A0A_85%] pointer-events-none z-[1]" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[920px] h-[480px] bg-gradient-to-b from-[#FF6B00]/[0.16] via-[#F59E0B]/[0.06] to-transparent blur-3xl pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_0%,#070709_86%] pointer-events-none z-[1]" />
 
       <div className="container-custom relative z-10">
+        {/* Grail ColonTitle Chapter Header */}
+        <ColonTitle
+          label="One real-world cohort a week. Taught by campus seniors."
+          chapter="Chapter 01"
+          accent
+        />
+
         {/* Main Hero Header */}
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto py-8">
+        <div className="flex flex-col items-center text-center max-w-5xl mx-auto pt-2 pb-6">
           {/* Interactive Scramble Pill Badge */}
           <motion.div
             initial={{ opacity: 0, y: -14, scale: 0.94 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             whileHover={{ scale: 1.03, y: -1 }}
             whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => navigate('/explore')}
-            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/60 backdrop-blur-xl text-xs font-semibold text-zinc-300 mb-7 shadow-[0_4px_24px_rgba(0,0,0,0.6),0_0_16px_rgba(255,107,0,0.12)] transition-colors cursor-pointer select-none"
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-zinc-950/85 border border-white/15 hover:border-[#FF6B00]/60 backdrop-blur-xl text-xs font-semibold text-zinc-300 mb-6 shadow-[0_4px_24px_rgba(0,0,0,0.6),0_0_16px_rgba(255,107,0,0.12)] transition-colors cursor-pointer select-none"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B00] opacity-75" />
@@ -128,47 +185,60 @@ export function Hero() {
             />
           </motion.div>
 
-          {/* Main H1 Title with Awwwards Split-Word Reveal + Instrument Serif Italic Accent */}
-          <h1 className="font-display font-bold text-4xl sm:text-6xl lg:text-[76px] text-white leading-[1.03] tracking-[-0.03em] mb-6 max-w-4xl">
-            <SplitTextReveal
-              text="The only sane way to"
-              delay={0.05}
-              stagger={0.055}
-            />{' '}
-            <span className="block sm:inline">
+          {/* Grail Monumental Per-Letter Rising Headline (_headline_bwga5_473) */}
+          <div
+            ref={headlineRef}
+            className="w-full origin-center will-change-transform mb-6"
+          >
+            <div className="font-grail-serif text-[clamp(44px,8.2vw,112px)] text-white tracking-[-0.015em] leading-[0.88] mb-3 select-none">
+              <GrailLetterRise
+                text="RECLAIM YOUR CRAFT"
+                delay={0.04}
+                stagger={0.032}
+              />
+            </div>
+
+            <h1 className="font-display font-bold text-2xl sm:text-4xl lg:text-[44px] text-zinc-200 leading-[1.08] tracking-[-0.025em] max-w-3xl mx-auto">
               <SplitTextReveal
-                text="learn from"
-                delay={0.28}
-                stagger={0.06}
-                wordClassName="text-shimmer-orange"
+                text="The only sane way to"
+                delay={0.22}
+                stagger={0.05}
               />{' '}
-              <motion.span
-                initial={{ opacity: 0, y: 24, rotateZ: -3, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, rotateZ: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.75, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                className="font-editorial italic font-normal text-[#FF6B00] text-[1.12em] tracking-normal inline-block drop-shadow-[0_0_28px_rgba(255,107,0,0.35)]"
-              >
-                seniors.
-              </motion.span>
-            </span>
-          </h1>
+              <span className="inline">
+                <SplitTextReveal
+                  text="learn from"
+                  delay={0.38}
+                  stagger={0.055}
+                  wordClassName="text-shimmer-orange"
+                />{' '}
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.72, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="font-editorial italic font-normal text-[#FF6B00] text-[1.14em] tracking-normal inline-block drop-shadow-[0_0_28px_rgba(255,107,0,0.35)]"
+                >
+                  seniors.
+                </motion.span>
+              </span>
+            </h1>
+          </div>
 
           {/* Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 18, filter: 'blur(4px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="font-body text-base sm:text-lg text-zinc-400 max-w-2xl mb-10 leading-relaxed font-normal"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="font-body text-sm sm:text-base text-zinc-400 max-w-xl mb-8 leading-relaxed font-normal"
           >
-            Campus Learn is a peer-to-peer student network for hands-on bootcamps in tech, music, sports, and arts—taught directly by senior mentors from top colleges.
+            Campus Learn pulls you out of autopilot with live, peer-led cohorts in tech, music, sports, and arts—taught directly by senior mentors from top colleges.
           </motion.p>
 
           {/* Magnetic & Spring-Animated CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-14"
+            transition={{ duration: 0.6, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-6"
           >
             <Magnetic strength={0.18} className="w-full sm:w-auto">
               <InteractiveHoverButton
@@ -204,19 +274,23 @@ export function Hero() {
             </motion.button>
           </motion.div>
 
-          {/* Value Highlight Cards with Staggered Spring Reveal */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 w-full max-w-4xl mb-12">
+          {/* GRAIL CENTERPIECE: Interactive 3D Spiral Cohort Card Deck (_scene_bwga5_154) */}
+          <GrailSpiralDeck />
+
+          {/* Value Highlight Cards with Staggered Reveal */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 w-full max-w-4xl mt-6 mb-12">
             {highlightCards.map((item, idx) => {
               const Icon = item.icon;
               return (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 24, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
                   transition={{
-                    duration: 0.55,
-                    delay: 0.5 + idx * 0.08,
-                    ease: [0.16, 1, 0.3, 1],
+                    duration: 0.6,
+                    delay: idx * 0.08,
+                    ease: [0.22, 1, 0.36, 1],
                   }}
                   whileHover={{ y: -5, scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
@@ -270,8 +344,52 @@ export function Hero() {
           </div>
         </div>
 
-        {/* SECTION 2: CAMPUS DOMAINS - Explore Peer-Led Disciplines */}
-        <div className="relative z-10 pt-16 pb-8 border-t border-white/[0.06] mt-6">
+        {/* GRAIL SECTION 2 MANIFESTO: Staggered Offset Editorial Lines (_section2_bwga5_184) */}
+        <div className="relative py-20 sm:py-28 border-t border-white/[0.08]">
+          <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 font-mono text-xs uppercase tracking-[0.12em] text-zinc-500">
+            About The Loop
+          </div>
+
+          <div className="w-full">
+            <div className="font-grail-serif text-[clamp(38px,6.2vw,88px)] text-white leading-[0.88] tracking-[-0.01em] space-y-1">
+              {manifestoLines.map((line, idx) => (
+                <motion.div
+                  key={line.text}
+                  initial={{ opacity: 0, y: '0.5em' }}
+                  whileInView={{ opacity: 1, y: '0em' }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.72,
+                    delay: 0.08 + idx * 0.16,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className={`${line.ml} whitespace-nowrap`}
+                >
+                  {idx === 1 ? (
+                    <>
+                      shipping. <span className="text-[#FF6B00] italic font-editorial lowercase">You&apos;re</span>
+                    </>
+                  ) : (
+                    line.text
+                  )}
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.72, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="text-zinc-400 text-sm sm:text-base leading-[1.35] max-w-[420px] mt-8 lg:mt-12 lg:ml-[36vw]"
+            >
+              Same semester, over and over, until you can&apos;t tell them apart. You keep meaning to build the project, master the instrument, join the society—and somehow it&apos;s always next semester. Campus Learn pairs you directly with seniors who already cracked it.
+            </motion.p>
+          </div>
+        </div>
+
+        {/* CAMPUS DOMAINS - Explore Peer-Led Disciplines */}
+        <div className="relative z-10 pt-14 pb-8 border-t border-white/[0.06]">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-9 gap-4">
             <div>
               <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#FF6B00] font-bold block mb-2">
@@ -312,9 +430,9 @@ export function Hero() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{
-                    duration: 0.45,
+                    duration: 0.5,
                     delay: index * 0.05,
-                    ease: [0.16, 1, 0.3, 1],
+                    ease: [0.22, 1, 0.36, 1],
                   }}
                   onClick={() => navigate(`/explore?category=${cat?.id}`)}
                   whileHover={{ y: -4, scale: 1.02 }}

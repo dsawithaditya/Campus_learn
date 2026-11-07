@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1" flood-color="#FF6B00" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Outer glowing obsidian blade -->
+  <path d="M3 2L10.5 21L14.2 13.8L21.5 10.5L3 2Z" fill="#09090D" stroke="#FF6B00" stroke-width="1.75" stroke-linejoin="round" filter="url(#shadow)"/>
+  <!-- Amber accent facet -->
+  <polygon points="3,2 8,11 11,8" fill="#FFA057" opacity="0.85"/>
+  <!-- White precision target pip -->
+  <circle cx="3.5" cy="2.5" r="1.1" fill="#FFFFFF"/>
+</svg>
+

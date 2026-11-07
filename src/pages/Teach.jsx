@@ -10,6 +10,7 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { Button } from '../components/Button';
+import { ColonTitle, GrailLetterRise } from '../components/AnimatedText';
 import { useAppStore } from '../store/useAppStore';
 import categoriesData from '../data/categories.json';
 
@@ -79,13 +80,18 @@ export default function Teach() {
 
       {/* Hero section */}
       <div className="py-12 border-b border-border/80 dark:border-border-dark/80 text-center relative">
-        <div className="container-custom max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <ColonTitle
+            label="About Society Leadership & Mentorship"
+            chapter="Mentors"
+            accent
+          />
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill bg-orange-500/10 border border-orange-500/30 text-xs font-semibold text-orange-400 mb-4 shadow-[0_0_15px_rgba(249,115,22,0.15)]">
             <Sparkles className="w-4 h-4 text-orange-400" />
             <span>Campus Mentorship Initiative</span>
           </div>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
-            Become a Campus Mentor
+          <h1 className="font-grail-serif text-4xl sm:text-6xl lg:text-7xl text-white leading-[0.88] tracking-[-0.01em] mb-4">
+            <GrailLetterRise text="LEAD YOUR CAMPUS SOCIETY" stagger={0.025} />
           </h1>
           <p className="text-zinc-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             Pass on the lessons you learned the hard way. Guide juniors in tech, sports, music and college societies.

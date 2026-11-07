@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUp, ShieldCheck } from 'lucide-react';
+import { GrailHoverChars } from './AnimatedText';
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ export function Footer() {
           {/* Column 1: Brand */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="inline-flex items-center gap-2.5 group">
-              <div className="w-7 h-7 rounded-full border border-[#FF6B00]/40 bg-zinc-900 flex items-center justify-center text-white transition-transform group-hover:scale-105 shadow-[0_0_12px_rgba(255,107,0,0.3)]">
+              <div className="w-7 h-7 rounded-full border border-[#FF6B00]/40 bg-zinc-900 flex items-center justify-center text-white transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:-rotate-12 shadow-[0_0_12px_rgba(255,107,0,0.3)]">
                 <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-[2]">
                   <circle cx="12" cy="12" r="9" className="stroke-white/80" />
                   <line x1="5" y1="19" x2="19" y2="5" className="stroke-[#FF6B00]" strokeWidth="2.5" />
@@ -46,59 +47,59 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Navigation */}
+          {/* Column 2: Navigation with Grail Per-Letter Hover Wave */}
           <div>
             <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-white mb-4">
               Explore
             </h4>
             <ul className="space-y-2.5 text-sm font-heading">
               <li>
-                <Link to="/explore?category=tech" className="hover:text-[#FF6B00] transition-colors">
-                  Tech & Coding
+                <Link to="/explore?category=tech" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="Tech & Coding" />
                 </Link>
               </li>
               <li>
-                <Link to="/explore?category=art" className="hover:text-[#FF6B00] transition-colors">
-                  Design & 3D
+                <Link to="/explore?category=art" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="Design & 3D" />
                 </Link>
               </li>
               <li>
-                <Link to="/explore?category=music" className="hover:text-[#FF6B00] transition-colors">
-                  Music & Vocals
+                <Link to="/explore?category=music" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="Music & Vocals" />
                 </Link>
               </li>
               <li>
-                <Link to="/explore?category=sports" className="hover:text-[#FF6B00] transition-colors">
-                  Sports & Fitness
+                <Link to="/explore?category=sports" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="Sports & Fitness" />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Platform */}
+          {/* Column 3: Platform with Grail Per-Letter Hover Wave */}
           <div>
             <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-white mb-4">
               Platform
             </h4>
             <ul className="space-y-2.5 text-sm font-heading">
               <li>
-                <Link to="/#how-it-works" className="hover:text-[#FF6B00] transition-colors">
-                  How it Works
+                <Link to="/#how-it-works" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="How it Works" />
                 </Link>
               </li>
               <li>
-                <Link to="/#mentors" className="hover:text-[#FF6B00] transition-colors">
-                  Senior Mentors
+                <Link to="/#mentors" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="Senior Mentors" />
                 </Link>
               </li>
               <li>
-                <Link to="/teach" className="hover:text-[#FF6B00] transition-colors">
-                  Become a Mentor
+                <Link to="/teach" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="Become a Mentor" />
                 </Link>
               </li>
               <li>
-                <Link to="/signup" className="hover:text-[#FF6B00] transition-colors">
-                  Student Sign Up
+                <Link to="/signup" className="hover:text-white transition-colors inline-block">
+                  <GrailHoverChars text="Student Sign Up" />
                 </Link>
               </li>
             </ul>
@@ -143,19 +144,25 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Grail-Inspired 3-Column Bottom Bar (_bottom_jyv7u_47) */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4 font-mono">
-          <p>© {new Date().getFullYear()} Campus Learn. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Campus Learn • Real Craft Happens Together</p>
+
           <div className="flex items-center gap-6">
-            <a href="#privacy" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#terms" className="hover:text-white transition-colors">Terms</a>
+            <a href="#privacy" className="hover:text-white transition-colors">
+              <GrailHoverChars text="Privacy" />
+            </a>
+            <a href="#terms" className="hover:text-white transition-colors">
+              <GrailHoverChars text="Terms" />
+            </a>
             <motion.button
-              whileHover={{ y: -2 }}
+              whileHover={{ y: -3 }}
               whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={scrollToTop}
               className="hover:text-[#FF6B00] transition-colors flex items-center gap-1.5 cursor-pointer font-bold"
             >
-              <span>Back to top</span>
+              <GrailHoverChars text="Back to top" />
               <ArrowUp className="w-3.5 h-3.5" />
             </motion.button>
           </div>

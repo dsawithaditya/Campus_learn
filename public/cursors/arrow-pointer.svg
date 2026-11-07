@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+  <defs>
+    <filter id="glow-pointer" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.95"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#FF6B00" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+  <!-- Energized Blaze Orange Pointer Arrow -->
+  <path d="M3 2L10.5 21L14.2 13.8L21.5 10.5L3 2Z" fill="#FF6B00" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round" filter="url(#glow-pointer)"/>
+  <!-- Center Core -->
+  <polygon points="3,2 8,11 11,8" fill="#FFF2E8" opacity="0.95"/>
+  <!-- Pulsing target dot -->
+  <circle cx="14" cy="14" r="2.2" fill="#FFA057" stroke="#09090D" stroke-width="1.2"/>
+</svg>
+

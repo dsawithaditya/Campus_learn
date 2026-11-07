@@ -35,9 +35,63 @@
 }
 
 @layer base {
+  /* 
+    Obsidian & Blaze Orange Custom Hardware Cursors 
+    Provides dual fallback: SVG asset + inline URI fallback
+  */
+  html, body, * {
+    cursor: url('/cursors/arrow-default.svg') 3 2, 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Cpath d='M3 2L10.5 21L14.2 13.8L21.5 10.5L3 2Z' fill='%2309090D' stroke='%23FF6B00' stroke-width='1.75' stroke-linejoin='round'/%3E%3Cpolygon points='3,2 8,11 11,8' fill='%23FFA057' opacity='0.85'/%3E%3Ccircle cx='3.5' cy='2.5' r='1.1' fill='%23FFFFFF'/%3E%3C/svg%3E") 3 2, 
+            auto;
+  }
+
+  a, 
+  button, 
+  [role="button"], 
+  input[type="button"], 
+  input[type="submit"], 
+  input[type="reset"], 
+  select, 
+  summary,
+  .cursor-pointer,
+  .btn-zephyr-primary,
+  .btn-zephyr-secondary,
+  .btn-glossy-white,
+  [tabindex]:not([tabindex="-1"]) {
+    cursor: url('/cursors/arrow-pointer.svg') 3 2, 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Cpath d='M3 2L10.5 21L14.2 13.8L21.5 10.5L3 2Z' fill='%23FF6B00' stroke='%23FFFFFF' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpolygon points='3,2 8,11 11,8' fill='%23FFF2E8' opacity='0.95'/%3E%3Ccircle cx='14' cy='14' r='2.2' fill='%23FFA057' stroke='%2309090D' stroke-width='1.2'/%3E%3C/svg%3E") 3 2, 
+            pointer !important;
+  }
+
+  .cursor-grab {
+    cursor: url('/cursors/arrow-grab.svg') 12 12, 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Crect x='5' y='7' width='18' height='14' rx='4' fill='%2309090D' stroke='%23FF6B00' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='14' r='1.5' fill='%23FFA057'/%3E%3Ccircle cx='14' cy='14' r='1.5' fill='%23FFA057'/%3E%3Ccircle cx='18' cy='14' r='1.5' fill='%23FFA057'/%3E%3C/svg%3E") 12 12, 
+            grab !important;
+  }
+
+  .cursor-grabbing,
+  .cursor-grab:active {
+    cursor: url('/cursors/arrow-grabbing.svg') 12 12, 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Crect x='6' y='8' width='16' height='12' rx='3.5' fill='%23FF6B00' stroke='%23FFFFFF' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='14' r='1.3' fill='%2309090D'/%3E%3Ccircle cx='14' cy='14' r='1.3' fill='%2309090D'/%3E%3Ccircle cx='18' cy='14' r='1.3' fill='%2309090D'/%3E%3C/svg%3E") 12 12, 
+            grabbing !important;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  textarea {
+    cursor: url('/cursors/arrow-text.svg') 12 12, 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M8 4H16M12 4V20M8 20H16' stroke='%23FF6B00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 12 12, 
+            text !important;
+  }
+
   html {
     scroll-behavior: smooth;
-    font-family: 'Satoshi', 'General Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Switzer', 'Satoshi', 'General Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: #070709 !important;
     color: #F4F4F5 !important;
     color-scheme: dark;
@@ -50,7 +104,7 @@
     position: relative;
     background-color: #070709 !important;
     background-image: 
-      radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 28px 28px;
     color: #F4F4F5 !important;
     overflow-x: hidden;
@@ -72,17 +126,27 @@
   }
 
   h2, h3, h4, h5, h6, .font-heading {
-    font-family: 'Cabinet Grotesk', 'Clash Display', 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Cabinet Grotesk', 'Switzer', 'Plus Jakarta Sans', sans-serif;
     letter-spacing: -0.025em;
     color: #F4F4F5;
     text-rendering: optimizeLegibility;
   }
 
   .font-editorial {
-    font-family: 'Instrument Serif', Georgia, serif;
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
     font-weight: 400;
     letter-spacing: -0.01em;
+  }
+
+  /* Grail Signature Uppercase Light Editorial Serif (PP Pangaia / Cormorant 300) */
+  .font-grail-serif {
+    font-family: 'Cormorant Garamond', 'Instrument Serif', Georgia, serif;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.88;
+    text-rendering: optimizeLegibility;
   }
 
   .font-mono, code, .stat-num {
@@ -365,5 +429,166 @@
       padding-top: 120px;
       padding-bottom: 120px;
     }
+  }
+}
+
+/* ==========================================================================
+   GRAIL-INSPIRED DESIGN & ANIMATION SYSTEM (OBSIDIAN & BLAZE ORANGE THEME)
+   ========================================================================== */
+
+/* Grail Signature Colon-Title Bar */
+.grail-colontitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.31;
+  letter-spacing: 0.01em;
+  color: rgba(244, 244, 245, 0.72);
+  pointer-events: none;
+  user-select: none;
+  z-index: 10;
+}
+
+/* Grail Progressive 3-Layer Backdrop Blur Scrim */
+.grail-scrim-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44vh;
+  min-height: 300px;
+  pointer-events: none;
+  z-index: 1;
+}
+.grail-scrim-b1 {
+  position: absolute;
+  inset: 0;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  -webkit-mask-image: linear-gradient(#000 0% 50%, transparent 92%);
+  mask-image: linear-gradient(#000 0% 50%, transparent 92%);
+}
+.grail-scrim-b2 {
+  position: absolute;
+  inset: 0;
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+  -webkit-mask-image: linear-gradient(#000 0% 22%, transparent 52%);
+  mask-image: linear-gradient(#000 0% 22%, transparent 52%);
+}
+.grail-scrim-grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#070709 28%, transparent 100%);
+}
+
+/* Grail Rounded Sheet Container with subtle scroll tilt/scale */
+.grail-sheet {
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(16, 16, 21, 0.96) 0%, rgba(10, 10, 14, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.92),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* Grail Per-Character Hover Lift Wave (_hl_jyv7u_542) */
+.grail-char-wave {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s;
+}
+.group-wave:hover .grail-char-wave,
+.group-wave:focus-visible .grail-char-wave {
+  color: #FF6B00;
+  transition-delay: calc(var(--i, 0) * 20ms);
+  transform: translateY(-3px);
+}
+
+/* Grail Masked Word & Letter Rise Keyframes */
+@keyframes grailWordRise {
+  0% {
+    transform: translateY(115%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes grailLetterRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0.62em);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes grailBubbleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes grailBubblePop {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes grailDotRun {
+  0%, 60%, 100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.grail-bubble-float {
+  animation: 3.4s ease-in-out infinite grailBubbleFloat;
+}
+
+.grail-bubble-pop {
+  animation: 0.3s cubic-bezier(0.22, 1, 0.36, 1) grailBubblePop;
+}
+
+.grail-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #09090B;
+  display: inline-block;
+  animation: 1.2s ease-in-out infinite grailDotRun;
+}
+.grail-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.grail-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grail-bubble-float,
+  .grail-bubble-pop,
+  .grail-dot {
+    animation: none !important;
+    transition: none !important;
   }
 }

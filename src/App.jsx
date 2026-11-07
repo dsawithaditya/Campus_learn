@@ -5,9 +5,11 @@ import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
 import {
   BackToTopButton,
+  GrailFloatingPill,
   SplashScreen,
   GlobalProgressBar,
   GlobalClickBurst,
+  CustomCursorGlow,
 } from './components/GlobalExtras';
 import { AppRoutes } from './routes';
 import { useAppStore } from './store/useAppStore';
@@ -59,6 +61,9 @@ export function App() {
         Skip to main content
       </a>
 
+      {/* Ambient Blaze Orange Cursor Spotlight */}
+      <CustomCursorGlow />
+
       {/* Top Scroll Progress Laser Bar */}
       <GlobalProgressBar />
 
@@ -78,6 +83,9 @@ export function App() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Grail-inspired bottom-left floating cohort pill */}
+      <GrailFloatingPill />
 
       {/* Back to top floating button */}
       <BackToTopButton />

@@ -11,6 +11,7 @@ import {
 import { CourseCard } from '../components/CourseCard';
 import { Skeleton } from '../components/Skeleton';
 import { Button } from '../components/Button';
+import { ColonTitle, GrailLetterRise } from '../components/AnimatedText';
 import coursesData from '../data/courses.json';
 import categoriesData from '../data/categories.json';
 
@@ -155,16 +156,21 @@ export default function Explore() {
     (isRating4Plus ? 1 : 0);
 
   return (
-    <div className="pt-24 pb-16 min-h-screen">
+    <div className="pt-28 pb-16 min-h-screen">
       <div className="container-custom">
+        <ColonTitle
+          label="Explore All Peer Cohorts & Bootcamps"
+          chapter="Directory"
+          accent
+        />
         {/* Header with Search and Stats */}
         <div className="py-6 border-b border-white/10 mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-zinc-100">
-                Explore Peer Courses
+              <h1 className="font-grail-serif text-4xl sm:text-6xl text-white leading-[0.88] tracking-[-0.01em]">
+                <GrailLetterRise text="EXPLORE PEER COHORTS" stagger={0.025} />
               </h1>
-              <p className="text-xs sm:text-sm text-zinc-400 mt-1 font-mono">
+              <p className="text-xs sm:text-sm text-zinc-400 mt-2 font-mono">
                 Showing{' '}
                 <span className="font-bold text-[#FF6B00]">
                   {filteredCourses.length}

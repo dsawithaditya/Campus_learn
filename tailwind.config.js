@@ -75,9 +75,10 @@ export default {
       },
       fontFamily: {
         display: ['"Clash Display"', '"Cabinet Grotesk"', '"Syne"', 'sans-serif'],
-        heading: ['"Cabinet Grotesk"', '"Clash Display"', '"Plus Jakarta Sans"', 'sans-serif'],
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
-        body: ['"Satoshi"', '"General Sans"', '"Inter"', 'sans-serif'],
+        heading: ['"Cabinet Grotesk"', '"Switzer"', '"Plus Jakarta Sans"', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', '"Instrument Serif"', 'Georgia', 'serif'],
+        grail: ['"Cormorant Garamond"', '"Instrument Serif"', 'Georgia', 'serif'],
+        body: ['"Switzer"', '"Satoshi"', '"General Sans"', '"Inter"', 'sans-serif'],
         mono: ['"Space Grotesk"', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       keyframes: {
