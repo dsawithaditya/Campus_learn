@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   Users,
   Star,
@@ -8,30 +8,81 @@ import {
   Share2,
   BookOpen,
   ArrowLeft,
+  Calendar,
+  Clock,
+  GraduationCap,
 } from 'lucide-react';
 import { CourseCard } from '../components/CourseCard';
 import { Tabs } from '../components/Tabs';
 import { Rating } from '../components/Rating';
+import { Modal } from '../components/Modal';
+import { Button } from '../components/Button';
 import { useAppStore } from '../store/useAppStore';
 import mentorsData from '../data/mentors.json';
 import coursesData from '../data/courses.json';
+import reviewsData from '../data/reviews.json';
 
 export default function MentorProfile() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const safeMentors = Array.isArray(mentorsData) ? mentorsData : [];
   const safeCourses = Array.isArray(coursesData) ? coursesData : [];
 
   const mentor = safeMentors.find((m) => m?.id === id) || safeMentors[0] || {};
+  const officeSlots = Array.isArray(mentor?.officeHours) && mentor.officeHours.length > 0
+    ? mentor.officeHours
+    : ['Thu, 6:30 PM IST', 'Sat, 11:00 AM IST'];
 
+  const user = useAppStore((state) => state.user);
   const followedMentorIds =
     useAppStore((state) => state.followedMentorIds) || [];
+  const bookedSessions = useAppStore((state) => state.bookedSessions) || [];
   const toggleFollowMentor = useAppStore((state) => state.toggleFollowMentor);
+  const bookMentorSession = useAppStore((state) => state.bookMentorSession);
   const addToast = useAppStore((state) => state.addToast);
 
   const [activeTab, setActiveTab] = useState('courses');
+  const [isBookModalOpen, setIsBookModalOpen] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState(officeSlots[0]);
+  const [sessionTopic, setSessionTopic] = useState('');
+  const [sessionNote, setSessionNote] = useState('');
 
   const isFollowed = followedMentorIds.includes(mentor?.id);
   const mentorCourses = safeCourses.filter((c) => c?.mentorId === mentor?.id);
+  const existingMentorBookings = bookedSessions.filter((s) => s?.mentorId === mentor?.id);
+
+  const feedbackList = useMemo(() => {
+    const primaryCat = mentorCourses[0]?.categoryId || 'tech';
+    return reviewsData?.[primaryCat] || reviewsData?.tech || [];
+  }, [mentorCourses]);
+
+  const handleOpenBooking = () => {
+    if (!user) {
+      addToast('Sign in with your college email to book a 1:1 mentor slot', 'info');
+      navigate('/login');
+      return;
+    }
+    setSelectedSlot(officeSlots[0]);
+    setIsBookModalOpen(true);
+  };
+
+  const handleConfirmBooking = (e) => {
+    e.preventDefault();
+    if (!sessionTopic.trim()) {
+      addToast('Please describe what you want to discuss', 'error');
+      return;
+    }
+    bookMentorSession({
+      mentorId: mentor.id,
+      mentorName: mentor.name,
+      topic: sessionTopic.trim(),
+      slot: selectedSlot,
+      note: sessionNote.trim(),
+    });
+    setIsBookModalOpen(false);
+    setSessionTopic('');
+    setSessionNote('');
+  };
 
   const handleShare = () => {
     const shareTitle = `${mentor?.name || 'Mentor'} on Campus Learn`;
@@ -103,10 +154,16 @@ export default function MentorProfile() {
 
               {/* Identity, Bio & Stats */}
               <div className="space-y-3 min-w-0">
-                <div className="flex flex-wrap items-center gap-2.5">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="font-mono text-[11px] font-semibold text-[#0859D4] bg-[#0859D4]/10 border border-[#0859D4]/20 px-2.5 py-0.5 rounded-full">
                     {mentor?.expertise || 'Senior Mentor'}
                   </span>
+                  {mentor?.college && (
+                    <span className="inline-flex items-center gap-1 font-mono text-[11px] text-[#424242] bg-[#F5F5F7] border border-black/[0.06] px-2.5 py-0.5 rounded-full">
+                      <GraduationCap className="w-3 h-3 text-[#0859D4]" />
+                      {mentor.college}
+                    </span>
+                  )}
                   <span className="font-mono text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
                     Verified Lead
                   </span>
@@ -164,12 +221,23 @@ export default function MentorProfile() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-2.5 self-start lg:self-center shrink-0">
+            <div className="flex flex-wrap items-center gap-2.5 self-start lg:self-center shrink-0">
+              <button
+                type="button"
+                onClick={handleOpenBooking}
+                className="btn-zephyr-primary min-h-[44px] inline-flex items-center gap-1.5 text-xs sm:text-sm px-5 py-2.5 rounded-full font-heading font-semibold"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>Book 1:1 Office Hours</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => mentor?.id && toggleFollowMentor(mentor.id)}
-                className={`inline-flex items-center gap-1.5 text-xs sm:text-sm px-5 py-2.5 rounded-full font-heading font-semibold transition-all cursor-pointer ${
-                  isFollowed ? 'btn-zephyr-secondary' : 'btn-zephyr-primary'
+                className={`min-h-[44px] inline-flex items-center gap-1.5 text-xs sm:text-sm px-4 py-2.5 rounded-full font-heading font-semibold transition-all cursor-pointer ${
+                  isFollowed
+                    ? 'btn-zephyr-secondary'
+                    : 'bg-[#F5F5F7] border border-black/15 text-[#1D1D1F] hover:border-[#0859D4]/40'
                 }`}
               >
                 {isFollowed ? (
@@ -189,7 +257,7 @@ export default function MentorProfile() {
                 type="button"
                 onClick={handleShare}
                 aria-label="Share mentor profile"
-                className="btn-zephyr-secondary text-xs sm:text-sm px-4 py-2.5 inline-flex items-center gap-1.5"
+                className="btn-zephyr-secondary min-h-[44px] text-xs sm:text-sm px-4 py-2.5 inline-flex items-center gap-1.5"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>Share</span>
@@ -261,20 +329,101 @@ export default function MentorProfile() {
             <h3 className="font-heading font-bold text-lg text-[#1D1D1F]">
               Student Feedback
             </h3>
-            <div className="p-4 bg-[#F5F5F7] border border-black/[0.06] rounded-xl space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <span className="font-heading font-semibold text-xs sm:text-sm text-[#1D1D1F]">
-                  Pranav V. • 2nd Year
-                </span>
-                <Rating value={5} size="sm" showValue={false} />
+            {feedbackList.map((fb) => (
+              <div key={fb.id} className="p-4 bg-[#F5F5F7] border border-black/[0.06] rounded-xl space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-heading font-semibold text-xs sm:text-sm text-[#1D1D1F]">
+                    {fb.author} • <span className="font-mono font-normal text-[#6E6E73]">{fb.college}</span>
+                  </span>
+                  <Rating value={fb.rating} size="sm" showValue={false} />
+                </div>
+                <p className="text-xs sm:text-sm text-[#424242] leading-relaxed">
+                  &ldquo;{fb.comment}&rdquo;
+                </p>
               </div>
-              <p className="text-xs sm:text-sm text-[#424242] leading-relaxed">
-                &ldquo;Clear, practical sessions with zero fluff. Helped me ship my first project within a week.&rdquo;
-              </p>
-            </div>
+            ))}
           </div>
         )}
       </div>
+
+      {/* Book 1:1 Office Hours Modal */}
+      <Modal
+        isOpen={isBookModalOpen}
+        onClose={() => setIsBookModalOpen(false)}
+        title={`Book 1:1 with ${mentor?.name || 'Mentor'}`}
+      >
+        <form onSubmit={handleConfirmBooking} className="space-y-4">
+          {existingMentorBookings.length > 0 && (
+            <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800">
+              You already have an upcoming slot ({existingMentorBookings[0].slot}). Manage bookings in your{' '}
+              <Link to="/dashboard" className="underline font-semibold">
+                Dashboard
+              </Link>.
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <label className="block font-mono text-[11px] uppercase tracking-wider text-[#6E6E73]">
+              Select Weekly Office Hour
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {officeSlots.map((slot) => (
+                <button
+                  key={slot}
+                  type="button"
+                  onClick={() => setSelectedSlot(slot)}
+                  className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-mono font-medium flex items-center gap-2 transition-colors cursor-pointer ${
+                    selectedSlot === slot
+                      ? 'bg-[#0859D4]/10 border-[#0859D4] text-[#0859D4]'
+                      : 'bg-[#F5F5F7] border-black/10 text-[#1D1D1F] hover:bg-[#EBEBF0]'
+                  }`}
+                >
+                  <Clock className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">{slot}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label htmlFor="session-topic" className="block text-xs font-semibold text-[#1D1D1F]">
+              What would you like help with? *
+            </label>
+            <input
+              id="session-topic"
+              type="text"
+              required
+              value={sessionTopic}
+              onChange={(e) => setSessionTopic(e.target.value)}
+              placeholder="e.g. Portfolio review, Supabase auth bug, or audition feedback"
+              className="w-full min-h-[44px] px-3.5 py-2 rounded-xl bg-[#F5F5F7] border border-black/10 text-xs sm:text-sm text-[#1D1D1F] placeholder:text-[#6E6E73] focus:outline-none focus:border-[#0859D4] focus:bg-white transition-colors"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label htmlFor="session-note" className="block text-xs font-semibold text-[#1D1D1F]">
+              Optional context / links
+            </label>
+            <textarea
+              id="session-note"
+              rows={2}
+              value={sessionNote}
+              onChange={(e) => setSessionNote(e.target.value)}
+              placeholder="Share GitHub repo, audition piece, or specific questions..."
+              className="w-full p-3 rounded-xl bg-[#F5F5F7] border border-black/10 text-xs sm:text-sm text-[#1D1D1F] placeholder:text-[#6E6E73] focus:outline-none focus:border-[#0859D4] focus:bg-white transition-colors resize-none"
+            />
+          </div>
+
+          <div className="flex justify-end gap-2 pt-2">
+            <Button type="button" variant="secondary" size="sm" onClick={() => setIsBookModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" size="sm">
+              Confirm 1:1 Slot
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

@@ -37,14 +37,25 @@ export function MentorCard({ mentor, className = '' }) {
     }
   };
 
+  const handleCardKeyDown = (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+      e.preventDefault();
+      handleCardClick();
+    }
+  };
+
   return (
     <motion.div
+      role="link"
+      tabIndex={0}
+      aria-label={`View profile of ${mentor?.name || 'Mentor'}`}
       onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
       onMouseMove={handleMouseMove}
       whileHover={{ y: -5 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative p-5 cursor-pointer flex flex-col justify-between rounded-2xl bg-white border border-black/[0.08] hover:border-[#0859D4]/45 shadow-[0_8px_24px_rgba(29,29,31,0.05)] hover:shadow-[0_14px_34px_rgba(8,89,212,0.12)] transition-all h-full select-none ${className}`}
+      className={`group relative p-5 cursor-pointer flex flex-col justify-between rounded-2xl bg-white border border-black/[0.08] hover:border-[#0859D4]/45 shadow-[0_8px_24px_rgba(29,29,31,0.05)] hover:shadow-[0_14px_34px_rgba(8,89,212,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0859D4] transition-all h-full select-none ${className}`}
       style={{
         backgroundImage:
           'radial-gradient(320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(8,89,212,0.06), transparent 50%)',
@@ -77,7 +88,11 @@ export function MentorCard({ mentor, className = '' }) {
             <h4 className="font-heading font-bold text-base text-[#1D1D1F] group-hover:text-[#0859D4] transition-colors leading-tight truncate">
               {mentor?.name}
             </h4>
-            {/* Expertise tag replacing college name */}
+            {mentor?.college && (
+              <p className="text-[11px] font-mono text-[#6E6E73] truncate mt-0.5">
+                {mentor.college}
+              </p>
+            )}
             <div className="mt-1 flex items-center gap-1.5">
               <span className="font-mono text-[11px] font-semibold text-[#0859D4] bg-[#0859D4]/10 border border-[#0859D4]/20 px-2 py-0.5 rounded-md truncate max-w-full inline-block">
                 {mentor?.expertise || 'Domain Lead'}
@@ -105,14 +120,14 @@ export function MentorCard({ mentor, className = '' }) {
       </div>
 
       {/* Footer Metrics & Follow Action */}
-      <div className="pt-3 border-t border-black/[0.08] flex items-center justify-between">
-        <div className="flex items-center gap-2 font-mono text-xs text-[#6E6E73]">
+      <div className="pt-3 border-t border-black/[0.08] flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 font-mono text-xs text-[#6E6E73] min-w-0">
           <span className="flex items-center gap-1 font-bold text-[#1D1D1F]">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
             <span>{mentor?.rating}</span>
           </span>
           <span className="text-black/25">•</span>
-          <span className="text-[#6E6E73] text-[11px]">
+          <span className="text-[#6E6E73] text-[11px] truncate">
             {(mentor?.followers + (isFollowed ? 1 : 0)).toLocaleString()} learners
           </span>
         </div>
@@ -122,7 +137,7 @@ export function MentorCard({ mentor, className = '' }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.92 }}
           onClick={handleFollowToggle}
-          className={`text-xs px-3 py-1 rounded-full font-heading font-semibold transition-all flex items-center gap-1 cursor-pointer select-none ${
+          className={`min-h-[38px] text-xs px-3.5 py-1.5 rounded-full font-heading font-semibold transition-all flex items-center gap-1 cursor-pointer select-none shrink-0 ${
             isFollowed
               ? 'bg-[#F5F5F7] border border-black/15 text-[#1D1D1F] hover:border-black/30'
               : 'bg-gradient-to-r from-[#0859D4] to-[#1A59F9] text-white shadow-[0_4px_12px_rgba(8,89,212,0.25)]'

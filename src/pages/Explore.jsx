@@ -220,7 +220,7 @@ export default function Explore() {
           <button
             type="button"
             onClick={selectAllCategories}
-            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-heading font-semibold whitespace-nowrap transition-all cursor-pointer select-none ${
+            className={`px-4 min-h-[40px] flex items-center rounded-full text-xs sm:text-sm font-heading font-semibold whitespace-nowrap transition-all cursor-pointer select-none ${
               selectedCategories.length === 0
                 ? 'bg-[#0859D4] text-white font-bold shadow-[0_4px_14px_rgba(8,89,212,0.28)]'
                 : 'bg-[#F5F5F7] text-[#424242] hover:text-[#1D1D1F] hover:bg-[#EBEBF0] border border-black/[0.06]'
@@ -236,7 +236,7 @@ export default function Explore() {
                 key={cat?.id}
                 type="button"
                 onClick={() => toggleCategory(cat?.id)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-heading font-semibold whitespace-nowrap transition-all cursor-pointer select-none ${
+                className={`px-4 min-h-[40px] flex items-center rounded-full text-xs sm:text-sm font-heading font-semibold whitespace-nowrap transition-all cursor-pointer select-none ${
                   isSelected
                     ? 'bg-[#0859D4] text-white font-bold shadow-[0_4px_14px_rgba(8,89,212,0.28)]'
                     : 'bg-[#F5F5F7] text-[#424242] hover:text-[#1D1D1F] hover:bg-[#EBEBF0] border border-black/[0.06]'
@@ -254,7 +254,7 @@ export default function Explore() {
             <button
               type="button"
               onClick={() => setIsFilterOpen((prev) => !prev)}
-              className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-heading font-semibold border transition-colors cursor-pointer ${
+              className={`inline-flex items-center gap-2 px-4 min-h-[40px] rounded-full text-xs font-heading font-semibold border transition-colors cursor-pointer ${
                 isFilterOpen || secondaryFilterCount > 0
                   ? 'bg-[#0859D4]/10 border-[#0859D4]/30 text-[#0859D4]'
                   : 'bg-[#F5F5F7] border-black/[0.08] text-[#424242] hover:text-[#1D1D1F] hover:bg-[#EBEBF0]'
@@ -398,7 +398,7 @@ export default function Explore() {
         </AnimatePresence>
 
         {/* Full-Width 3-Column Course Grid */}
-        <main>
+        <section aria-label="Course catalog">
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -453,7 +453,7 @@ export default function Explore() {
               )}
             </div>
           )}
-        </main>
+        </section>
       </div>
     </div>
   );

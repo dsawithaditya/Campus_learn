@@ -143,11 +143,16 @@ export function Mentors() {
 
                     {/* Right: Details & Skills */}
                     <div className="lg:col-span-8 flex flex-col justify-center space-y-4">
-                      {/* Expertise Pill + Metrics */}
-                      <div className="flex flex-wrap items-center gap-3">
+                      {/* Expertise Pill + College + Metrics */}
+                      <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                         <span className="font-mono text-[11px] font-semibold text-[#0859D4] bg-[#0859D4]/10 border border-[#0859D4]/20 px-2.5 py-1 rounded-full">
                           {mentorItem.expertise || 'Domain Lead'}
                         </span>
+                        {mentorItem.college && (
+                          <span className="font-mono text-[11px] text-[#424242] bg-[#F5F5F7] border border-black/[0.06] px-2.5 py-1 rounded-full">
+                            {mentorItem.college}
+                          </span>
+                        )}
                         <span className="flex items-center gap-1 font-mono text-xs text-[#6E6E73]">
                           <Users className="w-3.5 h-3.5 text-[#0859D4]" />
                           {(mentorItem.followers || 0).toLocaleString()} learners
@@ -204,7 +209,7 @@ export function Mentors() {
                       role="tab"
                       aria-selected={isOn}
                       onClick={() => swiperRef.current?.slideToLoop(idx)}
-                      className={`h-8 px-3.5 rounded-full font-heading text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                      className={`min-h-[38px] px-3.5 rounded-full font-heading text-xs font-semibold transition-all duration-200 cursor-pointer flex items-center ${
                         isOn
                           ? 'bg-[#0859D4] text-white shadow-[0_4px_14px_rgba(8,89,212,0.28)]'
                           : 'bg-[#F5F5F7] text-[#424242] hover:bg-[#EBEBF0] hover:text-[#1D1D1F]'
@@ -221,7 +226,7 @@ export function Mentors() {
                   type="button"
                   onClick={() => handleStageCycle(-1)}
                   aria-label="Previous mentor"
-                  className="w-8 h-8 rounded-full border border-black/15 bg-white hover:border-[#0859D4]/50 hover:text-[#0859D4] text-[#424242] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-10 h-10 sm:w-9 sm:h-9 rounded-full border border-black/15 bg-white hover:border-[#0859D4]/50 hover:text-[#0859D4] text-[#424242] flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -229,14 +234,14 @@ export function Mentors() {
                   type="button"
                   onClick={() => handleStageCycle(1)}
                   aria-label="Next mentor"
-                  className="w-8 h-8 rounded-full border border-black/15 bg-white hover:border-[#0859D4]/50 hover:text-[#0859D4] text-[#424242] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-10 h-10 sm:w-9 sm:h-9 rounded-full border border-black/15 bg-white hover:border-[#0859D4]/50 hover:text-[#0859D4] text-[#424242] flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate(`/mentor/${activeMentor.id}`)}
-                  className="btn-zephyr-secondary text-xs px-4 py-1.5 gap-1.5 ml-1"
+                  className="btn-zephyr-secondary min-h-[40px] text-xs px-4 py-2 gap-1.5 ml-1"
                 >
                   <span>View Profile</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -266,7 +271,7 @@ export function Mentors() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search name or skill..."
                 aria-label="Filter mentors"
-                className="w-full pl-8 pr-3 py-1.5 rounded-full bg-[#F5F5F7] border border-black/[0.08] focus:border-[#0859D4]/60 focus:bg-white text-xs text-[#1D1D1F] placeholder:text-[#6E6E73] outline-none transition-colors"
+                className="w-full min-h-[42px] pl-9 pr-3 py-2 rounded-full bg-[#F5F5F7] border border-black/[0.08] focus:border-[#0859D4]/60 focus:bg-white text-xs sm:text-sm text-[#1D1D1F] placeholder:text-[#6E6E73] outline-none transition-colors"
               />
             </div>
           </div>

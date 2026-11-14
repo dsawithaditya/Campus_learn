@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Eye, EyeOff, CheckCircle2, GraduationCap, AlertCircle } from 'lucide-react';
 import { Button } from '../components/Button';
 import { useAppStore } from '../store/useAppStore';
+import { isValidCollegeEmail } from '../utils/validators';
 
 export default function Signup() {
   const [fullName, setFullName] = useState('');
@@ -19,11 +20,6 @@ export default function Signup() {
   const login = useAppStore((state) => state.login);
   const navigate = useNavigate();
 
-  const isValidCollegeEmail = (str) => {
-    const trimmed = (str || '').trim().toLowerCase();
-    return trimmed.endsWith('.edu') || trimmed.endsWith('.ac.in') || trimmed.includes('@college.');
-  };
-
   const isEmailDirty = email.length > 0;
   const isEmailValid = isValidCollegeEmail(email);
 
@@ -32,7 +28,7 @@ export default function Signup() {
     setError('');
 
     if (!isEmailValid) {
-      setError('A valid college email domain (.edu or .ac.in) is required to join Campus Learn.');
+      setError('A valid college email domain (.edu, .ac.in, or .edu.in) is required to join Campus Learn.');
       return;
     }
 
@@ -121,7 +117,7 @@ export default function Signup() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Priyanshi Mehta"
-                  className="w-full px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
+                  className="w-full min-h-[44px] px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                 />
               </div>
 
@@ -138,7 +134,7 @@ export default function Signup() {
                   value={collegeName}
                   onChange={(e) => setCollegeName(e.target.value)}
                   placeholder="e.g. BITS Pilani, IIT Delhi, SRCC"
-                  className="w-full px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
+                  className="w-full min-h-[44px] px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                 />
               </div>
 
@@ -156,7 +152,7 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@college.edu or name@college.ac.in"
-                  className="w-full px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
+                  className="w-full min-h-[44px] px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                 />
                 {isEmailDirty && !isEmailValid && (
                   <p className="text-[11px] text-amber-600 mt-1 flex items-center gap-1">
@@ -188,12 +184,13 @@ export default function Signup() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] pr-9"
+                      className="w-full min-h-[44px] px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] pr-11"
                     />
                     <button
                       type="button"
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#6E6E73] hover:text-[#1D1D1F] cursor-pointer"
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-md text-[#6E6E73] hover:text-[#1D1D1F] cursor-pointer"
                     >
                       {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                     </button>
@@ -213,7 +210,7 @@ export default function Signup() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
+                    className="w-full min-h-[44px] px-3 py-2 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                   />
                 </div>
               </div>

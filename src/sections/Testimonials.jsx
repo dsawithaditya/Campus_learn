@@ -136,19 +136,23 @@ export function Testimonials({ embedded = false }) {
                     </span>
                   )}
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center">
                     {safeTestimonials.map((_, dotIdx) => (
                       <button
                         key={dotIdx}
                         type="button"
                         onClick={() => swiperRef.current?.slideToLoop(dotIdx)}
                         aria-label={`Go to story ${dotIdx + 1}`}
-                        className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                          dotIdx === currentIndex
-                            ? 'w-5 bg-[#0859D4]'
-                            : 'w-1.5 bg-black/15 hover:bg-black/30'
-                        }`}
-                      />
+                        className="w-7 h-7 flex items-center justify-center cursor-pointer"
+                      >
+                        <span
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            dotIdx === currentIndex
+                              ? 'w-5 bg-[#0859D4]'
+                              : 'w-1.5 bg-black/20 hover:bg-black/35'
+                          }`}
+                        />
+                      </button>
                     ))}
                   </div>
 
@@ -157,7 +161,7 @@ export function Testimonials({ embedded = false }) {
                       <button
                         type="button"
                         onClick={handlePrev}
-                        className="p-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] transition-colors cursor-pointer"
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] transition-colors cursor-pointer"
                         aria-label="Previous story"
                       >
                         <ChevronLeft className="w-4 h-4" />
@@ -165,7 +169,7 @@ export function Testimonials({ embedded = false }) {
                       <button
                         type="button"
                         onClick={handleNext}
-                        className="p-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] transition-colors cursor-pointer"
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] transition-colors cursor-pointer"
                         aria-label="Next story"
                       >
                         <ChevronRight className="w-4 h-4" />

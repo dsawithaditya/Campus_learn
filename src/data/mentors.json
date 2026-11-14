@@ -2,10 +2,12 @@
   {
     "id": "m1",
     "name": "Rohan Deshmukh",
+    "college": "IIT Bombay",
     "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80",
     "expertise": "Full-Stack & Systems Architecture",
     "bio": "Competitive programmer (Candidate Master on CF), GSoC mentor, and campus coding lead. Passionate about graph theory and microservices.",
     "skills": ["React", "Go", "Distributed Systems", "LeetCode DSA"],
+    "officeHours": ["Thu, 6:30 PM IST", "Sat, 11:00 AM IST", "Sun, 5:00 PM IST"],
     "followers": 1420,
     "coursesCount": 3,
     "rating": 4.9
@@ -13,10 +15,12 @@
   {
     "id": "m2",
     "name": "Ananya Kulkarni",
+    "college": "BITS Pilani",
     "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80",
     "expertise": "Vocal Arts & Stage Performance",
     "bio": "Lead vocalist for university rock band 'Tarang'. Trained in Hindustani classical for 9 years and performed at 20+ collegiate fests.",
     "skills": ["Vocal Training", "Acoustic Singing", "Stage Presence", "Riyaz Drills"],
+    "officeHours": ["Wed, 7:00 PM IST", "Fri, 5:30 PM IST", "Sun, 4:00 PM IST"],
     "followers": 980,
     "coursesCount": 3,
     "rating": 4.8
@@ -24,10 +28,12 @@
   {
     "id": "m3",
     "name": "Kabir Sen",
+    "college": "IIT Madras",
     "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
     "expertise": "Audio Engineering & Lo-Fi Beats",
     "bio": "Beat producer with 500k+ streams on Spotify. Specialized in Indian Lo-Fi and drill rhythms using FL Studio and Ableton Live.",
     "skills": ["FL Studio", "Beat Making", "Sound Design", "Audio Mixing"],
+    "officeHours": ["Tue, 8:00 PM IST", "Thu, 8:00 PM IST", "Sat, 3:00 PM IST"],
     "followers": 1650,
     "coursesCount": 3,
     "rating": 4.9
@@ -35,10 +41,12 @@
   {
     "id": "m4",
     "name": "Tanvi Verma",
+    "college": "SRCC Delhi",
     "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80",
     "expertise": "Urban Dance & Choreography",
     "bio": "Choreographer for 'V13' western dance crew, winner of Mood Indigo 2024. Loves breaking down complex urban footwork into easy 8-counts.",
     "skills": ["Urban Hip-Hop", "Popping", "Choreography", "Stage Transitions"],
+    "officeHours": ["Mon, 6:00 PM IST", "Fri, 6:30 PM IST", "Sat, 5:00 PM IST"],
     "followers": 1130,
     "coursesCount": 3,
     "rating": 4.9
@@ -46,10 +54,12 @@
   {
     "id": "m5",
     "name": "Vikramaditya Rao",
-    "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+    "college": "NIT Surathkal",
+    "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80",
     "expertise": "Athletic Conditioning & Basketball",
     "bio": "Varsity basketball captain, national athlete, and fitness mentor. Specializes in plyometrics, court agility, and bodyweight mechanics.",
     "skills": ["Basketball", "Agility Drills", "Cardio Conditioning", "Calisthenics"],
+    "officeHours": ["Tue, 6:00 AM IST", "Thu, 6:30 PM IST", "Sat, 7:00 AM IST"],
     "followers": 870,
     "coursesCount": 3,
     "rating": 4.7
@@ -57,10 +67,12 @@
   {
     "id": "m6",
     "name": "Meera Nambiar",
-    "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&auto=format&fit=crop&q=80",
+    "college": "IDC IIT Bombay",
+    "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80",
     "expertise": "UI/UX & Product Design Systems",
     "bio": "Product designer and digital illustrator. Designed UI design systems for startup incubation batches and created major fest visual identities.",
     "skills": ["Figma", "Design Systems", "Vector Art", "Typography"],
+    "officeHours": ["Wed, 6:00 PM IST", "Fri, 7:30 PM IST", "Sun, 12:00 PM IST"],
     "followers": 2100,
     "coursesCount": 3,
     "rating": 5.0
@@ -68,10 +80,12 @@
   {
     "id": "m7",
     "name": "Arjun Sundaram",
-    "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80",
+    "college": "IIIT Hyderabad",
+    "avatar": "https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=300&auto=format&fit=crop&q=80",
     "expertise": "Cinematic Video & Street Photo",
     "bio": "Director of campus photography society. Shot covers for collegiate cultural magazines and freelance projects for live concert stages.",
     "skills": ["Lightroom Classic", "Street Photography", "Color Grading", "Composition"],
+    "officeHours": ["Tue, 5:30 PM IST", "Thu, 7:30 PM IST", "Sun, 10:30 AM IST"],
     "followers": 1340,
     "coursesCount": 3,
     "rating": 4.8
@@ -79,10 +93,12 @@
   {
     "id": "m8",
     "name": "Sahil Sheikh",
-    "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80",
+    "college": "DTU Delhi",
+    "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80",
     "expertise": "Esports & Tactical FPS Strategy",
     "bio": "Top 500 Radiant player in Valorant APAC and collegiate esports lead. Coaching student squads to win regional LANs and scrims.",
     "skills": ["Valorant", "Game Sense", "Aim Training", "Team Comms"],
+    "officeHours": ["Wed, 9:00 PM IST", "Fri, 9:30 PM IST", "Sun, 8:00 PM IST"],
     "followers": 1780,
     "coursesCount": 3,
     "rating": 4.9
@@ -90,10 +106,12 @@
   {
     "id": "m9",
     "name": "Pooja Banerjee",
-    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+    "college": "IIT Kharagpur",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
     "expertise": "Next.js & Open Source AI",
     "bio": "Full-stack engineer building open-source developer tooling and leading hackathon sprint teams across collegiate developer circles.",
     "skills": ["Next.js", "TypeScript", "Tailwind CSS", "API Design"],
+    "officeHours": ["Mon, 7:30 PM IST", "Thu, 8:00 PM IST", "Sat, 4:00 PM IST"],
     "followers": 920,
     "coursesCount": 3,
     "rating": 4.8
@@ -101,10 +119,12 @@
   {
     "id": "m10",
     "name": "Devanshu Pillai",
-    "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+    "college": "NIT Trichy",
+    "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80",
     "expertise": "Competitive Chess & Endgame Tactics",
     "bio": "FIDE rated chess player (Elo 2080) and varsity chess captain. Passionate about breaking down chess tactics, endgames, and intuition.",
     "skills": ["Chess Tactics", "Endgame Strategy", "Opening Preparation", "Positional Play"],
+    "officeHours": ["Tue, 6:30 PM IST", "Thu, 6:30 PM IST", "Sun, 11:00 AM IST"],
     "followers": 1150,
     "coursesCount": 3,
     "rating": 4.9

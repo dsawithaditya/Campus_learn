@@ -71,7 +71,7 @@
 
   html {
     scroll-behavior: smooth;
-    font-family: 'Switzer', 'Satoshi', 'General Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Ranade', 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: #FFFFFF !important;
     color: #1D1D1F !important;
     color-scheme: light;
@@ -98,29 +98,29 @@
   }
 
   h1, .font-display {
-    font-family: 'Clash Display', 'Cabinet Grotesk', 'Syne', sans-serif;
+    font-family: 'Chillax', 'Geist', sans-serif;
     letter-spacing: -0.03em;
     color: #1D1D1F;
     text-rendering: optimizeLegibility;
   }
 
   h2, h3, h4, h5, h6, .font-heading {
-    font-family: 'Cabinet Grotesk', 'Switzer', 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Geist', 'Ranade', sans-serif;
     letter-spacing: -0.025em;
     color: #1D1D1F;
     text-rendering: optimizeLegibility;
   }
 
   .font-editorial {
-    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Instrument Serif', 'Zodiak', Georgia, serif;
     font-style: italic;
     font-weight: 400;
     letter-spacing: -0.01em;
   }
 
   .font-grail-serif {
-    font-family: 'Cormorant Garamond', 'Instrument Serif', Georgia, serif;
-    font-weight: 300;
+    font-family: 'Zodiak', 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 0.88;
@@ -128,7 +128,7 @@
   }
 
   .font-mono, code, .stat-num {
-    font-family: 'Space Grotesk', 'JetBrains Mono', ui-monospace, monospace;
+    font-family: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
     letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
   }
@@ -403,7 +403,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Ranade', 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.31;

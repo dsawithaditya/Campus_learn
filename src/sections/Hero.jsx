@@ -71,6 +71,7 @@ export function Hero() {
           glow={0.4}
           clickCascade={true}
           fade={0.88}
+          paused={typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches}
           className="w-full h-full"
         />
       </div>

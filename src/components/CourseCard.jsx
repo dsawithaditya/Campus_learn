@@ -43,12 +43,21 @@ export function CourseCard({ course, className = '' }) {
 
   return (
     <motion.div
+      role="link"
+      tabIndex={0}
+      aria-label={`View course ${course?.title}`}
       onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
       onMouseMove={handleMouseMove}
       whileHover={{ y: -5 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className={`zephyr-card p-4 group relative overflow-hidden cursor-pointer flex flex-col justify-between rounded-2xl h-full select-none ${className}`}
+      className={`zephyr-card p-4 group relative overflow-hidden cursor-pointer flex flex-col justify-between rounded-2xl h-full select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0859D4] ${className}`}
       style={{
         backgroundImage:
           'radial-gradient(360px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(8,89,212,0.06), transparent 45%)',
@@ -89,7 +98,7 @@ export function CourseCard({ course, className = '' }) {
               whileHover={{ scale: 1.12 }}
               whileTap={{ scale: 0.85 }}
               aria-label={isSaved ? 'Remove from saved' : 'Save course'}
-              className="pointer-events-auto w-8 h-8 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-sm text-[#6E6E73] hover:text-rose-500 transition-colors border border-black/10 cursor-pointer"
+              className="pointer-events-auto w-10 h-10 sm:w-9 sm:h-9 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-sm text-[#6E6E73] hover:text-rose-500 transition-colors border border-black/10 cursor-pointer"
             >
               <Heart
                 className={`w-3.5 h-3.5 transition-colors ${

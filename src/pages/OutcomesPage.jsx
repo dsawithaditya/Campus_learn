@@ -57,12 +57,12 @@ export default function OutcomesPage() {
           <p className="text-sm text-[#424242]">
             Ready to start your next cohort with a verified senior?
           </p>
-          <div className="flex items-center gap-3">
-            <Link to="/explore" className="btn-zephyr-primary text-xs px-5 py-2.5 gap-1.5">
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to="/explore" className="btn-zephyr-primary text-xs px-5 py-2.5 min-h-[44px] gap-1.5">
               <span>Explore Cohorts</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
-            <Link to="/mentors" className="btn-zephyr-secondary text-xs px-5 py-2.5">
+            <Link to="/mentors" className="btn-zephyr-secondary text-xs px-5 py-2.5 min-h-[44px]">
               Meet Mentors
             </Link>
           </div>

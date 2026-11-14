@@ -18,7 +18,7 @@ export const InteractiveHoverButton = React.forwardRef<
     <button
       ref={ref}
       className={cn(
-        "group relative inline-flex items-center justify-center px-6 py-2.5 rounded-full cursor-pointer overflow-hidden font-semibold text-sm transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0859D4]/60",
+        "group relative inline-flex items-center justify-center whitespace-nowrap min-h-[44px] px-6 py-2.5 rounded-full cursor-pointer overflow-hidden font-semibold text-sm transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0859D4]/60",
         "bg-[#1D1D1F] text-white border border-[#1D1D1F] hover:border-[#0859D4]",
         "hover:shadow-[0_10px_28px_rgba(8,89,212,0.28)] active:scale-[0.98]",
         className

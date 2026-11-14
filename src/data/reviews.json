@@ -1,0 +1,146 @@
+{
+  "tech": [
+    {
+      "id": "r-tech-1",
+      "author": "Siddharth Verma",
+      "college": "IIT Roorkee",
+      "rating": 5,
+      "date": "2026-10-18",
+      "comment": "Straight hands-on architecture without 20-minute filler intros. Used the exact Supabase + Next.js pattern in our campus hackathon finals."
+    },
+    {
+      "id": "r-tech-2",
+      "author": "Neha Deshpande",
+      "college": "COEP Pune",
+      "rating": 5,
+      "date": "2026-10-04",
+      "comment": "Breaking dynamic programming states down with whiteboard traces saved me hours during internship prep."
+    }
+  ],
+  "singing": [
+    {
+      "id": "r-sing-1",
+      "author": "Anjali Menon",
+      "college": "NIT Calicut",
+      "rating": 5,
+      "date": "2026-10-15",
+      "comment": "Followed the breath-control and harkat drills right before our annual cultural auditions and cleared the final shortlist."
+    },
+    {
+      "id": "r-sing-2",
+      "author": "Pranav Joshi",
+      "college": "Fergusson College",
+      "rating": 4.8,
+      "date": "2026-09-29",
+      "comment": "Clear pitch-reference demonstrations and practical warmups you can do in a hostel room without disturbing neighbors."
+    }
+  ],
+  "music": [
+    {
+      "id": "r-mus-1",
+      "author": "Raghav Kapoor",
+      "college": "DTU Delhi",
+      "rating": 5,
+      "date": "2026-10-21",
+      "comment": "Built my first tape-saturated lo-fi beat within two evenings. The drum swing breakdown alone is gold."
+    },
+    {
+      "id": "r-mus-2",
+      "author": "Kriti Sharma",
+      "college": "NSUT Delhi",
+      "rating": 4.9,
+      "date": "2026-09-19",
+      "comment": "Practical mixing workflows on regular laptop headphones instead of assuming expensive studio monitors."
+    }
+  ],
+  "dance": [
+    {
+      "id": "r-dan-1",
+      "author": "Zoya Siddiqui",
+      "college": "Lady Shri Ram College",
+      "rating": 5,
+      "date": "2026-10-11",
+      "comment": "Count-by-count isolation drills made complex floorwork transitions click during our stage choreography rehearsals."
+    },
+    {
+      "id": "r-dan-2",
+      "author": "Harshil Patel",
+      "college": "Nirma University",
+      "rating": 4.8,
+      "date": "2026-09-25",
+      "comment": "Crisp camera angles on footwork and clear conditioning warmups before intense practice sessions."
+    }
+  ],
+  "sports": [
+    {
+      "id": "r-spo-1",
+      "author": "Karanveer Gill",
+      "college": "BITS Goa",
+      "rating": 5,
+      "date": "2026-10-14",
+      "comment": "The pick-and-roll spacing and defensive rotation breakdowns directly helped our hostel squad win inter-bhawan silver."
+    },
+    {
+      "id": "r-spo-2",
+      "author": "Tanya Bose",
+      "college": "Jadavpur University",
+      "rating": 4.7,
+      "date": "2026-09-22",
+      "comment": "Progressive calisthenics progressions with zero gym equipment needed—easy to follow on campus grounds."
+    }
+  ],
+  "art": [
+    {
+      "id": "r-art-1",
+      "author": "Ritika Kulkarni",
+      "college": "IIT Guwahati",
+      "rating": 5,
+      "date": "2026-10-20",
+      "comment": "Auto-layout tokens and typography scale exercises turned our club portfolio website into something genuinely shippable."
+    },
+    {
+      "id": "r-art-2",
+      "author": "Aryan Nair",
+      "college": "MIT Manipal",
+      "rating": 5,
+      "date": "2026-10-01",
+      "comment": "Best critique style—clear visual hierarchy rules instead of vague aesthetic buzzwords."
+    }
+  ],
+  "photography": [
+    {
+      "id": "r-pho-1",
+      "author": "Devika Rao",
+      "college": "IIIT Bangalore",
+      "rating": 5,
+      "date": "2026-10-12",
+      "comment": "Night concert framing settings and Lightroom masking workflows rescued every low-light fest photo I shot this semester."
+    },
+    {
+      "id": "r-pho-2",
+      "author": "Samarth Jain",
+      "college": "VIT Vellore",
+      "rating": 4.8,
+      "date": "2026-09-27",
+      "comment": "Clean color-grading LUT structure for campus event reels without over-saturating skin tones."
+    }
+  ],
+  "gaming": [
+    {
+      "id": "r-gam-1",
+      "author": "Adithya Menon",
+      "college": "IIT Kanpur",
+      "rating": 5,
+      "date": "2026-10-16",
+      "comment": "Crosshair discipline and utility-timing VOD reviews took our five-stack from Ascendant to taking maps in inter-IIT scrims."
+    },
+    {
+      "id": "r-gam-2",
+      "author": "Sana Qureshi",
+      "college": "IIIT Delhi",
+      "rating": 4.9,
+      "date": "2026-10-02",
+      "comment": "Endgame calculation frameworks finally stopped me from blundering winning rook endgames in rapid tournaments."
+    }
+  ]
+}

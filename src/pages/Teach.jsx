@@ -12,6 +12,7 @@ import {
 import { Button } from '../components/Button';
 import { GrailLetterRise } from '../components/AnimatedText';
 import { useAppStore } from '../store/useAppStore';
+import { isValidCollegeEmail } from '../utils/validators';
 import categoriesData from '../data/categories.json';
 
 const benefits = [
@@ -34,15 +35,17 @@ const benefits = [
 
 export default function Teach() {
   const navigate = useNavigate();
-  const addToast = useAppStore((state) => state.addToast);
+  const submitMentorApplication = useAppStore((state) => state.submitMentorApplication);
+  const user = useAppStore((state) => state.user);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   // Form State
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    college: '',
+    name: user?.name || '',
+    email: user?.email || '',
+    college: user?.college || '',
     year: '3rd year',
     branch: '',
     category: 'tech',
@@ -52,16 +55,23 @@ export default function Teach() {
   });
 
   const handleChange = (e) => {
+    if (e.target.name === 'email') setEmailError('');
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleNext = (e) => {
     e.preventDefault();
+    if (currentStep === 1) {
+      if (!isValidCollegeEmail(formData.email)) {
+        setEmailError('Please use a valid campus email ending in .edu, .ac.in, or .edu.in');
+        return;
+      }
+    }
     if (currentStep < 3) {
       setCurrentStep((prev) => prev + 1);
     } else {
+      submitMentorApplication(formData);
       setIsSubmitted(true);
-      addToast('Application submitted successfully! Our campus leads will review your profile.', 'success');
     }
   };
 
@@ -137,8 +147,13 @@ export default function Teach() {
               <p className="text-sm text-[#6E6E73] leading-relaxed">
                 Thank you for stepping up to guide your peers. We will review your application and verify your college email within 48 hours.
               </p>
-              <div className="pt-4">
-                <Button variant="primary" onClick={() => navigate('/')}>
+              <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+                {user && (
+                  <Button variant="primary" onClick={() => navigate('/dashboard')}>
+                    View in Dashboard
+                  </Button>
+                )}
+                <Button variant={user ? 'secondary' : 'primary'} onClick={() => navigate('/')}>
                   Back to Campus Learn
                 </Button>
               </div>
@@ -204,8 +219,15 @@ export default function Teach() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="name@college.edu or .ac.in"
-                          className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
+                          className={`w-full min-h-[44px] px-3.5 py-2.5 bg-[#F5F5F7] border rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white ${
+                            emailError ? 'border-rose-500 focus:border-rose-500' : 'border-black/[0.08] focus:border-[#0859D4]'
+                          }`}
                         />
+                        {emailError && (
+                          <p className="text-xs text-rose-600 mt-1" role="alert">
+                            {emailError}
+                          </p>
+                        )}
                       </div>
                     </div>
 

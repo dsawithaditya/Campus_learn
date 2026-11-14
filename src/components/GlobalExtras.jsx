@@ -6,6 +6,7 @@ import 'locomotive-scroll/locomotive-scroll.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useScrollProgress } from '../hooks/useScrollProgress';
+import { BrandMark } from './BrandLogo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -125,7 +126,7 @@ export function BackToTopButton() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 14 }}
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-6 right-6 z-50 flex items-center"
+          className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 flex items-center"
         >
           <motion.button
             type="button"
@@ -223,10 +224,7 @@ export function GrailFloatingPill() {
             aria-hidden="true"
             className="w-6 h-6 rounded-full bg-[#0859D4]/10 border border-[#0859D4]/25 flex items-center justify-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-rotate-12 group-hover:scale-110"
           >
-            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none">
-              <circle cx="12" cy="12" r="8" className="stroke-[#1D1D1F]/80" strokeWidth="2" />
-              <line x1="6" y1="18" x2="18" y2="6" className="stroke-[#0859D4]" strokeWidth="2.4" strokeLinecap="round" />
-            </svg>
+            <BrandMark className="w-3.5 h-3.5" strokeWidth={2.1} />
           </span>
           <span className="px-4 py-2 rounded-full bg-[#F5F5F7] group-hover:bg-[#0859D4] text-[#0859D4] group-hover:text-white font-heading font-semibold text-xs tracking-tight transition-all duration-300">
             Explore Cohorts
@@ -397,22 +395,22 @@ export function SplashScreen({ onFinish }) {
                   strokeWidth="1"
                 />
                 {/* Brand geometric mark */}
-                <circle
-                  cx="30"
-                  cy="30"
-                  r="9"
-                  stroke="#0859D4"
-                  strokeWidth="2"
-                />
-                <line
-                  x1="23.5"
-                  y1="36.5"
-                  x2="36.5"
-                  y2="23.5"
-                  stroke="#0859D4"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                />
+                <g transform="translate(18, 18)">
+                  <path
+                    d="M17.2 6.8A7.5 7.5 0 1 0 19 14.2"
+                    stroke="#1D1D1F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M8.5 14.5L13 10L17.5 14.5"
+                    stroke="#0859D4"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle cx="17.5" cy="7.5" r="2" fill="#0859D4" />
+                </g>
               </svg>
             </div>
 
@@ -619,7 +617,12 @@ export function CustomCursor() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
-    if (window.matchMedia?.('(pointer: coarse)').matches) return undefined;
+    if (
+      window.matchMedia?.('(pointer: coarse)').matches ||
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return undefined;
+    }
     setEnabled(true);
     document.documentElement.classList.add('has-custom-cursor');
     return () => document.documentElement.classList.remove('has-custom-cursor');

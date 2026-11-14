@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { OrangeHorizonLight } from '../components/OrangeHorizonLight';
 import { SplitTextReveal } from '../components/AnimatedText';
+import { BrandMark } from '../components/BrandLogo';
+import { useAppStore } from '../store/useAppStore';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
@@ -104,6 +106,8 @@ export function FinalCTA() {
     return (Math.abs(hash) % 11) - 5;
   }, [email]);
 
+  const joinWaitlist = useAppStore((s) => s.joinWaitlist);
+
   const handleWaitlistSubmit = (e) => {
     e.preventDefault();
     const res = evaluateEmailBubble(email);
@@ -111,6 +115,7 @@ export function FinalCTA() {
       setBubble(res);
       return;
     }
+    joinWaitlist(email);
     setStatus('done');
     setBubble({ mode: 'hidden' });
   };
@@ -145,18 +150,7 @@ export function FinalCTA() {
             }}
             className="w-20 h-20 sm:w-24 sm:h-24 rounded-[24px] flex items-center justify-center shadow-[0_20px_50px_rgba(8,89,212,0.28),inset_0_1px_2px_rgba(255,255,255,0.65)] select-none"
           >
-            <svg viewBox="0 0 48 48" className="w-12 h-12 fill-none">
-              <circle cx="24" cy="24" r="17" stroke="#FFFFFF" strokeWidth="3.2" />
-              <line
-                x1="12"
-                y1="36"
-                x2="36"
-                y2="12"
-                stroke="#FFFFFF"
-                strokeWidth="3.6"
-                strokeLinecap="round"
-              />
-            </svg>
+            <BrandMark className="w-12 h-12" strokeWidth={2.2} inverted />
           </motion.div>
         </div>
 

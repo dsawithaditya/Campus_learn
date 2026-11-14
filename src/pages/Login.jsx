@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Eye, EyeOff, CheckCircle2, GraduationCap, AlertCircle, ArrowRight } from 'lucide-react';
 import { Button } from '../components/Button';
 import { useAppStore } from '../store/useAppStore';
+import { isValidCollegeEmail } from '../utils/validators';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -17,12 +18,6 @@ export default function Login() {
   const addToast = useAppStore((state) => state.addToast);
   const navigate = useNavigate();
 
-  // Validate college email domain
-  const isValidCollegeEmail = (str) => {
-    const trimmed = (str || '').trim().toLowerCase();
-    return trimmed.endsWith('.edu') || trimmed.endsWith('.ac.in') || trimmed.includes('@college.');
-  };
-
   const isEmailDirty = email.length > 0;
   const isEmailValid = isValidCollegeEmail(email);
 
@@ -31,7 +26,7 @@ export default function Login() {
     setError('');
 
     if (!isEmailValid) {
-      setError('Please use a valid college email ending with .edu or .ac.in');
+      setError('Please use a valid college email ending with .edu, .ac.in, or .edu.in');
       return;
     }
 
@@ -121,7 +116,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@college.edu or name@iitb.ac.in"
-                  className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] transition-colors"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] transition-colors"
                 />
                 {isEmailDirty && !isEmailValid && (
                   <p className="text-[11px] text-amber-600 mt-1 flex items-center gap-1">
@@ -161,12 +156,13 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] pr-10 transition-colors"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] pr-11 transition-colors"
                   />
                   <button
                     type="button"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6E6E73] hover:text-[#1D1D1F] cursor-pointer"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-md text-[#6E6E73] hover:text-[#1D1D1F] cursor-pointer"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>

@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { BrowserRouter, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
+import { MobileBottomNav } from './components/MobileBottomNav';
 import {
   BackToTopButton,
   GrailFloatingPill,
@@ -15,38 +16,53 @@ import {
   ScrollReveal,
 } from './components/GlobalExtras';
 import { AppRoutes } from './routes';
-import { useAppStore } from './store/useAppStore';
 
-function ScrollToTopAndHash() {
+const ROUTE_TITLES = [
+  { match: (p) => p === '/', title: 'Campus Learn | Peer Cohorts by Campus Seniors' },
+  { match: (p) => p.startsWith('/explore'), title: 'Explore Cohorts | Campus Learn' },
+  { match: (p) => p.startsWith('/mentors'), title: 'Senior Mentors | Campus Learn' },
+  { match: (p) => p.startsWith('/mentor/'), title: 'Mentor Profile | Campus Learn' },
+  { match: (p) => p.startsWith('/course/'), title: 'Cohort Overview | Campus Learn' },
+  { match: (p) => p.startsWith('/how-it-works'), title: 'How It Works | Campus Learn' },
+  { match: (p) => p.startsWith('/guilds'), title: 'Campus Guilds | Campus Learn' },
+  { match: (p) => p.startsWith('/outcomes'), title: 'Campus Outcomes | Campus Learn' },
+  { match: (p) => p.startsWith('/dashboard'), title: 'Student Dashboard | Campus Learn' },
+  { match: (p) => p.startsWith('/teach'), title: 'Become a Mentor | Campus Learn' },
+  { match: (p) => p.startsWith('/login'), title: 'Log In | Campus Learn' },
+  { match: (p) => p.startsWith('/signup'), title: 'Join Campus Learn | Sign Up' },
+];
+
+function RouteManager() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    const matched = ROUTE_TITLES.find((r) => r.match(pathname));
+    document.title = matched ? matched.title : 'Campus Learn';
+
     if (hash) {
       const id = hash.replace('#', '');
       const timer = setTimeout(() => {
         const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
       return () => clearTimeout(timer);
+    }
+
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
     } else {
       window.scrollTo(0, 0);
     }
+    return undefined;
   }, [pathname, hash]);
 
   return null;
 }
 
 export function App() {
-  const [splashFinished, setSplashFinished] = useState(false);
-
-  const handleSplashFinish = useCallback(() => {
-    setSplashFinished(true);
-  }, []);
+  const handleSplashFinish = useCallback(() => {}, []);
 
   useEffect(() => {
-    // Enforce clean light mode theme (#FFFFFF / #1D1D1F inspired by onlines.com.ar)
     document.documentElement.classList.remove('dark');
     document.documentElement.classList.add('light');
     document.documentElement.style.backgroundColor = '#FFFFFF';
@@ -59,7 +75,7 @@ export function App() {
 
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-      <ScrollToTopAndHash />
+      <RouteManager />
       {/* Accessibility: Skip to main content */}
       <a
         href="#main-content"
@@ -68,43 +84,27 @@ export function App() {
         Skip to main content
       </a>
 
-      {/* Ambient Blaze Orange Cursor Spotlight */}
       <CustomCursorGlow />
       <CustomCursor />
       <SmoothScroll />
       <ScrollReveal />
-
-      {/* Top Scroll Progress Laser Bar */}
       <GlobalProgressBar />
-
-      {/* Global Click Shockwave & Sparks */}
       <GlobalClickBurst />
-
-      {/* Splash Screen */}
       <SplashScreen onFinish={handleSplashFinish} />
 
-      {/* Sticky Glass Navbar */}
       <Navbar />
 
-      {/* Main Content */}
       <main id="main-content" className="min-h-screen relative">
         <AppRoutes />
       </main>
 
-      {/* Footer */}
       <Footer />
-
-      {/* Grail-inspired bottom-left floating cohort pill */}
+      <MobileBottomNav />
       <GrailFloatingPill />
-
-      {/* Back to top floating button */}
       <BackToTopButton />
-
-      {/* Global Toast notifications */}
       <ToastContainer />
     </BrowserRouter>
   );
 }
 
 export default App;
-

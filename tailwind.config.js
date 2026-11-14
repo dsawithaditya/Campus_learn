@@ -73,12 +73,12 @@ export default {
         }
       },
       fontFamily: {
-        display: ['"Clash Display"', '"Cabinet Grotesk"', '"Syne"', 'sans-serif'],
-        heading: ['"Cabinet Grotesk"', '"Switzer"', '"Plus Jakarta Sans"', 'sans-serif'],
-        serif: ['"Cormorant Garamond"', '"Instrument Serif"', 'Georgia', 'serif'],
-        grail: ['"Cormorant Garamond"', '"Instrument Serif"', 'Georgia', 'serif'],
-        body: ['"Switzer"', '"Satoshi"', '"General Sans"', '"Inter"', 'sans-serif'],
-        mono: ['"Space Grotesk"', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        display: ['"Chillax"', '"Geist"', 'sans-serif'],
+        heading: ['"Geist"', '"Ranade"', 'sans-serif'],
+        serif: ['"Instrument Serif"', '"Zodiak"', 'Georgia', 'serif'],
+        grail: ['"Zodiak"', '"Instrument Serif"', 'Georgia', 'serif'],
+        body: ['"Ranade"', '"Geist"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       keyframes: {
         marquee: {

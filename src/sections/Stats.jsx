@@ -211,14 +211,18 @@ function StatsBackdrop({ active }) {
     resize();
     window.addEventListener('resize', resize);
 
+    const reducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
     const loop = () => {
       if (!running) return;
       const now = performance.now() / 1000;
       const dt = Math.min(0.05, now - lastNow);
       lastNow = now;
 
-      if (activeRef.current) {
-        timeAcc += dt;
+      if (activeRef.current || reducedMotion) {
+        timeAcc += reducedMotion ? 0 : dt;
         currentMouse.x += (targetMouse.x - currentMouse.x) * Math.min(1, dt * 3);
         currentMouse.y += (targetMouse.y - currentMouse.y) * Math.min(1, dt * 3);
 
@@ -229,7 +233,9 @@ function StatsBackdrop({ active }) {
         gl.uniform2f(uMouse, currentMouse.x, currentMouse.y);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       }
-      rafId = requestAnimationFrame(loop);
+      if (!reducedMotion) {
+        rafId = requestAnimationFrame(loop);
+      }
     };
 
     rafId = requestAnimationFrame(loop);
@@ -592,11 +598,30 @@ export function Stats({ standalone = true, topContent = null }) {
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('resize', onResize);
 
+    const reducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
     let rafId = 0;
     let lastTime = performance.now();
     let physicsAccumMs = 0;
-    let activeElapsedSec = 0;
+    let activeElapsedSec = reducedMotion ? 3 : 0;
     const fixedStepMs = 1000 / 60;
+
+    if (reducedMotion) {
+      isIntersectingRef.current = true;
+      isActiveRef.current = true;
+      for (let i = 0; i < 60; i++) Engine.update(engine, fixedStepMs);
+      for (const b of balls) {
+        const meta = metaMap.get(b);
+        if (meta) meta.scale = 1;
+      }
+      for (let c = 0; c < 4; c++) {
+        displayedScores[c] = targetScores[c];
+        const el = countRefs.current[c];
+        if (el) el.textContent = String(targetScores[c]);
+      }
+    }
 
     const tick = () => {
       const now = performance.now();
@@ -759,7 +784,9 @@ export function Stats({ standalone = true, topContent = null }) {
         gooCtx.restore();
       }
 
-      rafId = requestAnimationFrame(tick);
+      if (!reducedMotion) {
+        rafId = requestAnimationFrame(tick);
+      }
     };
 
     rafId = requestAnimationFrame(tick);
@@ -786,7 +813,7 @@ export function Stats({ standalone = true, topContent = null }) {
         className={`${
           standalone
             ? topContent
-              ? 'relative min-h-[670px] sm:h-[680px] rounded-3xl'
+              ? 'relative min-h-[760px] sm:h-[680px] rounded-3xl'
               : 'relative h-[78vh] min-h-[560px] rounded-3xl'
             : 'sticky top-0 h-screen min-h-[680px] rounded-3xl'
         } w-full bg-[#F9F9FB] text-[#1D1D1F] overflow-hidden select-none border border-black/[0.08] shadow-[0_20px_60px_rgba(29,29,31,0.06)]`}
@@ -867,29 +894,32 @@ export function Stats({ standalone = true, topContent = null }) {
       </ul>
 
       {/* 4 Continuous Column Labels & Live Tabular Counters */}
-      <div aria-hidden="true" className="absolute inset-0 z-[2] pointer-events-none">
+      <div
+        aria-hidden="true"
+        className={`absolute inset-x-0 z-[2] pointer-events-none grid grid-cols-4 px-3 sm:px-6 gap-2 sm:gap-4 ${
+          topContent ? 'top-[57%] sm:top-[calc(56%-72px)]' : 'top-[57%] sm:top-[calc(56%+8px)]'
+        }`}
+      >
         {STAT_DOMAINS.map((d, idx) => (
           <div
             key={d.key}
             style={{
-              left: `calc(${idx * 25}% + 24px)`,
-              top: topContent ? 'calc(56% - 72px)' : 'calc(56% + 4px)',
-              opacity: entered ? 1 : 0,
-              transform: entered ? 'translateY(0)' : 'translateY(14px)',
+              opacity: entered || topContent ? 1 : 0,
+              transform: entered || topContent ? 'translateY(0)' : 'translateY(14px)',
               transitionDuration: '600ms',
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
               transitionDelay: `${(topContent ? 250 : 750) + idx * 100}ms`,
             }}
-            className="absolute flex flex-col gap-0.5 w-[21%] isolate transition-all"
+            className="flex flex-col gap-0.5 isolate transition-all min-w-0 sm:pl-2"
           >
-            <span className="text-xs sm:text-[15px] leading-[1.24] text-[#6E6E73] font-normal truncate">
+            <span className="text-[11px] sm:text-[15px] leading-tight text-[#6E6E73] font-medium sm:font-normal line-clamp-2 sm:truncate">
               {d.label}
             </span>
             <span
               ref={(el) => {
                 countRefs.current[idx] = el;
               }}
-              className="text-xl sm:text-[26px] font-bold leading-[1.08] text-[#1D1D1F] tabular-nums"
+              className="text-lg sm:text-[26px] font-bold leading-[1.08] text-[#1D1D1F] tabular-nums"
             >
               0
             </span>
@@ -898,7 +928,7 @@ export function Stats({ standalone = true, topContent = null }) {
       </div>
 
       {topContent && (
-        <span className="pointer-events-none absolute bottom-3 right-5 z-[3] font-mono text-[10px] text-[#6E6E73] bg-white/90 px-2.5 py-1 rounded-full border border-black/[0.08] shadow-sm">
+        <span className="pointer-events-none hidden sm:inline-flex absolute bottom-3 right-5 z-[3] font-mono text-[10px] text-[#6E6E73] bg-white/90 px-2.5 py-1 rounded-full border border-black/[0.08] shadow-sm">
           Click columns to drop orbs
         </span>
       )}

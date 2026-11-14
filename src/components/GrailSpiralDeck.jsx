@@ -343,9 +343,9 @@ export function GrailSpiralDeck() {
           type="button"
           onClick={() => stepDeck(-1)}
           aria-label="Previous cohort"
-          className="w-7 h-7 rounded-full hover:bg-[#F5F5F7] text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
+          className="w-10 h-10 sm:w-8 sm:h-8 rounded-full hover:bg-[#F5F5F7] text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
         >
-          <ChevronLeft className="w-3.5 h-3.5" />
+          <ChevronLeft className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
         </button>
 
         <div className="flex items-center gap-2 px-2 text-xs font-mono">
@@ -366,9 +366,9 @@ export function GrailSpiralDeck() {
           type="button"
           onClick={() => stepDeck(1)}
           aria-label="Next cohort"
-          className="w-7 h-7 rounded-full hover:bg-[#F5F5F7] text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
+          className="w-10 h-10 sm:w-8 sm:h-8 rounded-full hover:bg-[#F5F5F7] text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
         >
-          <ChevronRight className="w-3.5 h-3.5" />
+          <ChevronRight className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
         </button>
       </div>
     </div>

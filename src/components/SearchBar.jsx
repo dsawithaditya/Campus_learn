@@ -9,6 +9,8 @@ export function SearchBar({
   placeholder = 'Search skills, courses, mentors (e.g. React, FL Studio)...',
   className = '',
   initialValue = '',
+  inlineDropdown = false,
+  onSelect,
 }) {
   const [query, setQuery] = useState(initialValue);
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +51,7 @@ export function SearchBar({
     if (e.key === 'Enter') {
       e.preventDefault();
       setIsOpen(false);
+      onSelect?.();
       navigate(`/explore?q=${encodeURIComponent(query.trim())}`);
     } else if (e.key === 'Escape') {
       setIsOpen(false);
@@ -58,6 +61,7 @@ export function SearchBar({
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setIsOpen(false);
+    onSelect?.();
     navigate(`/explore?q=${encodeURIComponent(query.trim())}`);
   };
 
@@ -101,7 +105,13 @@ export function SearchBar({
 
       {/* Suggestion dropdown */}
       {isOpen && trimmed && (matchedCategories.length > 0 || matchedCourses.length > 0) && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/10 rounded-xl shadow-[0_20px_50px_rgba(29,29,31,0.12)] overflow-hidden z-40 max-h-[380px] overflow-y-auto">
+        <div
+          className={`${
+            inlineDropdown
+              ? 'relative mt-2.5'
+              : 'absolute top-full left-0 right-0 mt-2 z-40'
+          } bg-white border border-black/10 rounded-xl shadow-[0_20px_50px_rgba(29,29,31,0.12)] overflow-hidden max-h-[320px] overflow-y-auto`}
+        >
           {matchedCategories.length > 0 && (
             <div className="p-2 border-b border-black/[0.06]">
               <div className="text-[11px] font-semibold text-[#6E6E73] uppercase px-3 py-1">
@@ -113,9 +123,10 @@ export function SearchBar({
                   type="button"
                   onClick={() => {
                     setIsOpen(false);
+                    onSelect?.();
                     navigate(`/explore?category=${cat.id}`);
                   }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 text-left rounded-lg hover:bg-[#F5F5F7] transition-colors text-sm cursor-pointer"
+                  className="w-full flex items-center gap-2.5 px-3 min-h-[40px] text-left rounded-lg hover:bg-[#F5F5F7] transition-colors text-sm cursor-pointer"
                 >
                   <Tag className="w-4 h-4 text-[#0859D4] shrink-0" strokeWidth={1.75} />
                   <span className="font-medium text-[#1D1D1F]">{cat.name}</span>
@@ -138,6 +149,7 @@ export function SearchBar({
                   type="button"
                   onClick={() => {
                     setIsOpen(false);
+                    onSelect?.();
                     navigate(`/course/${c.slug}`);
                   }}
                   className="w-full flex items-center gap-3 px-3 py-2 text-left rounded-lg hover:bg-[#F5F5F7] transition-colors cursor-pointer"
