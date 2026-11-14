@@ -118,19 +118,19 @@ export function ColonTitle({
   return (
     <div
       aria-hidden="true"
-      className={`grail-colontitle w-full mb-8 pb-3.5 border-b border-white/[0.08] ${className}`}
+      className={`grail-colontitle w-full mb-8 pb-3.5 border-b border-black/[0.08] ${className}`}
     >
-      <span className="flex items-center gap-2 text-zinc-300 font-medium">
+      <span className="flex items-center gap-2 text-[#424242] font-medium">
         <span
           className={`w-1.5 h-1.5 rounded-full ${
             accent
-              ? 'bg-[#FF6B00] shadow-[0_0_8px_#FF6B00]'
-              : 'bg-[#FF6B00]/80'
+              ? 'bg-[#0859D4] shadow-[0_0_8px_rgba(8,89,212,0.5)]'
+              : 'bg-[#0859D4]/75'
           }`}
         />
         <span>{label}</span>
       </span>
-      <span className="text-right font-mono text-xs tracking-wider uppercase text-zinc-400">
+      <span className="text-right font-mono text-xs tracking-wider uppercase text-[#6E6E73]">
         {chapter}
       </span>
     </div>
@@ -179,7 +179,7 @@ export function GrailParenCounter({ value = 1, className = '' }) {
     <span
       className={`font-grail-serif inline-flex items-baseline select-none ${className}`}
     >
-      <span ref={leftParenRef} className="inline-block text-[#FF6B00]/80">
+      <span ref={leftParenRef} className="inline-block text-[#0859D4]/80">
         (
       </span>
       <motion.span
@@ -187,11 +187,11 @@ export function GrailParenCounter({ value = 1, className = '' }) {
         initial={{ opacity: 0, y: '0.48em' }}
         animate={{ opacity: 1, y: '0em' }}
         transition={{ duration: 0.5, ease: GRAIL_EASE }}
-        className="inline-block tabular-nums text-white mx-0.5"
+        className="inline-block tabular-nums text-[#1D1D1F] mx-0.5"
       >
         {formatted}
       </motion.span>
-      <span ref={rightParenRef} className="inline-block text-[#FF6B00]/80">
+      <span ref={rightParenRef} className="inline-block text-[#0859D4]/80">
         )
       </span>
     </span>

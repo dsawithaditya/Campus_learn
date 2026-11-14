@@ -31,17 +31,17 @@ export default function ComponentsShowcase() {
   return (
     <div className="pt-28 pb-20 container-custom space-y-12">
       <div>
-        <h1 className="text-3xl font-heading font-extrabold text-text dark:text-text-dark">
+        <h1 className="text-3xl font-heading font-extrabold text-[#1D1D1F]">
           Design System & Components Showcase
         </h1>
-        <p className="text-muted dark:text-muted-dark text-sm mt-1">
+        <p className="text-[#6E6E73] text-sm mt-1">
           Verification page for all design tokens, components, and animations.
         </p>
       </div>
 
       {/* Buttons */}
       <section className="space-y-4">
-        <h2 className="text-lg font-heading font-bold text-text dark:text-text-dark">Buttons</h2>
+        <h2 className="text-lg font-heading font-bold text-[#1D1D1F]">Buttons</h2>
         <div className="flex flex-wrap gap-4 items-center">
           <Button variant="primary" size="sm">Primary SM</Button>
           <Button variant="primary" size="md">Primary MD</Button>
@@ -55,13 +55,13 @@ export default function ComponentsShowcase() {
         </div>
 
         {/* Shadcn UI Interactive Hover Button Showcase */}
-        <div className="pt-4 border-t border-white/10 space-y-3">
-          <h3 className="text-sm font-semibold text-zinc-300">Shadcn UI Interactive Hover Buttons</h3>
+        <div className="pt-4 border-t border-black/[0.08] space-y-3">
+          <h3 className="text-sm font-semibold text-[#424242]">Shadcn UI Interactive Hover Buttons</h3>
           <div className="flex flex-wrap items-center gap-4">
             <InteractiveHoverButton text="Button" />
-            <InteractiveHoverButton text="Get Started" className="w-44 h-11 text-sm border-white/20 hover:border-[#FF6B00]/70" />
-            <InteractiveHoverButton text="Start Mentoring" className="w-52 h-12 text-sm border-white/20 hover:border-[#FF6B00]/70" />
-            <div className="p-2 rounded-xl bg-zinc-900 border border-white/10">
+            <InteractiveHoverButton text="Get Started" className="w-44 h-11 text-sm" />
+            <InteractiveHoverButton text="Start Mentoring" className="w-52 h-12 text-sm" />
+            <div className="p-2 rounded-xl bg-[#F5F5F7] border border-black/[0.08]">
               <InteractiveHoverButtonDemo />
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function ComponentsShowcase() {
 
       {/* Badges & Category Chips */}
       <section className="space-y-4">
-        <h2 className="text-lg font-heading font-bold text-text dark:text-text-dark">Badges & Category Chips</h2>
+        <h2 className="text-lg font-heading font-bold text-[#1D1D1F]">Badges & Category Chips</h2>
         <div className="flex flex-wrap gap-3 items-center">
           <Badge variant="primary">Primary Badge</Badge>
           <Badge variant="accent">Accent Badge</Badge>
@@ -86,7 +86,7 @@ export default function ComponentsShowcase() {
 
       {/* Ratings & Counters */}
       <section className="space-y-4">
-        <h2 className="text-lg font-heading font-bold text-text dark:text-text-dark">Rating & Progress Ring</h2>
+        <h2 className="text-lg font-heading font-bold text-[#1D1D1F]">Rating & Progress Ring</h2>
         <div className="flex items-center gap-8">
           <Rating value={4.8} count={340} size="md" />
           <ProgressRing value={75} size={64} />
@@ -96,13 +96,13 @@ export default function ComponentsShowcase() {
 
       {/* Search Bar */}
       <section className="space-y-4 max-w-xl">
-        <h2 className="text-lg font-heading font-bold text-text dark:text-text-dark">Search Bar (with debounced suggestions)</h2>
+        <h2 className="text-lg font-heading font-bold text-[#1D1D1F]">Search Bar (with debounced suggestions)</h2>
         <SearchBar />
       </section>
 
       {/* Cards Sample */}
       <section className="space-y-4">
-        <h2 className="text-lg font-heading font-bold text-text dark:text-text-dark">Course & Mentor Cards</h2>
+        <h2 className="text-lg font-heading font-bold text-[#1D1D1F]">Course & Mentor Cards</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {safeCourses[0] && <CourseCard course={safeCourses[0]} />}
           {safeCourses[3] && <CourseCard course={safeCourses[3]} />}
@@ -113,7 +113,7 @@ export default function ComponentsShowcase() {
 
       {/* Skeletons */}
       <section className="space-y-4">
-        <h2 className="text-lg font-heading font-bold text-text dark:text-text-dark">Skeleton Loaders</h2>
+        <h2 className="text-lg font-heading font-bold text-[#1D1D1F]">Skeleton Loaders</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Skeleton variant="card" />
           <Skeleton variant="card" />
@@ -127,7 +127,7 @@ export default function ComponentsShowcase() {
           Open Modal Demo
         </Button>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Component Modal Test">
-          <p className="text-sm text-muted dark:text-muted-dark">
+          <p className="text-sm text-[#6E6E73]">
             This modal has focus trap, Esc close, backdrop click close, and smooth 2D motion.
           </p>
         </Modal>

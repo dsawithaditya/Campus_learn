@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,36 +7,36 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: 'hsl(var(--background, 0 0% 4%))',
-        foreground: 'hsl(var(--foreground, 240 5% 96%))',
+        background: 'hsl(var(--background, 0 0% 100%))',
+        foreground: 'hsl(var(--foreground, 240 4% 12%))',
         card: {
-          DEFAULT: 'hsl(var(--card, 240 10% 7%))',
-          foreground: 'hsl(var(--card-foreground, 240 5% 96%))',
+          DEFAULT: 'hsl(var(--card, 0 0% 100%))',
+          foreground: 'hsl(var(--card-foreground, 240 4% 12%))',
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover, 240 10% 7%))',
-          foreground: 'hsl(var(--popover-foreground, 240 5% 96%))',
+          DEFAULT: 'hsl(var(--popover, 0 0% 100%))',
+          foreground: 'hsl(var(--popover-foreground, 240 4% 12%))',
         },
         primary: {
-          DEFAULT: '#FF6B00',
+          DEFAULT: '#0859D4',
           foreground: '#FFFFFF',
-          dark: '#E05300',
-          soft: 'rgba(255, 107, 0, 0.15)',
-          contrast: '#FFA057',
+          dark: '#1A59F9',
+          soft: 'rgba(8, 89, 212, 0.10)',
+          contrast: '#0859D4',
         },
         'primary-foreground': '#FFFFFF',
         secondary: {
-          DEFAULT: 'hsl(var(--secondary, 240 4% 16%))',
-          foreground: 'hsl(var(--secondary-foreground, 0 0% 98%))',
+          DEFAULT: 'hsl(var(--secondary, 240 12% 96%))',
+          foreground: 'hsl(var(--secondary-foreground, 240 4% 12%))',
         },
         muted: {
-          DEFAULT: '#A1A1AA',
-          dark: '#71717A',
-          foreground: 'hsl(var(--muted-foreground, 240 5% 65%))',
+          DEFAULT: '#6E6E73',
+          dark: '#6E6E73',
+          foreground: '#6E6E73',
         },
         accent: {
-          DEFAULT: '#FF6B00',
-          soft: 'rgba(255, 107, 0, 0.15)',
+          DEFAULT: '#0859D4',
+          soft: 'rgba(8, 89, 212, 0.10)',
           foreground: '#FFFFFF',
         },
         destructive: {
@@ -45,32 +44,32 @@ export default {
           foreground: 'hsl(var(--destructive-foreground, 0 0% 98%))',
         },
         border: {
-          DEFAULT: 'rgba(255, 255, 255, 0.12)',
-          dark: 'rgba(255, 255, 255, 0.08)',
+          DEFAULT: '#E5E5E7',
+          dark: '#E5E5E7',
         },
-        input: 'hsl(var(--input, 240 4% 18%))',
-        ring: 'hsl(var(--ring, 24 100% 50%))',
+        input: '#E5E5E7',
+        ring: '#0859D4',
         bg: {
-          DEFAULT: '#0A0A0A',
-          dark: '#0A0A0A',
+          DEFAULT: '#FFFFFF',
+          dark: '#FFFFFF',
         },
         surface: {
-          DEFAULT: '#141416',
-          dark: '#141416',
+          DEFAULT: '#F5F5F7',
+          dark: '#F5F5F7',
         },
         text: {
-          DEFAULT: '#F4F4F5',
-          dark: '#F4F4F5',
+          DEFAULT: '#1D1D1F',
+          dark: '#1D1D1F',
         },
         category: {
-          tech: '#38BDF8',
-          singing: '#F472B6',
-          music: '#A78BFA',
-          dance: '#C084FC',
-          sports: '#34D399',
-          art: '#FB923C',
-          photography: '#2DD4BF',
-          gaming: '#F87171',
+          tech: '#0859D4',
+          singing: '#EE46D3',
+          music: '#6465ED',
+          dance: '#EF5533',
+          sports: '#1BC47D',
+          art: '#EF5533',
+          photography: '#00B5CE',
+          gaming: '#E11D48',
         }
       },
       fontFamily: {
@@ -108,9 +107,9 @@ export default {
         pill: '999px',
       },
       boxShadow: {
-        soft: '0 4px 20px rgba(30, 41, 59, 0.06)',
-        lift: '0 12px 32px rgba(79, 70, 229, 0.16)',
-        cta: '0 8px 24px rgba(255, 107, 91, 0.35)',
+        soft: '0 4px 20px rgba(29, 29, 31, 0.05)',
+        lift: '0 14px 36px rgba(29, 29, 31, 0.09)',
+        cta: '0 8px 24px rgba(8, 89, 212, 0.25)',
       },
       transitionTimingFunction: {
         custom: 'cubic-bezier(0.22, 1, 0.36, 1)',
@@ -124,4 +123,3 @@ export default {
   },
   plugins: [],
 };
-

@@ -10,7 +10,7 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { Button } from '../components/Button';
-import { ColonTitle, GrailLetterRise } from '../components/AnimatedText';
+import { GrailLetterRise } from '../components/AnimatedText';
 import { useAppStore } from '../store/useAppStore';
 import categoriesData from '../data/categories.json';
 
@@ -76,25 +76,20 @@ export default function Teach() {
   return (
     <div className="pt-24 pb-16 min-h-screen relative overflow-hidden">
       {/* Decorative ambient radial background */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-r from-[#0859D4]/10 via-[#1A59F9]/5 to-transparent blur-3xl pointer-events-none -z-10" />
 
       {/* Hero section */}
-      <div className="py-12 border-b border-border/80 dark:border-border-dark/80 text-center relative">
+      <div className="pt-6 pb-10 border-b border-black/[0.08] text-center relative">
         <div className="container-custom max-w-4xl">
-          <ColonTitle
-            label="About Society Leadership & Mentorship"
-            chapter="Mentors"
-            accent
-          />
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill bg-orange-500/10 border border-orange-500/30 text-xs font-semibold text-orange-400 mb-4 shadow-[0_0_15px_rgba(249,115,22,0.15)]">
-            <Sparkles className="w-4 h-4 text-orange-400" />
-            <span>Campus Mentorship Initiative</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill bg-[#0859D4]/10 border border-[#0859D4]/20 text-xs font-semibold text-[#0859D4] mb-4 shadow-soft">
+            <Sparkles className="w-4 h-4 text-[#0859D4]" />
+            <span>Mentor Application</span>
           </div>
-          <h1 className="font-grail-serif text-4xl sm:text-6xl lg:text-7xl text-white leading-[0.88] tracking-[-0.01em] mb-4">
-            <GrailLetterRise text="LEAD YOUR CAMPUS SOCIETY" stagger={0.025} />
+          <h1 className="font-display font-bold text-4xl sm:text-6xl text-[#1D1D1F] tracking-tight mb-3">
+            <GrailLetterRise text="Lead your campus" stagger={0.02} />
           </h1>
-          <p className="text-zinc-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            Pass on the lessons you learned the hard way. Guide juniors in tech, sports, music and college societies.
+          <p className="text-[#6E6E73] text-sm sm:text-base max-w-md mx-auto">
+            Guide juniors in tech, design, music, and sports.
           </p>
         </div>
       </div>
@@ -109,13 +104,13 @@ export default function Teach() {
                 key={b?.title || i}
                 className="glass-card rounded-xl p-6 text-center sm:text-left space-y-3"
               >
-                <div className="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20 flex items-center justify-center mx-auto sm:mx-0 shadow-soft">
+                <div className="w-10 h-10 rounded-lg bg-[#0859D4]/10 text-[#0859D4] border border-[#0859D4]/20 flex items-center justify-center mx-auto sm:mx-0 shadow-soft">
                   {Icon && <Icon className="w-5 h-5" strokeWidth={2} />}
                 </div>
-                <h3 className="font-heading font-bold text-base text-zinc-100">
+                <h3 className="font-heading font-bold text-base text-[#1D1D1F]">
                   {b?.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#6E6E73] leading-relaxed">
                   {b?.desc}
                 </p>
               </div>
@@ -124,7 +119,7 @@ export default function Teach() {
         </div>
 
         {/* 3-Step Application Form with Progress Bar */}
-        <div className="glass-card rounded-2xl p-6 sm:p-10 shadow-lift border border-border/80 dark:border-border-dark/80">
+        <div className="glass-card rounded-2xl p-6 sm:p-10 shadow-[0_20px_50px_rgba(29,29,31,0.08)] border border-black/[0.08]">
           {isSubmitted ? (
             /* Success Screen */
             <motion.div
@@ -133,13 +128,13 @@ export default function Teach() {
               transition={{ duration: 0.4 }}
               className="py-12 text-center max-w-md mx-auto space-y-4"
             >
-              <div className="w-20 h-20 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+              <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center mx-auto shadow-soft">
                 <CheckCircle2 className="w-10 h-10" strokeWidth={2} />
               </div>
-              <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-text dark:text-text-dark">
+              <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-[#1D1D1F]">
                 Application Received!
               </h2>
-              <p className="text-sm text-muted dark:text-muted-dark leading-relaxed">
+              <p className="text-sm text-[#6E6E73] leading-relaxed">
                 Thank you for stepping up to guide your peers. We will review your application and verify your college email within 48 hours.
               </p>
               <div className="pt-4">
@@ -152,8 +147,8 @@ export default function Teach() {
             <div>
               {/* Progress Bar Header */}
               <div className="mb-8">
-                <div className="flex items-center justify-between text-xs font-semibold text-muted dark:text-muted-dark mb-2">
-                  <span className="text-orange-400 font-bold">Step {currentStep} of 3</span>
+                <div className="flex items-center justify-between text-xs font-semibold text-[#6E6E73] mb-2">
+                  <span className="text-[#0859D4] font-bold">Step {currentStep} of 3</span>
                   <span>
                     {currentStep === 1
                       ? 'Basic Information'
@@ -162,9 +157,9 @@ export default function Teach() {
                       : 'Course Proposal Idea'}
                   </span>
                 </div>
-                <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-black/[0.08] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-[#0859D4] to-[#1A59F9] transition-all duration-300"
                     style={{ width: `${(currentStep / 3) * 100}%` }}
                   />
                 </div>
@@ -181,7 +176,7 @@ export default function Teach() {
                   >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="teach-name" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-name" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                           Full Name
                         </label>
                         <input
@@ -193,11 +188,11 @@ export default function Teach() {
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="e.g. Siddharth Verma"
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                          className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                         />
                       </div>
                       <div>
-                        <label htmlFor="teach-email" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-email" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                           College Email
                         </label>
                         <input
@@ -209,14 +204,14 @@ export default function Teach() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="name@college.edu or .ac.in"
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                          className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="teach-college" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-college" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                           College / University
                         </label>
                         <input
@@ -227,11 +222,11 @@ export default function Teach() {
                           value={formData.college}
                           onChange={handleChange}
                           placeholder="e.g. IIT Delhi, BITS Goa, COEP"
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                          className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                         />
                       </div>
                       <div>
-                        <label htmlFor="teach-year" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                        <label htmlFor="teach-year" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                           Academic Year
                         </label>
                         <select
@@ -239,7 +234,7 @@ export default function Teach() {
                           name="year"
                           value={formData.year}
                           onChange={handleChange}
-                          className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                          className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                         >
                           <option value="2nd year">2nd Year</option>
                           <option value="3rd year">3rd Year</option>
@@ -259,7 +254,7 @@ export default function Teach() {
                     className="space-y-4"
                   >
                     <div>
-                      <label htmlFor="teach-category" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-category" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                         Skill Category
                       </label>
                       <select
@@ -267,7 +262,7 @@ export default function Teach() {
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                        className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                       >
                         {safeCategories.map((cat) => (
                           <option key={cat?.id} value={cat?.id}>
@@ -278,7 +273,7 @@ export default function Teach() {
                     </div>
 
                     <div>
-                      <label htmlFor="teach-branch" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-branch" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                         Specific Competencies / Tools (comma separated)
                       </label>
                       <input
@@ -289,7 +284,7 @@ export default function Teach() {
                         value={formData.branch}
                         onChange={handleChange}
                         placeholder="e.g. React, Next.js, DSA, Tailwind CSS"
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                        className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                       />
                     </div>
                   </motion.div>
@@ -303,7 +298,7 @@ export default function Teach() {
                     className="space-y-4"
                   >
                     <div>
-                      <label htmlFor="teach-skill-title" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-skill-title" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                         Proposed Course Title
                       </label>
                       <input
@@ -314,12 +309,12 @@ export default function Teach() {
                         value={formData.skillTitle}
                         onChange={handleChange}
                         placeholder="e.g. Modern Full-Stack Web Dev for SIH Hackathon"
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                        className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="teach-course-idea" className="block text-xs font-semibold uppercase tracking-wider text-text dark:text-text-dark mb-1">
+                      <label htmlFor="teach-course-idea" className="block text-xs font-semibold uppercase tracking-wider text-[#1D1D1F] mb-1">
                         Brief Outline of Modules & Lessons
                       </label>
                       <textarea
@@ -330,14 +325,14 @@ export default function Teach() {
                         value={formData.courseIdea}
                         onChange={handleChange}
                         placeholder="Explain 2-3 key takeaways and how this helps a college junior..."
-                        className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500"
+                        className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4]"
                       />
                     </div>
                   </motion.div>
                 )}
 
                 {/* Controls */}
-                <div className="flex items-center justify-between pt-6 border-t border-border/60 dark:border-border-dark/60">
+                <div className="flex items-center justify-between pt-6 border-t border-black/[0.08]">
                   {currentStep > 1 ? (
                     <Button variant="secondary" onClick={handleBack} icon={ArrowLeft}>
                       Back

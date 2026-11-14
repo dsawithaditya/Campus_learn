@@ -1,187 +1,200 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Keyboard } from 'swiper/modules';
+import 'swiper/css';
 import {
   SplitTextReveal,
-  ColonTitle,
   GrailParenCounter,
-  ScrambleText,
 } from '../components/AnimatedText';
 import testimonialsData from '../data/testimonials.json';
 
-export function Testimonials() {
+export function Testimonials({ embedded = false }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const [isPaused, setIsPaused] = useState(false);
+  const swiperRef = useRef(null);
 
   const safeTestimonials = Array.isArray(testimonialsData) ? testimonialsData : [];
   const count = safeTestimonials.length;
 
-  useEffect(() => {
-    if (isPaused || count === 0) return;
-    const interval = setInterval(() => {
-      setDirection(1);
-      setCurrentIndex((prev) => (prev + 1) % count);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [isPaused, count]);
-
   const handlePrev = () => {
-    if (count === 0) return;
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + count) % count);
+    swiperRef.current?.slidePrev();
   };
 
   const handleNext = () => {
-    if (count === 0) return;
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % count);
+    swiperRef.current?.slideNext();
   };
 
-  const item = safeTestimonials[currentIndex];
+  if (count === 0) return null;
 
-  if (!item) return null;
-
-  return (
-    <section
-      id="testimonials"
-      className="py-24 sm:py-32 bg-black border-b border-white/10 relative overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+  const cardBody = (
+    <div
+      onMouseEnter={() => swiperRef.current?.autoplay?.stop()}
+      onMouseLeave={() => swiperRef.current?.autoplay?.start()}
+      className={
+        embedded
+          ? 'relative rounded-2xl bg-white/95 backdrop-blur-md border border-black/[0.08] p-5 sm:p-6 overflow-hidden shadow-[0_12px_32px_rgba(29,29,31,0.06)]'
+          : 'relative rounded-3xl bg-white border border-black/[0.08] p-7 sm:p-12 shadow-[0_20px_50px_rgba(29,29,31,0.06)] overflow-hidden max-w-4xl mx-auto'
+      }
     >
-      <div className="container-custom relative z-10">
-        {/* Grail ColonTitle Chapter Header */}
-        <ColonTitle
-          label="About Student Stories & Feedback"
-          chapter="Chapter 07"
-        />
-
-        {/* Grail Voice Feedback Split Editorial Header (_colL_bknov_27 & _colR_bknov_28) */}
-        <div className="flex items-start justify-between gap-4 mb-12 sm:mb-16">
-          <div className="font-grail-serif text-[clamp(36px,5.6vw,78px)] text-white leading-[0.86] tracking-[-0.01em]">
-            <SplitTextReveal text="Tell" className="block" />
-            <SplitTextReveal text="future" delay={0.08} className="block text-[#FF6B00]" />
-            <SplitTextReveal text="juniors" delay={0.16} className="block" />
-          </div>
-
-          <div className="hidden md:flex flex-col items-center text-center pt-4">
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#FF6B00] font-bold block mb-2">
-              <ScrambleText text="07 // STUDENT STORIES" />
-            </span>
-            <h2 className="font-display font-bold text-2xl lg:text-3xl text-white tracking-tight">
-              Loved Across{' '}
-              <span className="font-editorial italic font-normal text-[#FF6B00] text-[1.12em]">
-                Indian Campuses
-              </span>
-            </h2>
-          </div>
-
-          <div className="font-grail-serif text-[clamp(36px,5.6vw,78px)] text-white leading-[0.86] tracking-[-0.01em] text-right">
-            <SplitTextReveal text="And" className="block" />
-            <SplitTextReveal text="builders" delay={0.08} className="block text-[#FFA057]" />
-            <SplitTextReveal text="after" delay={0.16} className="block" />
-          </div>
+      {/* Top Bar: Label + Counter + Navigation */}
+      <div className="flex items-center justify-between gap-4 mb-3 sm:mb-4">
+        <div className="flex items-center gap-2">
+          <Quote className="w-4 h-4 text-[#0859D4]" />
+          <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#0859D4]">
+            Student Stories
+          </span>
         </div>
 
-        {/* Testimonial Card with Grail Animated (01) Counter */}
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="relative zephyr-card rounded-3xl p-7 sm:p-12 border border-white/10 shadow-2xl overflow-hidden"
-          >
-            <div className="flex items-start justify-between mb-6">
-              <Quote className="w-10 h-10 text-[#FF6B00]/35" />
-              <GrailParenCounter
-                value={currentIndex + 1}
-                className="text-3xl sm:text-5xl"
-              />
-            </div>
-
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: direction * 24, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, x: direction * -24, filter: 'blur(4px)' }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="space-y-6"
+        <div className="flex items-center gap-3">
+          <GrailParenCounter
+            value={currentIndex + 1}
+            className={embedded ? 'text-xl sm:text-2xl' : 'text-3xl sm:text-5xl'}
+          />
+          {embedded && (
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="w-7 h-7 rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Previous story"
               >
-                <p className="font-heading text-lg sm:text-2xl text-zinc-100 font-medium leading-relaxed">
-                  &ldquo;{item?.quote || item?.text}&rdquo;
-                </p>
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-7 h-7 rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Next story"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-white/10">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-[#FF6B00] via-amber-400 to-white/20 shrink-0 shadow-[0_0_15px_rgba(255,107,0,0.25)]">
-                      <img
-                        src={item?.avatar}
-                        alt={item?.name || item?.author}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-heading font-bold text-white text-base">
-                        {item?.name || item?.author}
-                      </h4>
-                      <p className="font-mono text-xs text-zinc-400">
-                        <span className="text-[#FF6B00] font-semibold">
-                          {item?.role || 'Verified Learner'}
-                        </span>
-                        {item?.courseTitle && <span> • {item?.courseTitle}</span>}
-                      </p>
-                    </div>
+      {/* Swipeable Swiper Carousel */}
+      <Swiper
+        modules={[Autoplay, Keyboard]}
+        onSwiper={(s) => {
+          swiperRef.current = s;
+        }}
+        onSlideChange={(s) => setCurrentIndex(s.realIndex)}
+        loop={count > 1}
+        speed={550}
+        grabCursor={true}
+        keyboard={{ enabled: true }}
+        autoplay={{ delay: 5600, disableOnInteraction: false }}
+        className="w-full"
+      >
+        {safeTestimonials.map((item, idx) => (
+          <SwiperSlide key={item?.id || idx} className="select-none">
+            <div className={embedded ? 'space-y-4' : 'space-y-6'}>
+              <p
+                className={`font-heading text-[#1D1D1F] font-medium leading-relaxed ${
+                  embedded ? 'text-sm sm:text-lg max-w-4xl' : 'text-lg sm:text-2xl'
+                }`}
+              >
+                &ldquo;{item?.quote || item?.text}&rdquo;
+              </p>
+
+              <div
+                className={`flex flex-wrap items-center justify-between gap-3 ${
+                  embedded ? 'pt-3 border-t border-black/[0.08]' : 'pt-6 border-t border-black/[0.08]'
+                }`}
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div
+                    className={`${
+                      embedded ? 'w-9 h-9' : 'w-12 h-12'
+                    } rounded-full p-[1.5px] bg-gradient-to-tr from-[#0859D4] via-[#1A59F9] to-black/15 shrink-0`}
+                  >
+                    <img
+                      src={item?.avatar}
+                      alt={item?.name || item?.author}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full rounded-full object-cover"
+                    />
                   </div>
-
-                  <div className="flex items-center gap-3">
-                    {/* Dots indicator */}
-                    <div className="flex items-center gap-1.5 mr-2">
-                      {safeTestimonials.map((_, idx) => (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => {
-                            setDirection(idx > currentIndex ? 1 : -1);
-                            setCurrentIndex(idx);
-                          }}
-                          aria-label={`Go to story ${idx + 1}`}
-                          className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                            idx === currentIndex
-                              ? 'w-6 bg-[#FF6B00]'
-                              : 'w-1.5 bg-white/20 hover:bg-white/40'
-                          }`}
-                        />
-                      ))}
-                    </div>
-
-                    <motion.button
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={handlePrev}
-                      className="p-2.5 rounded-full bg-white/5 hover:bg-[#FF6B00]/20 border border-white/10 hover:border-[#FF6B00]/50 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                      aria-label="Previous story"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={handleNext}
-                      className="p-2.5 rounded-full bg-white/5 hover:bg-[#FF6B00]/20 border border-white/10 hover:border-[#FF6B00]/50 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                      aria-label="Next story"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </motion.button>
+                  <div className="min-w-0">
+                    <h4 className="font-heading font-bold text-[#1D1D1F] text-xs sm:text-sm truncate">
+                      {item?.name || item?.author}
+                    </h4>
+                    <p className="font-mono text-[11px] text-[#0859D4] truncate">
+                      {item?.role || 'Verified Learner'}
+                    </p>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
+
+                <div className="flex items-center gap-3">
+                  {item?.rating && (
+                    <span className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-[#1D1D1F] bg-[#F5F5F7] border border-black/[0.08] px-2.5 py-0.5 rounded-full">
+                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      {item.rating}
+                    </span>
+                  )}
+
+                  <div className="flex items-center gap-1.5">
+                    {safeTestimonials.map((_, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        type="button"
+                        onClick={() => swiperRef.current?.slideToLoop(dotIdx)}
+                        aria-label={`Go to story ${dotIdx + 1}`}
+                        className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                          dotIdx === currentIndex
+                            ? 'w-5 bg-[#0859D4]'
+                            : 'w-1.5 bg-black/15 hover:bg-black/30'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {!embedded && (
+                    <div className="flex items-center gap-2 ml-2">
+                      <button
+                        type="button"
+                        onClick={handlePrev}
+                        className="p-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] transition-colors cursor-pointer"
+                        aria-label="Previous story"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNext}
+                        className="p-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#0859D4]/10 border border-black/[0.08] hover:border-[#0859D4]/40 text-[#424242] hover:text-[#0859D4] transition-colors cursor-pointer"
+                        aria-label="Next story"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
+
+  if (embedded) return cardBody;
+
+  return (
+    <section id="testimonials" className="py-16 sm:py-20 bg-white border-t border-black/[0.08] relative overflow-hidden">
+      <div className="container-custom relative z-10">
+        <div className="text-center mb-10 sm:mb-12">
+          <h2 className="font-display font-bold text-3xl sm:text-5xl text-[#1D1D1F] tracking-tight">
+            <SplitTextReveal text="Student" />{' '}
+            <span className="font-editorial italic font-normal text-[#0859D4] text-[1.12em]">
+              Stories
+            </span>
+          </h2>
         </div>
+        {cardBody}
       </div>
     </section>
   );

@@ -89,32 +89,32 @@ export default function CourseDetail() {
   ];
 
   return (
-    <div className="pt-24 pb-16 min-h-screen">
+    <div className="pt-28 sm:pt-32 pb-16 min-h-screen">
       {/* Top Header / Breadcrumb */}
-      <div className="bg-zinc-950/70 border-b border-white/5 py-8">
+      <div className="bg-[#F5F5F7] border-b border-black/[0.08] py-8">
         <div className="container-custom">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-zinc-400 mb-4">
-            <Link to="/" className="hover:text-orange-400 transition-colors">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#6E6E73] mb-4">
+            <Link to="/" className="hover:text-[#0859D4] transition-colors">
               Home
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
-            <Link to="/explore" className="hover:text-orange-400 transition-colors">
+            <ChevronRight className="w-3.5 h-3.5 text-black/25" />
+            <Link to="/explore" className="hover:text-[#0859D4] transition-colors">
               Courses
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+            <ChevronRight className="w-3.5 h-3.5 text-black/25" />
             {category && (
               <>
                 <Link
                   to={`/explore?category=${category?.id}`}
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-[#0859D4] transition-colors"
                 >
                   {category?.name}
                 </Link>
-                <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+                <ChevronRight className="w-3.5 h-3.5 text-black/25" />
               </>
             )}
-            <span className="text-zinc-200 font-medium truncate max-w-[200px]">
+            <span className="text-[#1D1D1F] font-medium truncate max-w-[200px]">
               {course?.title}
             </span>
           </nav>
@@ -125,25 +125,25 @@ export default function CourseDetail() {
               <div className="flex flex-wrap items-center gap-2">
                 {category && (
                   <span
-                    style={{ backgroundColor: `${category?.color || '#f97316'}22`, color: category?.color || '#f97316' }}
-                    className="text-xs font-semibold px-3 py-1 rounded-full border border-white/10"
+                    style={{ backgroundColor: `${category?.color || '#0859D4'}18`, color: category?.color || '#0859D4' }}
+                    className="text-xs font-semibold px-3 py-1 rounded-full border border-black/[0.08]"
                   >
                     {category?.name}
                   </span>
                 )}
-                <span className="text-xs font-semibold bg-zinc-800 text-zinc-300 border border-white/10 px-2.5 py-1 rounded-full">
+                <span className="text-xs font-semibold bg-white text-[#424242] border border-black/[0.08] px-2.5 py-1 rounded-full">
                   {course?.level}
                 </span>
-                <span className="text-xs text-zinc-500 flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-orange-400" /> Updated Jan 2025
+                <span className="text-xs text-[#6E6E73] flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-[#0859D4]" /> Updated Jan 2025
                 </span>
               </div>
 
-              <h1 className="font-heading font-extrabold text-2xl sm:text-3xl lg:text-4xl text-zinc-100 leading-tight">
+              <h1 className="font-heading font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#1D1D1F] leading-tight">
                 {course?.title}
               </h1>
 
-              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
+              <p className="text-[#424242] text-sm sm:text-base leading-relaxed">
                 {course?.shortDescription}
               </p>
 
@@ -151,24 +151,24 @@ export default function CourseDetail() {
               <div className="flex flex-wrap items-center gap-6 pt-2 text-xs sm:text-sm">
                 <Rating value={course?.rating ?? 5} count={course?.reviewsCount} size="md" />
 
-                <div className="flex items-center gap-1.5 text-zinc-400">
-                  <Users className="w-4 h-4 text-orange-400" strokeWidth={2} />
+                <div className="flex items-center gap-1.5 text-[#6E6E73]">
+                  <Users className="w-4 h-4 text-[#0859D4]" strokeWidth={2} />
                   <span>{(course?.studentsCount || 0).toLocaleString()} students enrolled</span>
                 </div>
 
                 {mentor && (
                   <Link
                     to={`/mentor/${mentor?.id}`}
-                    className="flex items-center gap-2 hover:text-orange-400 transition-colors"
+                    className="flex items-center gap-2 hover:text-[#0859D4] transition-colors"
                   >
-                    <div className="w-6 h-6 rounded-full p-[1px] bg-gradient-to-tr from-[#FF6B00] to-white/20 shrink-0">
+                    <div className="w-6 h-6 rounded-full p-[1px] bg-gradient-to-tr from-[#0859D4] to-black/15 shrink-0">
                       <img
                         src={mentor?.avatar}
                         alt={mentor?.name || 'Mentor'}
                         className="w-full h-full rounded-full object-cover"
                       />
                     </div>
-                    <span className="font-semibold text-zinc-200 underline decoration-dotted">
+                    <span className="font-semibold text-[#1D1D1F] underline decoration-dotted">
                       {mentor?.name} • {mentor?.expertise || 'Domain Lead'}
                     </span>
                   </Link>
@@ -185,27 +185,27 @@ export default function CourseDetail() {
           {/* Left Content Area (8 cols) */}
           <div className="lg:col-span-8 space-y-8">
             {/* Video Preview Block */}
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-zinc-950 shadow-2xl border border-white/10 group">
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#F5F5F7] shadow-[0_18px_48px_rgba(29,29,31,0.12)] border border-black/[0.08] group">
               <img
                 src={course?.thumbnail}
                 alt={course?.title || 'Preview'}
-                className="w-full h-full object-cover opacity-70 group-hover:scale-102 transition-transform duration-300"
+                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/[0.04] via-transparent to-transparent flex items-center justify-center">
                 <button
                   type="button"
                   onClick={() => setIsVideoModalOpen(true)}
                   aria-label="Play sample lesson"
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-transform"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#0859D4] text-white flex items-center justify-center shadow-2xl hover:bg-[#1A59F9] hover:scale-105 active:scale-95 transition-all cursor-pointer"
                 >
                   <Play className="w-8 h-8 ml-1 fill-white" strokeWidth={0} />
                 </button>
               </div>
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white">
-                <span className="bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                <span className="bg-white/95 text-[#1D1D1F] backdrop-blur-md px-2.5 py-1 rounded-md border border-black/10 font-medium shadow-sm">
                   Course Preview (5:20 min)
                 </span>
-                <span className="bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-0.5 rounded-md font-bold shadow-sm">
+                <span className="bg-gradient-to-r from-[#0859D4] to-[#1A59F9] px-2.5 py-0.5 rounded-md font-bold shadow-sm">
                   Free Access
                 </span>
               </div>
@@ -219,14 +219,14 @@ export default function CourseDetail() {
               <div className="space-y-8">
                 {/* What you'll learn checklist */}
                 <div className="glass-card p-6 sm:p-8">
-                  <h3 className="font-heading font-bold text-lg text-zinc-100 mb-4 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-orange-400" />
+                  <h3 className="font-heading font-bold text-lg text-[#1D1D1F] mb-4 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-[#0859D4]" />
                     <span>What you'll master in this course</span>
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     {course?.learnPoints?.map((point, index) => (
-                      <div key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-300">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" strokeWidth={2} />
+                      <div key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#424242]">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2} />
                         <span>{point}</span>
                       </div>
                     ))}
@@ -235,17 +235,17 @@ export default function CourseDetail() {
 
                 {/* Course In-Depth Description */}
                 <div className="glass-card p-6 sm:p-8 space-y-4">
-                  <h3 className="font-heading font-bold text-lg text-zinc-100">
+                  <h3 className="font-heading font-bold text-lg text-[#1D1D1F]">
                     About this peer learning course
                   </h3>
-                  <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
+                  <p className="text-sm sm:text-base text-[#424242] leading-relaxed">
                     {course?.description}
                   </p>
-                  <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2">
+                  <div className="pt-4 border-t border-black/[0.08] flex flex-wrap gap-2">
                     {course?.tags?.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2.5 py-1 rounded-full border border-white/5"
+                        className="text-xs font-semibold bg-[#F5F5F7] text-[#424242] px-2.5 py-1 rounded-full border border-black/[0.06]"
                       >
                         #{tag}
                       </span>
@@ -258,7 +258,7 @@ export default function CourseDetail() {
             {/* Tab 2: Syllabus */}
             {activeTab === 'syllabus' && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs text-zinc-400 mb-2">
+                <div className="flex items-center justify-between text-xs text-[#6E6E73] mb-2">
                   <span>{course?.syllabus?.length || 3} Modules • {course?.lessonsCount} Lessons</span>
                   <span>Total: {course?.durationHours} Hours</span>
                 </div>
@@ -273,13 +273,13 @@ export default function CourseDetail() {
                         {module?.lessons?.map((lesson, lIdx) => (
                           <li
                             key={lIdx}
-                            className="flex items-center justify-between py-1 border-b border-white/5 last:border-none"
+                            className="flex items-center justify-between py-1 border-b border-black/[0.06] last:border-none"
                           >
                             <div className="flex items-center gap-2">
-                              <Play className="w-3.5 h-3.5 text-orange-400" strokeWidth={2} />
-                              <span className="text-xs sm:text-sm font-medium text-zinc-200">{lesson?.title}</span>
+                              <Play className="w-3.5 h-3.5 text-[#0859D4]" strokeWidth={2} />
+                              <span className="text-xs sm:text-sm font-medium text-[#1D1D1F]">{lesson?.title}</span>
                             </div>
-                            <span className="text-xs text-zinc-500 font-mono">
+                            <span className="text-xs text-[#6E6E73] font-mono">
                               {lesson?.duration}
                             </span>
                           </li>
@@ -294,13 +294,13 @@ export default function CourseDetail() {
             {/* Tab 3: Reviews */}
             {activeTab === 'reviews' && (
               <div className="glass-card p-6 sm:p-8 space-y-6">
-                <div className="flex items-center gap-4 pb-6 border-b border-white/10">
-                  <div className="text-4xl font-heading font-extrabold text-zinc-100">
+                <div className="flex items-center gap-4 pb-6 border-b border-black/[0.08]">
+                  <div className="text-4xl font-heading font-extrabold text-[#1D1D1F]">
                     {(course?.rating ?? 5).toFixed(1)}
                   </div>
                   <div>
-                    <Rating value={course?.rating ?? 5} size="md" />
-                    <p className="text-xs text-zinc-500 mt-1">
+                    <Rating value={course?.rating ?? 5} size="md" showValue={false} />
+                    <p className="text-xs text-[#6E6E73] mt-1">
                       Based on {course?.reviewsCount} verified student ratings
                     </p>
                   </div>
@@ -308,26 +308,26 @@ export default function CourseDetail() {
 
                 {/* Review items */}
                 <div className="space-y-4">
-                  <div className="p-4 bg-zinc-900/60 border border-white/5 rounded-xl space-y-2">
+                  <div className="p-4 bg-[#F5F5F7] border border-black/[0.06] rounded-xl space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-xs text-zinc-200">
+                      <span className="font-semibold text-xs text-[#1D1D1F]">
                         Siddharth Verma (IIT Roorkee)
                       </span>
                       <Rating value={5} size="sm" />
                     </div>
-                    <p className="text-xs text-zinc-400 leading-relaxed">
+                    <p className="text-xs text-[#424242] leading-relaxed">
                       "Extremely concise and straight to the point. No 20-minute theoretical rants, just straight hands-on code and campus tactics."
                     </p>
                   </div>
 
-                  <div className="p-4 bg-zinc-900/60 border border-white/5 rounded-xl space-y-2">
+                  <div className="p-4 bg-[#F5F5F7] border border-black/[0.06] rounded-xl space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-xs text-zinc-200">
+                      <span className="font-semibold text-xs text-[#1D1D1F]">
                         Anjali Menon (NIT Calicut)
                       </span>
                       <Rating value={5} size="sm" />
                     </div>
-                    <p className="text-xs text-zinc-400 leading-relaxed">
+                    <p className="text-xs text-[#424242] leading-relaxed">
                       "I followed this before our annual cultural auditions and it gave me the exact foundation I needed. Highly recommend to juniors!"
                     </p>
                   </div>
@@ -338,9 +338,9 @@ export default function CourseDetail() {
 
           {/* Sticky Right Action Card (4 cols) */}
           <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
-            <div className="glass-card p-6 shadow-2xl space-y-5">
+            <div className="glass-card p-6 shadow-[0_18px_48px_rgba(29,29,31,0.08)] space-y-5">
               {/* Thumbnail */}
-              <div className="aspect-[16/10] rounded-xl overflow-hidden bg-zinc-800">
+              <div className="aspect-[16/10] rounded-xl overflow-hidden bg-[#F5F5F7]">
                 <img
                   src={course?.thumbnail}
                   alt={course?.title || 'Course'}
@@ -351,14 +351,14 @@ export default function CourseDetail() {
               {/* Price & Free Tag */}
               <div className="flex items-baseline justify-between">
                 <div>
-                  <span className="text-2xl font-heading font-extrabold text-orange-400">
+                  <span className="text-2xl font-heading font-extrabold text-[#0859D4]">
                     {course?.price || 'Free'}
                   </span>
-                  <span className="text-xs text-zinc-500 ml-2">
+                  <span className="text-xs text-[#6E6E73] ml-2">
                     Students-Only Peer Grant
                   </span>
                 </div>
-                <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">
+                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
                   100% Free
                 </span>
               </div>
@@ -394,37 +394,37 @@ export default function CourseDetail() {
               </div>
 
               {/* Course Facts List */}
-              <div className="pt-4 border-t border-white/10 space-y-3 text-xs text-zinc-300">
+              <div className="pt-4 border-t border-black/[0.08] space-y-3 text-xs text-[#424242]">
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-500 flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-orange-400" />
+                  <span className="text-[#6E6E73] flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-[#0859D4]" />
                     <span>Duration</span>
                   </span>
-                  <span className="font-semibold text-zinc-200">{course?.durationHours} hours on-demand</span>
+                  <span className="font-semibold text-[#1D1D1F]">{course?.durationHours} hours on-demand</span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-500 flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5 text-orange-400" />
+                  <span className="text-[#6E6E73] flex items-center gap-1.5">
+                    <BookOpen className="w-3.5 h-3.5 text-[#0859D4]" />
                     <span>Lessons</span>
                   </span>
-                  <span className="font-semibold text-zinc-200">{course?.lessonsCount} lessons</span>
+                  <span className="font-semibold text-[#1D1D1F]">{course?.lessonsCount} lessons</span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-500 flex items-center gap-1.5">
-                    <Award className="w-3.5 h-3.5 text-orange-400" />
+                  <span className="text-[#6E6E73] flex items-center gap-1.5">
+                    <Award className="w-3.5 h-3.5 text-[#0859D4]" />
                     <span>Certificate</span>
                   </span>
-                  <span className="font-semibold text-zinc-200">Peer-Verified Badge</span>
+                  <span className="font-semibold text-[#1D1D1F]">Peer-Verified Badge</span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-500 flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-orange-400" />
+                  <span className="text-[#6E6E73] flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#0859D4]" />
                     <span>Access</span>
                   </span>
-                  <span className="font-semibold text-zinc-200">Lifetime Campus Access</span>
+                  <span className="font-semibold text-[#1D1D1F]">Lifetime Campus Access</span>
                 </div>
               </div>
             </div>
@@ -433,8 +433,8 @@ export default function CourseDetail() {
 
         {/* Related Courses Row */}
         {relatedCourses.length > 0 && (
-          <div className="mt-20 pt-12 border-t border-white/10">
-            <h3 className="font-heading font-bold text-2xl text-zinc-100 mb-6">
+          <div className="mt-20 pt-12 border-t border-black/[0.08]">
+            <h3 className="font-heading font-bold text-2xl text-[#1D1D1F] mb-6">
               Students also checked out
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -452,11 +452,11 @@ export default function CourseDetail() {
         onClose={() => setIsVideoModalOpen(false)}
         title={course?.title || 'Preview'}
       >
-        <div className="aspect-video w-full rounded-xl overflow-hidden bg-zinc-950 flex flex-col items-center justify-center text-white relative border border-white/10">
-          <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center shadow-2xl cursor-pointer hover:scale-105 active:scale-95 transition-transform">
+        <div className="aspect-video w-full rounded-xl overflow-hidden bg-[#1D1D1F] flex flex-col items-center justify-center text-white relative border border-black/10">
+          <div className="w-16 h-16 rounded-full bg-[#0859D4] flex items-center justify-center shadow-2xl cursor-pointer hover:bg-[#1A59F9] hover:scale-105 active:scale-95 transition-all">
             <Play className="w-7 h-7 text-white fill-white ml-1" />
           </div>
-          <p className="mt-4 text-sm font-medium text-zinc-300">
+          <p className="mt-4 text-sm font-medium text-white/85">
             Playing Lesson 1: Introduction & Architecture
           </p>
         </div>

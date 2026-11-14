@@ -7,11 +7,12 @@ import {
   SlidersHorizontal,
   RotateCcw,
   BookOpen,
+  Star,
 } from 'lucide-react';
 import { CourseCard } from '../components/CourseCard';
 import { Skeleton } from '../components/Skeleton';
 import { Button } from '../components/Button';
-import { ColonTitle, GrailLetterRise } from '../components/AnimatedText';
+import { SplitTextReveal } from '../components/AnimatedText';
 import coursesData from '../data/courses.json';
 import categoriesData from '../data/categories.json';
 
@@ -34,7 +35,7 @@ export default function Explore() {
   const [selectedDuration, setSelectedDuration] = useState(durationParam);
   const [isRating4Plus, setIsRating4Plus] = useState(rating4Plus);
 
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(12);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,7 +65,7 @@ export default function Explore() {
 
     setSearchParams(params);
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 250);
+    setTimeout(() => setIsLoading(false), 180);
   };
 
   useEffect(() => {
@@ -83,6 +84,11 @@ export default function Explore() {
       : [...selectedCategories, catId];
     setSelectedCategories(next);
     updateFilters({ categories: next });
+  };
+
+  const selectAllCategories = () => {
+    setSelectedCategories([]);
+    updateFilters({ categories: [] });
   };
 
   const handleClearFilters = () => {
@@ -149,83 +155,116 @@ export default function Explore() {
     selectedSort,
   ]);
 
-  const activeFilterCount =
-    (selectedCategories.length > 0 ? selectedCategories.length : 0) +
+  const secondaryFilterCount =
     (selectedLevel !== 'all' ? 1 : 0) +
     (selectedDuration !== 'all' ? 1 : 0) +
     (isRating4Plus ? 1 : 0);
 
-  return (
-    <div className="pt-28 pb-16 min-h-screen">
-      <div className="container-custom">
-        <ColonTitle
-          label="Explore All Peer Cohorts & Bootcamps"
-          chapter="Directory"
-          accent
-        />
-        {/* Header with Search and Stats */}
-        <div className="py-6 border-b border-white/10 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="font-grail-serif text-4xl sm:text-6xl text-white leading-[0.88] tracking-[-0.01em]">
-                <GrailLetterRise text="EXPLORE PEER COHORTS" stagger={0.025} />
-              </h1>
-              <p className="text-xs sm:text-sm text-zinc-400 mt-2 font-mono">
-                Showing{' '}
-                <span className="font-bold text-[#FF6B00]">
-                  {filteredCourses.length}
-                </span>{' '}
-                peer cohorts across domains
-              </p>
-            </div>
+  const activeFilterCount = selectedCategories.length + secondaryFilterCount + (searchQuery ? 1 : 0);
 
-            {/* Search Input */}
-            <div className="w-full md:w-96 relative">
-              <Search
-                className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"
-                strokeWidth={2}
-              />
-              <input
-                type="text"
-                id="explore-search-input"
-                name="search"
-                aria-label="Search courses, tags, and tools"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  updateFilters({ q: e.target.value });
-                }}
-                placeholder="Search courses, tags, tools..."
-                className="w-full pl-10 pr-9 py-2.5 bg-zinc-900/60 border border-white/10 rounded-xl text-sm text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-orange-500/60 transition-colors shadow-inner"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery('');
-                    updateFilters({ q: '' });
-                  }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 text-zinc-400 hover:text-white"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
-            </div>
+  return (
+    <div className="pt-28 pb-20 min-h-screen">
+      <div className="container-custom">
+        {/* Clean Modern Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-8">
+          <div>
+            <h1 className="font-display font-bold text-3xl sm:text-5xl text-[#1D1D1F] tracking-tight leading-[1.06]">
+              <SplitTextReveal text="Explore" />{' '}
+              <span className="font-editorial italic font-normal text-[#0859D4] text-[1.1em]">
+                Cohorts
+              </span>
+            </h1>
+            <p className="text-xs sm:text-sm text-[#6E6E73] mt-2 font-mono">
+              <span className="font-bold text-[#0859D4]">{filteredCourses.length}</span>{' '}
+              {filteredCourses.length === 1 ? 'cohort' : 'cohorts'} available
+            </p>
           </div>
 
-          {/* Controls Bar */}
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5 flex-wrap gap-3">
-            {/* Mobile Filter Button */}
+          {/* Search Pill */}
+          <div className="w-full md:w-80 relative">
+            <Search
+              className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-[#6E6E73]"
+              strokeWidth={2}
+            />
+            <input
+              type="text"
+              id="explore-search-input"
+              name="search"
+              aria-label="Search courses, tags, and tools"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                updateFilters({ q: e.target.value });
+              }}
+              placeholder="Search cohorts, skills, tools..."
+              className="w-full pl-10 pr-9 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-full text-sm text-[#1D1D1F] placeholder:text-[#6E6E73] outline-none focus:bg-white focus:border-[#0859D4]/60 transition-colors"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  updateFilters({ q: '' });
+                }}
+                aria-label="Clear search"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-0.5 text-[#6E6E73] hover:text-[#1D1D1F] cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Horizontal Category Filter Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 mb-5">
+          <button
+            type="button"
+            onClick={selectAllCategories}
+            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-heading font-semibold whitespace-nowrap transition-all cursor-pointer select-none ${
+              selectedCategories.length === 0
+                ? 'bg-[#0859D4] text-white font-bold shadow-[0_4px_14px_rgba(8,89,212,0.28)]'
+                : 'bg-[#F5F5F7] text-[#424242] hover:text-[#1D1D1F] hover:bg-[#EBEBF0] border border-black/[0.06]'
+            }`}
+          >
+            All Domains
+          </button>
+
+          {safeCategories.map((cat) => {
+            const isSelected = selectedCategories.includes(cat?.id);
+            return (
+              <button
+                key={cat?.id}
+                type="button"
+                onClick={() => toggleCategory(cat?.id)}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-heading font-semibold whitespace-nowrap transition-all cursor-pointer select-none ${
+                  isSelected
+                    ? 'bg-[#0859D4] text-white font-bold shadow-[0_4px_14px_rgba(8,89,212,0.28)]'
+                    : 'bg-[#F5F5F7] text-[#424242] hover:text-[#1D1D1F] hover:bg-[#EBEBF0] border border-black/[0.06]'
+                }`}
+              >
+                {cat?.name}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Compact Toolbar: Filters Toggle + Reset + Sort */}
+        <div className="flex items-center justify-between gap-3 py-3 border-y border-black/[0.08] mb-8 flex-wrap">
+          <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => setIsMobileFilterOpen(true)}
-              className="md:hidden inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-xs font-semibold text-zinc-200 shadow-sm active:scale-95"
+              onClick={() => setIsFilterOpen((prev) => !prev)}
+              className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-heading font-semibold border transition-colors cursor-pointer ${
+                isFilterOpen || secondaryFilterCount > 0
+                  ? 'bg-[#0859D4]/10 border-[#0859D4]/30 text-[#0859D4]'
+                  : 'bg-[#F5F5F7] border-black/[0.08] text-[#424242] hover:text-[#1D1D1F] hover:bg-[#EBEBF0]'
+              }`}
             >
-              <SlidersHorizontal className="w-3.5 h-3.5 text-orange-400" />
+              <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>Filters</span>
-              {activeFilterCount > 0 && (
-                <span className="bg-orange-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                  {activeFilterCount}
+              {secondaryFilterCount > 0 && (
+                <span className="bg-[#0859D4] text-white font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                  {secondaryFilterCount}
                 </span>
               )}
             </button>
@@ -234,319 +273,188 @@ export default function Explore() {
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="inline-flex items-center gap-1.5 text-xs text-rose-400 hover:underline font-medium"
+                className="inline-flex items-center gap-1.5 text-xs text-[#6E6E73] hover:text-[#0859D4] transition-colors font-medium cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Reset all filters ({activeFilterCount})</span>
+                <span>Reset ({activeFilterCount})</span>
               </button>
             )}
+          </div>
 
-            {/* Sort selector */}
-            <div className="flex items-center gap-2 ml-auto text-xs sm:text-sm">
-              <span className="text-zinc-400">Sort by:</span>
-              <select
-                id="explore-sort"
-                name="sort"
-                aria-label="Sort courses by"
-                value={selectedSort}
-                onChange={(e) => {
-                  setSelectedSort(e.target.value);
-                  updateFilters({ sort: e.target.value });
-                }}
-                className="bg-zinc-900 border border-white/10 text-zinc-200 rounded-lg px-2.5 py-1.5 font-medium outline-none focus:border-orange-500/60 text-xs sm:text-sm"
-              >
-                <option value="popular">Most Popular</option>
-                <option value="newest">Newest First</option>
-                <option value="rating">Top Rated</option>
-              </select>
-            </div>
+          {/* Sort */}
+          <div className="flex items-center gap-2 ml-auto text-xs">
+            <span className="text-[#6E6E73] font-mono uppercase tracking-wider text-[11px]">Sort</span>
+            <select
+              id="explore-sort"
+              name="sort"
+              aria-label="Sort courses by"
+              value={selectedSort}
+              onChange={(e) => {
+                setSelectedSort(e.target.value);
+                updateFilters({ sort: e.target.value });
+              }}
+              className="bg-[#F5F5F7] border border-black/[0.08] text-[#1D1D1F] rounded-full px-3.5 py-1.5 font-medium outline-none focus:bg-white focus:border-[#0859D4]/60 text-xs cursor-pointer"
+            >
+              <option value="popular">Most Popular</option>
+              <option value="newest">Newest First</option>
+              <option value="rating">Top Rated</option>
+            </select>
           </div>
         </div>
 
-        {/* Main Content Layout: Left Filter Panel + Right Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* Desktop Left Filter Panel */}
-          <aside className="hidden md:block md:col-span-3 space-y-6">
-            <div className="glass-card p-5 shadow-lg space-y-6">
-              {/* Category Multi-select */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
-                  Categories
-                </h4>
-                <div className="space-y-1.5">
-                  {safeCategories?.map((cat) => {
-                    const isChecked = selectedCategories.includes(cat?.id);
-                    return (
-                      <label
-                        key={cat?.id}
-                        className="flex items-center justify-between text-xs py-1.5 px-2 rounded-lg hover:bg-white/5 cursor-pointer select-none"
-                      >
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            id={`cat-${cat?.id}`}
-                            name="category"
-                            checked={isChecked}
-                            onChange={() => toggleCategory(cat?.id)}
-                            className="rounded border-zinc-700 bg-zinc-800 text-orange-500 focus:ring-orange-500 h-3.5 w-3.5"
-                          />
-                          <span className={isChecked ? 'font-bold text-orange-400' : 'text-zinc-300'}>
-                            {cat?.name}
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-zinc-500">
-                          {cat?.courseCount}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Level Filter */}
-              <div className="pt-4 border-t border-white/10">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
-                  Difficulty Level
-                </h4>
-                <div className="space-y-1 text-xs">
-                  {['all', 'beginner', 'intermediate', 'advanced'].map((lvl) => (
-                    <label
-                      key={lvl}
-                      htmlFor={`level-${lvl}`}
-                      className="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/5 cursor-pointer capitalize"
-                    >
-                      <input
-                        type="radio"
-                        id={`level-${lvl}`}
-                        name="level"
-                        checked={selectedLevel === lvl}
-                        onChange={() => {
+        {/* Collapsible Inline Glass Filter Bar */}
+        <AnimatePresence>
+          {isFilterOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+              animate={{ opacity: 1, height: 'auto', marginBottom: 32 }}
+              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="p-5 rounded-2xl bg-white border border-black/[0.08] shadow-[0_12px_32px_rgba(29,29,31,0.06)] grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Level */}
+                <div>
+                  <h4 className="font-mono text-[11px] uppercase tracking-wider text-[#6E6E73] mb-2.5">
+                    Difficulty
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {['all', 'beginner', 'intermediate', 'advanced'].map((lvl) => (
+                      <button
+                        key={lvl}
+                        type="button"
+                        onClick={() => {
                           setSelectedLevel(lvl);
                           updateFilters({ level: lvl });
                         }}
-                        className="text-orange-500 focus:ring-orange-500 h-3.5 w-3.5"
-                      />
-                      <span className="text-zinc-300">
-                        {lvl === 'all' ? 'All Levels' : lvl}
-                      </span>
-                    </label>
-                  ))}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium capitalize transition-colors cursor-pointer ${
+                          selectedLevel === lvl
+                            ? 'bg-[#0859D4] text-white font-bold shadow-sm'
+                            : 'bg-[#F5F5F7] text-[#424242] hover:bg-[#EBEBF0] border border-black/[0.06]'
+                        }`}
+                      >
+                        {lvl === 'all' ? 'All' : lvl}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Duration Filter */}
-              <div className="pt-4 border-t border-white/10">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
-                  Duration
-                </h4>
-                <div className="space-y-1 text-xs">
-                  {[
-                    { id: 'all', label: 'Any Duration' },
-                    { id: 'short', label: '< 8 hours' },
-                    { id: 'medium', label: '8 - 12 hours' },
-                    { id: 'long', label: '> 12 hours' },
-                  ].map((dur) => (
-                    <label
-                      key={dur.id}
-                      htmlFor={`duration-${dur.id}`}
-                      className="flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-white/5 cursor-pointer"
-                    >
-                      <input
-                        type="radio"
-                        id={`duration-${dur.id}`}
-                        name="duration"
-                        checked={selectedDuration === dur.id}
-                        onChange={() => {
+                {/* Duration */}
+                <div>
+                  <h4 className="font-mono text-[11px] uppercase tracking-wider text-[#6E6E73] mb-2.5">
+                    Duration
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      { id: 'all', label: 'Any' },
+                      { id: 'short', label: '< 8h' },
+                      { id: 'medium', label: '8–12h' },
+                      { id: 'long', label: '> 12h' },
+                    ].map((dur) => (
+                      <button
+                        key={dur.id}
+                        type="button"
+                        onClick={() => {
                           setSelectedDuration(dur.id);
                           updateFilters({ duration: dur.id });
                         }}
-                        className="text-orange-500 focus:ring-orange-500 h-3.5 w-3.5"
-                      />
-                      <span className="text-zinc-300">{dur.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Rating 4+ */}
-              <div className="pt-4 border-t border-white/10">
-                <label htmlFor="rating-4plus" className="flex items-center gap-2 text-xs cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    id="rating-4plus"
-                    name="rating4"
-                    checked={isRating4Plus}
-                    onChange={(e) => {
-                      setIsRating4Plus(e.target.checked);
-                      updateFilters({ rating4: e.target.checked });
-                    }}
-                    className="rounded border-zinc-700 bg-zinc-800 text-orange-500 focus:ring-orange-500 h-3.5 w-3.5"
-                  />
-                  <span className="text-zinc-300 font-medium">
-                    Rated 4.0 & above only
-                  </span>
-                </label>
-              </div>
-            </div>
-          </aside>
-
-          {/* Right: Course Cards Grid */}
-          <main className="col-span-1 md:col-span-9">
-            {isLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <Skeleton key={i} variant="card" />
-                ))}
-              </div>
-            ) : filteredCourses.length === 0 ? (
-              <div className="glass-card p-12 text-center flex flex-col items-center justify-center my-6">
-                <div className="w-16 h-16 rounded-full bg-orange-500/10 text-orange-400 flex items-center justify-center mb-4">
-                  <BookOpen className="w-8 h-8" strokeWidth={1.5} />
-                </div>
-                <h3 className="font-heading font-bold text-xl text-zinc-100 mb-2">
-                  No courses match your filters
-                </h3>
-                <p className="text-sm text-zinc-400 max-w-md mb-6 leading-relaxed">
-                  Try adjusting your search terms, clearing some categories, or resetting filters to view all courses.
-                </p>
-                <Button variant="secondary" onClick={handleClearFilters}>
-                  Clear all filters
-                </Button>
-              </div>
-            ) : (
-              <div>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.25 }}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
-                  {filteredCourses?.slice(0, visibleCount)?.map((course, idx) => (
-                    <div
-                      key={course?.id || idx}
-                      className={`animate-fade-up ${
-                        idx % 3 === 0 ? 'delay-1' : idx % 3 === 1 ? 'delay-2' : 'delay-3'
-                      }`}
-                    >
-                      <CourseCard course={course} />
-                    </div>
-                  ))}
-                </motion.div>
-
-                {/* Load More Button */}
-                {visibleCount < filteredCourses.length && (
-                  <div className="mt-10 text-center">
-                    <Button
-                      variant="secondary"
-                      size="md"
-                      onClick={() => setVisibleCount((prev) => prev + 6)}
-                    >
-                      Load more courses ({filteredCourses.length - visibleCount} remaining)
-                    </Button>
-                  </div>
-                )}
-              </div>
-            )}
-          </main>
-        </div>
-      </div>
-
-      {/* Mobile Bottom-Sheet Filter */}
-      <AnimatePresence>
-        {isMobileFilterOpen && (
-          <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileFilterOpen(false)}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ y: '100%' }}
-              animate={{ y: 0 }}
-              exit={{ y: '100%' }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 bg-zinc-950 border-t border-white/10 rounded-t-3xl p-6 max-h-[85vh] overflow-y-auto space-y-6 shadow-2xl"
-            >
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <h3 className="font-heading font-bold text-lg text-zinc-100">
-                  Filters
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setIsMobileFilterOpen(false)}
-                  className="p-1 rounded text-zinc-400 hover:text-white"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Categories */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
-                  Categories
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {safeCategories?.map((cat) => {
-                    const isChecked = selectedCategories.includes(cat?.id);
-                    return (
-                      <button
-                        key={cat?.id}
-                        type="button"
-                        onClick={() => toggleCategory(cat?.id)}
-                        className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
-                          isChecked
-                            ? 'bg-orange-500 text-white border-orange-500'
-                            : 'bg-zinc-900 text-zinc-300 border-white/10'
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
+                          selectedDuration === dur.id
+                            ? 'bg-[#0859D4] text-white font-bold shadow-sm'
+                            : 'bg-[#F5F5F7] text-[#424242] hover:bg-[#EBEBF0] border border-black/[0.06]'
                         }`}
                       >
-                        {cat?.name}
+                        {dur.label}
                       </button>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Level */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
-                  Difficulty Level
-                </h4>
-                <div className="grid grid-cols-2 gap-2">
-                  {['all', 'beginner', 'intermediate', 'advanced'].map((lvl) => (
-                    <button
-                      key={lvl}
-                      type="button"
-                      onClick={() => {
-                        setSelectedLevel(lvl);
-                        updateFilters({ level: lvl });
-                      }}
-                      className={`text-xs py-2 px-3 rounded-lg border text-center capitalize ${
-                        selectedLevel === lvl
-                          ? 'bg-orange-500 text-white border-orange-500'
-                          : 'bg-zinc-900 text-zinc-300 border-white/10'
-                      }`}
-                    >
-                      {lvl === 'all' ? 'All' : lvl}
-                    </button>
-                  ))}
+                {/* Rating */}
+                <div>
+                  <h4 className="font-mono text-[11px] uppercase tracking-wider text-[#6E6E73] mb-2.5">
+                    Rating
+                  </h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const next = !isRating4Plus;
+                      setIsRating4Plus(next);
+                      updateFilters({ rating4: next });
+                    }}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
+                      isRating4Plus
+                        ? 'bg-[#0859D4] text-white font-bold shadow-sm'
+                        : 'bg-[#F5F5F7] text-[#424242] hover:bg-[#EBEBF0] border border-black/[0.06]'
+                    }`}
+                  >
+                    <Star className={`w-3.5 h-3.5 ${isRating4Plus ? 'fill-white text-white' : 'fill-amber-400 text-amber-400'}`} />
+                    <span>4.0+ Rated Only</span>
+                  </button>
                 </div>
-              </div>
-
-              <div className="pt-2">
-                <Button
-                  variant="primary"
-                  fullWidth
-                  onClick={() => setIsMobileFilterOpen(false)}
-                >
-                  Apply Filters ({filteredCourses.length} results)
-                </Button>
               </div>
             </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+
+        {/* Full-Width 3-Column Course Grid */}
+        <main>
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <Skeleton key={i} variant="card" />
+              ))}
+            </div>
+          ) : filteredCourses.length === 0 ? (
+            <div className="glass-card p-12 text-center flex flex-col items-center justify-center my-6">
+              <div className="w-14 h-14 rounded-full bg-[#0859D4]/10 text-[#0859D4] flex items-center justify-center mb-4">
+                <BookOpen className="w-6 h-6" strokeWidth={1.5} />
+              </div>
+              <h3 className="font-heading font-bold text-xl text-[#1D1D1F] mb-2">
+                No cohorts found
+              </h3>
+              <p className="text-sm text-[#6E6E73] max-w-sm mb-6">
+                Try clearing filters or searching a different keyword.
+              </p>
+              <Button variant="secondary" onClick={handleClearFilters}>
+                Reset Filters
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                {filteredCourses.slice(0, visibleCount).map((course, idx) => (
+                  <div
+                    key={course?.id || idx}
+                    className={`animate-fade-up ${
+                      idx % 3 === 0 ? 'delay-1' : idx % 3 === 1 ? 'delay-2' : 'delay-3'
+                    }`}
+                  >
+                    <CourseCard course={course} />
+                  </div>
+                ))}
+              </motion.div>
+
+              {visibleCount < filteredCourses.length && (
+                <div className="mt-10 text-center">
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    onClick={() => setVisibleCount((prev) => prev + 6)}
+                  >
+                    Load more ({filteredCourses.length - visibleCount} remaining)
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

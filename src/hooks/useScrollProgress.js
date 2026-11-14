@@ -32,9 +32,10 @@ export function useScrollProgress() {
     window.addEventListener('resize', onScroll, { passive: true });
 
     let unbindLenis;
-    if (window.__lenis) {
-      window.__lenis.on('scroll', onScroll);
-      unbindLenis = () => window.__lenis.off('scroll', onScroll);
+    const lenis = window.__lenis;
+    if (lenis) {
+      lenis.on('scroll', onScroll);
+      unbindLenis = () => lenis.off?.('scroll', onScroll);
     }
 
     read();

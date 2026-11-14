@@ -80,10 +80,10 @@ export default function Dashboard() {
     <div className="pt-24 pb-20 md:pb-16 min-h-screen">
       <div className="container-custom">
         {/* Top Greeting Header */}
-        <div className="glass-card p-6 sm:p-8 shadow-2xl mb-8 animate-fade-up">
+        <div className="glass-card p-6 sm:p-8 shadow-soft mb-8 animate-fade-up">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl p-[2px] bg-gradient-to-tr from-[#FF6B00] via-amber-400 to-[#FF6B00] shadow-[0_0_20px_rgba(255,107,0,0.35)] shrink-0">
+              <div className="w-16 h-16 rounded-2xl p-[2px] bg-gradient-to-tr from-[#0859D4] via-[#1A59F9] to-[#0859D4] shadow-[0_6px_18px_rgba(8,89,212,0.22)] shrink-0">
                 <img
                   src={user?.avatar}
                   alt={user?.name || 'User'}
@@ -91,10 +91,10 @@ export default function Dashboard() {
                 />
               </div>
               <div>
-                <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-zinc-100">
+                <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-[#1D1D1F]">
                   Hey, {user?.name?.split(' ')?.[0] || 'Learner'}! 👋
                 </h1>
-                <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
+                <p className="text-xs sm:text-sm text-[#6E6E73] mt-0.5">
                   {user?.college} • Campus Learner
                 </p>
               </div>
@@ -102,8 +102,8 @@ export default function Dashboard() {
 
             {/* Streak & Quick stats */}
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/30 text-orange-400 rounded-full shadow-sm">
-                <Flame className="w-5 h-5 fill-orange-500 text-orange-500 animate-pulse" />
+              <div className="flex items-center gap-2 px-4 py-2 bg-[#0859D4]/10 border border-[#0859D4]/20 text-[#0859D4] rounded-full shadow-sm">
+                <Flame className="w-5 h-5 fill-[#0859D4] text-[#0859D4] animate-pulse" />
                 <span className="font-heading font-bold text-sm">
                   {user?.streak || 7} Day Streak!
                 </span>
@@ -115,7 +115,7 @@ export default function Dashboard() {
                   logout();
                   navigate('/');
                 }}
-                className="p-2 rounded-full text-zinc-400 hover:text-rose-400 hover:bg-white/5 transition-colors active:scale-95"
+                className="p-2 rounded-full text-[#6E6E73] hover:text-rose-600 hover:bg-black/5 transition-colors active:scale-95"
                 aria-label="Log out"
               >
                 <LogOut className="w-5 h-5" strokeWidth={2} />
@@ -124,33 +124,33 @@ export default function Dashboard() {
           </div>
 
           {/* 3 Small Stat Cards */}
-          <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 pt-6 border-t border-white/10">
-            <div className="p-3 sm:p-4 bg-zinc-900/60 border border-white/5 rounded-xl text-center">
-              <div className="flex items-center justify-center gap-1.5 text-orange-400 text-xs font-semibold uppercase mb-1">
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 pt-6 border-t border-black/[0.08]">
+            <div className="p-3 sm:p-4 bg-[#F5F5F7] border border-black/[0.06] rounded-xl text-center">
+              <div className="flex items-center justify-center gap-1.5 text-[#0859D4] text-xs font-semibold uppercase mb-1">
                 <BookOpen className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Enrolled</span>
               </div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-zinc-100">
+              <div className="font-heading font-extrabold text-xl sm:text-2xl text-[#1D1D1F]">
                 {enrolledDetails.length}
               </div>
             </div>
 
-            <div className="p-3 sm:p-4 bg-zinc-900/60 border border-white/5 rounded-xl text-center">
-              <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs font-semibold uppercase mb-1">
+            <div className="p-3 sm:p-4 bg-[#F5F5F7] border border-black/[0.06] rounded-xl text-center">
+              <div className="flex items-center justify-center gap-1.5 text-emerald-600 text-xs font-semibold uppercase mb-1">
                 <Clock className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Hours</span>
               </div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-zinc-100">
+              <div className="font-heading font-extrabold text-xl sm:text-2xl text-[#1D1D1F]">
                 {totalHoursLearned}h
               </div>
             </div>
 
-            <div className="p-3 sm:p-4 bg-zinc-900/60 border border-white/5 rounded-xl text-center">
-              <div className="flex items-center justify-center gap-1.5 text-amber-400 text-xs font-semibold uppercase mb-1">
+            <div className="p-3 sm:p-4 bg-[#F5F5F7] border border-black/[0.06] rounded-xl text-center">
+              <div className="flex items-center justify-center gap-1.5 text-amber-600 text-xs font-semibold uppercase mb-1">
                 <Award className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Badges</span>
               </div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-zinc-100">
+              <div className="font-heading font-extrabold text-xl sm:text-2xl text-[#1D1D1F]">
                 {allBadges?.filter((b) => b?.unlocked)?.length}
               </div>
             </div>
@@ -167,7 +167,7 @@ export default function Dashboard() {
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'learning'
                   ? 'btn-interactive text-white shadow-lg'
-                  : 'text-zinc-300 hover:bg-white/5 border border-transparent'
+                  : 'text-[#424242] hover:bg-[#F5F5F7] border border-transparent'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -183,7 +183,7 @@ export default function Dashboard() {
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'saved'
                   ? 'btn-interactive text-white shadow-lg'
-                  : 'text-zinc-300 hover:bg-white/5 border border-transparent'
+                  : 'text-[#424242] hover:bg-[#F5F5F7] border border-transparent'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -199,7 +199,7 @@ export default function Dashboard() {
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'badges'
                   ? 'btn-interactive text-white shadow-lg'
-                  : 'text-zinc-300 hover:bg-white/5 border border-transparent'
+                  : 'text-[#424242] hover:bg-[#F5F5F7] border border-transparent'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -217,13 +217,13 @@ export default function Dashboard() {
             {/* View: Continue Learning */}
             {activeTab === 'learning' && (
               <div className="space-y-6">
-                <h2 className="font-heading font-bold text-xl text-zinc-100">
+                <h2 className="font-heading font-bold text-xl text-[#1D1D1F]">
                   In Progress Courses
                 </h2>
 
                 {enrolledDetails.length === 0 ? (
                   <div className="glass-card p-8 text-center">
-                    <p className="text-sm text-zinc-400 mb-4">
+                    <p className="text-sm text-[#6E6E73] mb-4">
                       You haven't enrolled in any courses yet.
                     </p>
                     <Link to="/explore">
@@ -243,27 +243,27 @@ export default function Dashboard() {
                           <img
                             src={course?.thumbnail}
                             alt=""
-                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 border border-white/10"
+                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 border border-black/[0.08]"
                           />
                           <div>
-                            <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wide">
+                            <span className="text-[11px] font-bold text-[#0859D4] uppercase tracking-wide">
                               {course?.level}
                             </span>
-                            <h3 className="font-heading font-bold text-base text-zinc-100 line-clamp-1">
+                            <h3 className="font-heading font-bold text-base text-[#1D1D1F] line-clamp-1">
                               {course?.title}
                             </h3>
-                            <p className="text-xs text-zinc-400 mt-1">
+                            <p className="text-xs text-[#6E6E73] mt-1">
                               {course?.lessonsCount} lessons • {course?.durationHours} hours
                             </p>
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-white/10">
+                        <div className="flex items-center justify-between sm:justify-end gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-black/[0.08]">
                           <ProgressRing
                             value={course?.progress}
                             size={52}
                             strokeWidth={5}
-                            color="#f97316"
+                            color="#0859D4"
                           />
                           <Button
                             variant="secondary"
@@ -281,10 +281,10 @@ export default function Dashboard() {
 
                 {/* Recommended For You Section */}
                 {recommendedCourses.length > 0 && (
-                  <div className="pt-8 border-t border-white/10">
+                  <div className="pt-8 border-t border-black/[0.08]">
                     <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="w-4 h-4 text-orange-400" />
-                      <h3 className="font-heading font-bold text-lg text-zinc-100">
+                      <Sparkles className="w-4 h-4 text-[#0859D4]" />
+                      <h3 className="font-heading font-bold text-lg text-[#1D1D1F]">
                         Recommended for You
                       </h3>
                     </div>
@@ -301,12 +301,12 @@ export default function Dashboard() {
             {/* View: Saved Courses */}
             {activeTab === 'saved' && (
               <div className="space-y-6">
-                <h2 className="font-heading font-bold text-xl text-zinc-100">
+                <h2 className="font-heading font-bold text-xl text-[#1D1D1F]">
                   Saved For Later ({savedCourses.length})
                 </h2>
                 {savedCourses.length === 0 ? (
                   <div className="glass-card p-8 text-center">
-                    <p className="text-sm text-zinc-400 mb-4">
+                    <p className="text-sm text-[#6E6E73] mb-4">
                       No courses saved yet. Click the heart icon on any course card to bookmark it.
                     </p>
                     <Link to="/explore">
@@ -328,7 +328,7 @@ export default function Dashboard() {
             {/* View: Badges */}
             {activeTab === 'badges' && (
               <div className="space-y-6">
-                <h2 className="font-heading font-bold text-xl text-zinc-100">
+                <h2 className="font-heading font-bold text-xl text-[#1D1D1F]">
                   Campus Achievements & Badges
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -337,15 +337,15 @@ export default function Dashboard() {
                       key={badge?.id}
                       className={`glass-card p-5 flex items-start gap-4 transition-all ${
                         badge?.unlocked
-                          ? 'border-orange-500/30 shadow-lg'
+                          ? 'border-[#0859D4]/30 shadow-soft'
                           : 'opacity-50'
                       }`}
                     >
                       <div
                         className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
                           badge?.unlocked
-                            ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-                            : 'bg-zinc-800 text-zinc-500'
+                            ? 'bg-[#0859D4]/10 text-[#0859D4] border border-[#0859D4]/20'
+                            : 'bg-[#F5F5F7] text-[#6E6E73]'
                         }`}
                       >
                         {badge?.unlocked ? (
@@ -356,16 +356,16 @@ export default function Dashboard() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h4 className="font-heading font-bold text-base text-zinc-100">
+                          <h4 className="font-heading font-bold text-base text-[#1D1D1F]">
                             {badge?.name}
                           </h4>
                           {badge?.unlocked && (
-                            <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">
                               Unlocked
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-zinc-400 mt-1">
+                        <p className="text-xs text-[#6E6E73] mt-1">
                           {badge?.desc}
                         </p>
                       </div>
@@ -379,14 +379,14 @@ export default function Dashboard() {
       </div>
 
       {/* Mobile Bottom Tab Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-zinc-950/90 backdrop-blur-xl border-t border-white/10 py-2.5 px-6 flex items-center justify-around">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-black/[0.08] py-2.5 px-6 flex items-center justify-around">
         <button
           type="button"
           onClick={() => setActiveTab('learning')}
           className={`flex flex-col items-center gap-1 py-1 text-xs font-semibold ${
             activeTab === 'learning'
-              ? 'text-orange-400'
-              : 'text-zinc-500'
+              ? 'text-[#0859D4]'
+              : 'text-[#6E6E73]'
           }`}
         >
           <LayoutDashboard className="w-5 h-5" />
@@ -398,8 +398,8 @@ export default function Dashboard() {
           onClick={() => setActiveTab('saved')}
           className={`flex flex-col items-center gap-1 py-1 text-xs font-semibold ${
             activeTab === 'saved'
-              ? 'text-orange-400'
-              : 'text-zinc-500'
+              ? 'text-[#0859D4]'
+              : 'text-[#6E6E73]'
           }`}
         >
           <Heart className="w-5 h-5" />
@@ -411,8 +411,8 @@ export default function Dashboard() {
           onClick={() => setActiveTab('badges')}
           className={`flex flex-col items-center gap-1 py-1 text-xs font-semibold ${
             activeTab === 'badges'
-              ? 'text-orange-400'
-              : 'text-zinc-500'
+              ? 'text-[#0859D4]'
+              : 'text-[#6E6E73]'
           }`}
         >
           <Award className="w-5 h-5" />

@@ -3,39 +3,39 @@ import Matter from 'matter-js';
 
 const STAT_DOMAINS = [
   {
-    key: 'CHA',
-    label: 'Charisma',
-    guild: 'The Wind Shifters',
+    key: 'TECH',
+    label: 'Tech & Code',
+    guild: 'The Systems Guild',
     color: '#f5b945',
     pattern: '/patterns/stats-bg-char.webp',
   },
   {
-    key: 'STR',
-    label: 'Strength',
-    guild: 'The Temperers of Steel',
+    key: 'ARTS',
+    label: 'Design & Arts',
+    guild: 'The Spatial Designers',
     color: '#ff6b4a',
     pattern: '/patterns/stats-bg-str.webp',
   },
   {
-    key: 'WIS',
-    label: 'Wisdom',
-    guild: 'The Keepers of Time',
+    key: 'MUSIC',
+    label: 'Music & Stage',
+    guild: 'The Sonic Architects',
     color: '#4ecb8a',
     pattern: '/patterns/stats-bg-wis.webp',
   },
   {
-    key: 'INT',
-    label: 'Intellect',
-    guild: 'The Brotherhood of Tale',
+    key: 'SPORTS',
+    label: 'Sports & Esports',
+    guild: 'The Athletic Vanguard',
     color: '#5b8def',
     pattern: '/patterns/stats-bg-int.webp',
   },
 ];
 
 const BODY_COPY =
-  "Point at the part of yourself you want to build, and the quests you take pile up there. Strength, intellect, charisma, wisdom. Some land exactly where you aimed. Some surprise you. Either way, it adds up into someone you weren't last month.";
+  'Click or hover to drop orbs and explore campus skill momentum.';
 
-const MIDLINE_RATIO = 0.5;
+const MIDLINE_RATIO = 0.56;
 const TARGET_BALL_AREA_DIVISOR = 25;
 const POINTS_PER_BALL = 4;
 const MAX_SCORE = 100;
@@ -45,7 +45,7 @@ const DIVIDER_THICKNESS = 8;
 const HOLD_SPAWN_INTERVAL_MS = 143;
 const DIE_DURATION_SEC = 0.38;
 const POP_DURATION_SEC = 0.42;
-const FALLING_ORB_COLOR = '#ffffff';
+const FALLING_ORB_COLOR = '#0859D4';
 
 // Back-out spring overshoot curve matching Grail's Bt(e)
 function easeOutBack(x) {
@@ -129,10 +129,10 @@ void main() {
   float vig = 1.0 - 0.45 * length(uv - 0.5);
   float field = n * vig;
 
-  vec3 col = vec3(0.027, 0.027, 0.035);
-  col += vec3(0.085, 0.055, 0.022) * field;
-  col += vec3(0.012, 0.015, 0.030) * field * (1.0 - glow);
-  col += vec3(0.22, 0.11, 0.03) * glow * (0.35 + 0.7 * field);
+  vec3 col = vec3(0.972, 0.976, 0.988);
+  col -= vec3(0.020, 0.014, 0.004) * field;
+  col -= vec3(0.012, 0.006, 0.000) * field * (1.0 - glow);
+  col += vec3(-0.045, -0.018, 0.012) * glow * (0.35 + 0.7 * field);
   gl_FragColor = vec4(col, 1.0);
 }
 `;
@@ -204,7 +204,7 @@ function StatsBackdrop({ active }) {
     window.addEventListener('mousemove', onMouseMove, { passive: true });
 
     const resize = () => {
-      const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+      const dpr = 0.5;
       canvas.width = Math.max(1, Math.floor(canvas.clientWidth * dpr));
       canvas.height = Math.max(1, Math.floor(canvas.clientHeight * dpr));
     };
@@ -255,7 +255,7 @@ function StatsBackdrop({ active }) {
   );
 }
 
-export function Stats() {
+export function Stats({ standalone = true, topContent = null }) {
   const sectionRef = useRef(null);
   const topCanvasRef = useRef(null);
   const gooCanvasRef = useRef(null);
@@ -665,7 +665,7 @@ export function Stats() {
       }
 
       // Smooth tabular score counter interpolation
-      if (isActiveRef.current && activeElapsedSec >= 0.75) {
+      if (isActiveRef.current && activeElapsedSec >= 0.15) {
         for (let c = 0; c < 4; c++) {
           if (displayedScores[c] !== targetScores[c]) {
             displayedScores[c] +=
@@ -684,7 +684,7 @@ export function Stats() {
       // 1) Draw top canvas: vertical divider lines + falling translucent white orbs
       topCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
       topCtx.clearRect(0, 0, width, height);
-      topCtx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      topCtx.strokeStyle = 'rgba(29, 29, 31, 0.12)';
       topCtx.lineWidth = 1;
 
       [0.25, 0.5, 0.75].forEach((ratio, idx) => {
@@ -779,23 +779,20 @@ export function Stats() {
   }, []);
 
   return (
-    <div className="relative z-[7] h-[190vh] -mb-[80vh]">
+    <div className={standalone ? 'relative z-[7]' : 'relative z-[7] h-[190vh] -mb-[80vh]'}>
       <section
         id="stats"
         ref={sectionRef}
-        className="sticky top-0 w-full h-screen min-h-[680px] bg-[#060606] text-white overflow-hidden select-none"
+        className={`${
+          standalone
+            ? topContent
+              ? 'relative min-h-[670px] sm:h-[680px] rounded-3xl'
+              : 'relative h-[78vh] min-h-[560px] rounded-3xl'
+            : 'sticky top-0 h-screen min-h-[680px] rounded-3xl'
+        } w-full bg-[#F9F9FB] text-[#1D1D1F] overflow-hidden select-none border border-black/[0.08] shadow-[0_20px_60px_rgba(29,29,31,0.06)]`}
       >
-      {/* Top Chapter Kicker Bar matching Grail's ColonTitle */}
-      <div className="absolute top-5 left-8 right-8 z-10 flex items-center justify-between pointer-events-none">
-        <span className="font-heading text-xs sm:text-[13px] text-white/85 font-medium tracking-tight">
-          About Stats
-        </span>
-        <span className="font-heading text-xs sm:text-[13px] text-white/85 font-medium tracking-tight">
-          Chapter 06
-        </span>
-      </div>
 
-      {/* Subtle Obsidian + Warm Torch WebGL Backdrop */}
+      {/* Subtle Crisp Studio WebGL Backdrop */}
       <StatsBackdrop active={inView} />
 
       {/* Goo Canvas (Clipped Pattern Artwork for Landed Balls) */}
@@ -813,43 +810,52 @@ export function Stats() {
         style={{ touchAction: 'pan-y' }}
       />
 
-      {/* Monumental Uppercase Editorial Serif Headline */}
-      <h2
-        className="absolute top-[6vh] left-8 z-[2] m-0 pointer-events-none font-grail-serif uppercase font-light text-white tracking-[-0.01em] leading-[0.88]"
-        style={{ fontSize: 'clamp(44px, 6.4vw, 92px)' }}
-      >
-        <span className="block overflow-hidden -mx-[0.02em] -mt-[0.09em] -mb-[0.02em] px-[0.02em] pt-[0.09em] pb-[0.02em]">
-          <span
-            className="block transition-transform duration-[780ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
-            style={{
-              transform: entered ? 'translateY(0)' : 'translateY(115%)',
-            }}
+      {/* Top Content Inside Unified Box */}
+      {topContent ? (
+        <div className="relative z-[3] pt-5 sm:pt-6 px-4 sm:px-7 pointer-events-none">
+          <div className="pointer-events-auto">{topContent}</div>
+        </div>
+      ) : (
+        <div className="relative z-[2] pt-8 sm:pt-10 px-6 sm:px-10 pointer-events-none flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <h1
+            className="m-0 font-display font-bold text-[#1D1D1F] tracking-tight leading-[1.02]"
+            style={{ fontSize: 'clamp(32px, 4.4vw, 56px)' }}
           >
-            Every quest
-          </span>
-        </span>
-        <span className="block overflow-hidden -mx-[0.02em] -mt-[0.09em] -mb-[0.02em] px-[0.02em] pt-[0.09em] pb-[0.02em]">
-          <span
-            className="block transition-transform duration-[780ms] delay-[140ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
-            style={{
-              transform: entered ? 'translateY(0)' : 'translateY(115%)',
-            }}
-          >
-            lands somewhere.
-          </span>
-        </span>
-      </h2>
+            <span className="block overflow-hidden">
+              <span
+                className="block transition-transform duration-[780ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{
+                  transform: entered ? 'translateY(0)' : 'translateY(115%)',
+                }}
+              >
+                Every cohort
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span
+                className="block transition-transform duration-[780ms] delay-[140ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{
+                  transform: entered ? 'translateY(0)' : 'translateY(115%)',
+                }}
+              >
+                <span className="font-editorial italic font-normal text-[#0859D4] text-[1.1em]">
+                  leaves proof.
+                </span>
+              </span>
+            </span>
+          </h1>
 
-      {/* Narrative Paragraph */}
-      <p
-        className="absolute top-[30vh] left-10 z-[2] m-0 max-w-[432px] text-[14px] leading-[1.31] text-white/50 pointer-events-none transition-all duration-[700ms] delay-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
-        style={{
-          opacity: entered ? 1 : 0,
-          transform: entered ? 'translateY(0)' : 'translateY(16px)',
-        }}
-      >
-        {BODY_COPY}
-      </p>
+          <p
+            className="m-0 max-w-xs text-xs sm:text-sm leading-relaxed text-[#6E6E73] transition-all duration-[700ms] delay-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={{
+              opacity: entered ? 1 : 0,
+              transform: entered ? 'translateY(0)' : 'translateY(12px)',
+            }}
+          >
+            {BODY_COPY}
+          </p>
+        </div>
+      )}
 
       {/* Accessible Screen-Reader List */}
       <ul className="sr-only">
@@ -866,39 +872,36 @@ export function Stats() {
           <div
             key={d.key}
             style={{
-              left: `calc(${idx * 25}% + 32px)`,
-              top: 'calc(50% + 4px)',
+              left: `calc(${idx * 25}% + 24px)`,
+              top: topContent ? 'calc(56% - 72px)' : 'calc(56% + 4px)',
               opacity: entered ? 1 : 0,
               transform: entered ? 'translateY(0)' : 'translateY(14px)',
               transitionDuration: '600ms',
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-              transitionDelay: `${750 + idx * 120}ms`,
+              transitionDelay: `${(topContent ? 250 : 750) + idx * 100}ms`,
             }}
-            className="absolute flex flex-col gap-[2px] w-[116px] lg:w-[140px] isolate transition-all"
+            className="absolute flex flex-col gap-0.5 w-[21%] isolate transition-all"
           >
-            {/* Soft dark radial halo behind label for legibility over tall ball piles */}
-            <div
-              aria-hidden="true"
-              className="absolute -inset-x-7 -inset-y-6 -z-10 pointer-events-none blur-[22px]"
-              style={{
-                background:
-                  'radial-gradient(56% 58% at 30% 50%, rgba(0,0,0,0.55), transparent 76%)',
-              }}
-            />
-            <span className="text-[16px] leading-[1.24] text-white/50 font-normal">
+            <span className="text-xs sm:text-[15px] leading-[1.24] text-[#6E6E73] font-normal truncate">
               {d.label}
             </span>
             <span
               ref={(el) => {
                 countRefs.current[idx] = el;
               }}
-              className="text-[24px] font-bold leading-[1.08] text-white tabular-nums"
+              className="text-xl sm:text-[26px] font-bold leading-[1.08] text-[#1D1D1F] tabular-nums"
             >
               0
             </span>
           </div>
         ))}
       </div>
+
+      {topContent && (
+        <span className="pointer-events-none absolute bottom-3 right-5 z-[3] font-mono text-[10px] text-[#6E6E73] bg-white/90 px-2.5 py-1 rounded-full border border-black/[0.08] shadow-sm">
+          Click columns to drop orbs
+        </span>
+      )}
     </section>
     </div>
   );

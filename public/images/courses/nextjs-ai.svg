@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" fill="none">
+  <defs>
+    <linearGradient id="c3-bg" x1="0" y1="0" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F6F9FE"/>
+      <stop offset="100%" stop-color="#EBF3FC"/>
+    </linearGradient>
+    <radialGradient id="c3-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#1A59F9" stop-opacity="0.14"/>
+      <stop offset="65%" stop-color="#1A59F9" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#1A59F9" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="c3-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" stroke="rgba(29,29,31,0.045)" stroke-width="1"/>
+    </pattern>
+    <filter id="c3-shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1D1D1F" flood-opacity="0.09"/>
+    </filter>
+    <filter id="c3-soft" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1A59F9" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#c3-bg)"/>
+  <rect width="800" height="500" fill="url(#c3-grid)"/>
+  <rect width="800" height="500" fill="url(#c3-glow)"/>
+    <g filter="url(#c3-shadow)">
+      <rect x="195" y="88" width="410" height="324" rx="28" fill="#FFFFFF" stroke="rgba(8,89,212,0.14)" stroke-width="1.5"/>
+    </g>
+    <path d="M235 288 C295 215, 345 345, 405 245 C455 162, 505 295, 565 210" stroke="url(#c3-bg)" stroke-width="16" opacity="0.25"/>
+    <path d="M235 288 C295 215, 345 345, 405 245 C455 162, 505 295, 565 210" stroke="#0859D4" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M235 318 C305 268, 355 360, 415 275 C465 205, 515 315, 565 248" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6"/>
+    <g filter="url(#c3-soft)">
+      <polygon points="400,124 470,194 400,264 330,194" fill="#EFF6FF" stroke="#0859D4" stroke-width="2.5"/>
+      <polygon points="400,148 446,194 400,240 354,194" fill="#0859D4" fill-opacity="0.16"/>
+      <circle cx="400" cy="194" r="14" fill="#0859D4"/>
+    </g>
+    <circle cx="295" cy="252" r="7" fill="#FFFFFF" stroke="#0859D4" stroke-width="3"/>
+    <circle cx="515" cy="240" r="7" fill="#FFFFFF" stroke="#38BDF8" stroke-width="3"/>
+  </svg>

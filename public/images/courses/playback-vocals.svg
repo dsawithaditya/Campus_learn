@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" fill="none">
+  <defs>
+    <linearGradient id="c6-bg" x1="0" y1="0" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FBF9F6"/>
+      <stop offset="100%" stop-color="#F4EFE8"/>
+    </linearGradient>
+    <radialGradient id="c6-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#0859D4" stop-opacity="0.14"/>
+      <stop offset="65%" stop-color="#0859D4" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#0859D4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="c6-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" stroke="rgba(29,29,31,0.045)" stroke-width="1"/>
+    </pattern>
+    <filter id="c6-shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1D1D1F" flood-opacity="0.09"/>
+    </filter>
+    <filter id="c6-soft" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0859D4" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#c6-bg)"/>
+  <rect width="800" height="500" fill="url(#c6-grid)"/>
+  <rect width="800" height="500" fill="url(#c6-glow)"/>
+    <g filter="url(#c6-shadow)">
+      <rect x="155" y="90" width="490" height="320" rx="28" fill="#FFFFFF" stroke="rgba(29,29,31,0.08)"/>
+    </g>
+    <path d="M185 280 C255 150, 325 360, 400 220 C475 80, 545 340, 615 210" stroke="#EC4899" stroke-width="5" stroke-linecap="round" stroke-opacity="0.75"/>
+    <path d="M185 250 C265 320, 335 140, 415 250 C495 360, 555 180, 615 260" stroke="#0859D4" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="400" cy="220" r="14" fill="#FFFFFF" stroke="#0859D4" stroke-width="4"/>
+    <circle cx="290" cy="240" r="9" fill="#EC4899"/>
+    <circle cx="515" cy="235" r="9" fill="#0859D4"/>
+  </svg>

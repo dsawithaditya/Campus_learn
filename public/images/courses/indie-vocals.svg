@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" fill="none">
+  <defs>
+    <linearGradient id="c5-bg" x1="0" y1="0" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F9F8FD"/>
+      <stop offset="100%" stop-color="#F1EFFA"/>
+    </linearGradient>
+    <radialGradient id="c5-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#6D28D9" stop-opacity="0.14"/>
+      <stop offset="65%" stop-color="#6D28D9" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#6D28D9" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="c5-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" stroke="rgba(29,29,31,0.045)" stroke-width="1"/>
+    </pattern>
+    <filter id="c5-shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1D1D1F" flood-opacity="0.09"/>
+    </filter>
+    <filter id="c5-soft" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#6D28D9" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#c5-bg)"/>
+  <rect width="800" height="500" fill="url(#c5-grid)"/>
+  <rect width="800" height="500" fill="url(#c5-glow)"/>
+    <g filter="url(#c5-shadow)">
+      <rect x="145" y="96" width="510" height="308" rx="26" fill="#FFFFFF" stroke="rgba(29,29,31,0.08)"/>
+    </g>
+    <rect x="196" y="229" width="10" height="42" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="218" y="216" width="10" height="68" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="240" y="191" width="10" height="118" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="262" y="204" width="10" height="92" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="284" y="177" width="10" height="146" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="306" y="161" width="10" height="178" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="328" y="190" width="10" height="120" rx="5" fill="#0859D4" fill-opacity="0.9"/><rect x="350" y="206" width="10" height="88" rx="5" fill="#0859D4" fill-opacity="0.9"/><rect x="372" y="170" width="10" height="160" rx="5" fill="#0859D4" fill-opacity="0.9"/><rect x="394" y="154" width="10" height="192" rx="5" fill="#0859D4" fill-opacity="0.9"/><rect x="416" y="176" width="10" height="148" rx="5" fill="#0859D4" fill-opacity="0.9"/><rect x="438" y="202" width="10" height="96" rx="5" fill="#0859D4" fill-opacity="0.9"/><rect x="460" y="174" width="10" height="152" rx="5" fill="#0859D4" fill-opacity="0.9"/><rect x="482" y="183" width="10" height="134" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="504" y="208" width="10" height="84" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="526" y="195" width="10" height="110" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="548" y="213" width="10" height="74" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="570" y="224" width="10" height="52" rx="5" fill="#A855F7" fill-opacity="0.32"/><rect x="592" y="231" width="10" height="38" rx="5" fill="#A855F7" fill-opacity="0.32"/>
+  </svg>

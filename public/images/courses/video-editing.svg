@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" fill="none">
+  <defs>
+    <linearGradient id="c20-bg" x1="0" y1="0" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F5F9FB"/>
+      <stop offset="100%" stop-color="#EBF3F7"/>
+    </linearGradient>
+    <radialGradient id="c20-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.14"/>
+      <stop offset="65%" stop-color="#0284C7" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="c20-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" stroke="rgba(29,29,31,0.045)" stroke-width="1"/>
+    </pattern>
+    <filter id="c20-shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1D1D1F" flood-opacity="0.09"/>
+    </filter>
+    <filter id="c20-soft" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0284C7" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#c20-bg)"/>
+  <rect width="800" height="500" fill="url(#c20-grid)"/>
+  <rect width="800" height="500" fill="url(#c20-glow)"/>
+    <g filter="url(#c20-shadow)">
+      <rect x="135" y="88" width="530" height="324" rx="24" fill="#FFFFFF" stroke="rgba(29,29,31,0.08)"/>
+    </g>
+    <rect x="170" y="160" width="180" height="44" rx="10" fill="#EFF6FF" stroke="#0859D4" stroke-width="2"/>
+    <rect x="364" y="160" width="260" height="44" rx="10" fill="#0859D4"/>
+    <rect x="210" y="224" width="220" height="44" rx="10" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+    <rect x="444" y="224" width="146" height="44" rx="10" fill="#F5F5F7" stroke="rgba(29,29,31,0.12)"/>
+    <rect x="170" y="288" width="420" height="44" rx="10" fill="#F5F5F7" stroke="rgba(29,29,31,0.1)"/>
+    <line x1="400" y1="126" x2="400" y2="368" stroke="#E11D48" stroke-width="3"/>
+    <polygon points="390,122 410,122 400,138" fill="#E11D48"/>
+  </svg>

@@ -38,7 +38,7 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = 'max-w-2xl'
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/35 backdrop-blur-sm"
           />
 
           {/* Modal Dialog */}
@@ -48,18 +48,18 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = 'max-w-2xl'
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className={`relative w-full ${maxWidth} bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-lg shadow-lift overflow-hidden z-10 my-8`}
+            className={`relative w-full ${maxWidth} bg-white border border-black/10 rounded-2xl shadow-[0_24px_60px_rgba(29,29,31,0.16)] overflow-hidden z-10 my-8`}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-border dark:border-border-dark">
-              <h3 className="text-lg font-heading font-semibold text-text dark:text-text-dark">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-black/[0.08]">
+              <h3 className="text-lg font-heading font-semibold text-[#1D1D1F]">
                 {title}
               </h3>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Close dialog"
-                className="w-8 h-8 rounded-full flex items-center justify-center text-muted dark:text-muted-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-black/5 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" strokeWidth={1.75} />
               </button>

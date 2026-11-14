@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" fill="none">
+  <defs>
+    <linearGradient id="c23-bg" x1="0" y1="0" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F8F9FA"/>
+      <stop offset="100%" stop-color="#ECEFF4"/>
+    </linearGradient>
+    <radialGradient id="c23-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#1D1D1F" stop-opacity="0.14"/>
+      <stop offset="65%" stop-color="#1D1D1F" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#1D1D1F" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="c23-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" stroke="rgba(29,29,31,0.045)" stroke-width="1"/>
+    </pattern>
+    <filter id="c23-shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1D1D1F" flood-opacity="0.09"/>
+    </filter>
+    <filter id="c23-soft" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1D1D1F" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#c23-bg)"/>
+  <rect width="800" height="500" fill="url(#c23-grid)"/>
+  <rect width="800" height="500" fill="url(#c23-glow)"/>
+    <g filter="url(#c23-shadow)">
+      <rect x="220" y="90" width="360" height="320" rx="24" fill="#FFFFFF" stroke="rgba(29,29,31,0.1)"/>
+    </g>
+    <rect x="260" y="120" width="70" height="65" rx="6" fill="#FFFFFF"/><rect x="330" y="120" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="400" y="120" width="70" height="65" rx="6" fill="#FFFFFF"/><rect x="470" y="120" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="260" y="185" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="330" y="185" width="70" height="65" rx="6" fill="#FFFFFF"/><rect x="400" y="185" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="470" y="185" width="70" height="65" rx="6" fill="#FFFFFF"/><rect x="260" y="250" width="70" height="65" rx="6" fill="#FFFFFF"/><rect x="330" y="250" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="400" y="250" width="70" height="65" rx="6" fill="#FFFFFF"/><rect x="470" y="250" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="260" y="315" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="330" y="315" width="70" height="65" rx="6" fill="#FFFFFF"/><rect x="400" y="315" width="70" height="65" rx="6" fill="#E8ECF2"/><rect x="470" y="315" width="70" height="65" rx="6" fill="#FFFFFF"/>
+    <path d="M295 318 L295 152 L435 152" stroke="#0859D4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6"/>
+    <polygon points="435,142 455,152 435,162" fill="#0859D4"/>
+    <circle cx="295" cy="318" r="22" fill="#1D1D1F"/>
+    <circle cx="435" cy="152" r="20" fill="#0859D4"/>
+    <circle cx="435" cy="152" r="7" fill="#FFFFFF"/>
+  </svg>

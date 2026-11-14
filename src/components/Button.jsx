@@ -31,11 +31,11 @@ export const Button = React.forwardRef(function Button(
     interactive:
       'btn-interactive',
     secondary:
-      'border border-white/10 dark:border-white/10 bg-zinc-900/60 dark:bg-zinc-900/60 backdrop-blur-md text-zinc-100 hover:border-orange-500/50 hover:text-orange-400 active:scale-[0.96] shadow-sm group',
+      'border border-black/15 bg-white text-[#1D1D1F] hover:border-[#0859D4] hover:text-[#0859D4] active:scale-[0.96] shadow-sm group',
     ghost:
-      'bg-transparent text-zinc-400 hover:text-zinc-100 hover:bg-white/5 active:scale-[0.96]',
+      'bg-transparent text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-black/5 active:scale-[0.96]',
     'primary-indigo':
-      'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-indigo-500/50',
+      'bg-[#0859D4] text-white hover:bg-[#1A59F9] shadow-md active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-[#0859D4]/40',
   };
 
   return (

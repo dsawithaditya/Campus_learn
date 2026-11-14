@@ -46,14 +46,14 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    // Enforce high-contrast Obsidian + Blaze Orange dark theme (#070709 / #F4F4F5)
-    document.documentElement.classList.add('dark');
-    document.documentElement.classList.remove('light');
-    document.documentElement.style.backgroundColor = '#070709';
-    document.documentElement.style.colorScheme = 'dark';
+    // Enforce clean light mode theme (#FFFFFF / #1D1D1F inspired by onlines.com.ar)
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
+    document.documentElement.style.backgroundColor = '#FFFFFF';
+    document.documentElement.style.colorScheme = 'light';
     if (document.body) {
-      document.body.style.backgroundColor = '#070709';
-      document.body.style.color = '#F4F4F5';
+      document.body.style.backgroundColor = '#FFFFFF';
+      document.body.style.color = '#1D1D1F';
     }
   }, []);
 
@@ -63,7 +63,7 @@ export function App() {
       {/* Accessibility: Skip to main content */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[#FF6B00] text-white rounded-md shadow-lift"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[#0859D4] text-white rounded-md shadow-lift"
       >
         Skip to main content
       </a>

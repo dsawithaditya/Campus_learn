@@ -44,17 +44,17 @@ export function MentorCard({ mentor, className = '' }) {
       whileHover={{ y: -5 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative p-5 cursor-pointer flex flex-col justify-between rounded-2xl bg-zinc-950/85 backdrop-blur-xl border border-white/[0.08] hover:border-[#FF6B00]/45 shadow-[0_8px_24px_rgba(0,0,0,0.6)] hover:shadow-[0_16px_36px_rgba(255,107,0,0.12)] transition-colors h-full select-none ${className}`}
+      className={`group relative p-5 cursor-pointer flex flex-col justify-between rounded-2xl bg-white border border-black/[0.08] hover:border-[#0859D4]/45 shadow-[0_8px_24px_rgba(29,29,31,0.05)] hover:shadow-[0_14px_34px_rgba(8,89,212,0.12)] transition-all h-full select-none ${className}`}
       style={{
         backgroundImage:
-          'radial-gradient(320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(255,107,0,0.08), transparent 50%)',
+          'radial-gradient(320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(8,89,212,0.06), transparent 50%)',
       }}
     >
       <div>
         {/* Mentor Header: Avatar + Full Name + Expertise Tag */}
         <div className="flex items-start gap-3.5 mb-3">
           <div className="relative w-12 h-12 shrink-0">
-            <div className="w-12 h-12 rounded-xl p-[1.5px] bg-gradient-to-tr from-[#FF6B00] via-amber-400 to-white/10 shadow-[0_0_12px_rgba(255,107,0,0.25)] overflow-hidden">
+            <div className="w-12 h-12 rounded-xl p-[1.5px] bg-gradient-to-tr from-[#0859D4] via-[#1A59F9] to-black/10 shadow-[0_4px_12px_rgba(8,89,212,0.18)] overflow-hidden">
               <img
                 src={avatarSrc}
                 alt={mentor?.name || 'Mentor'}
@@ -70,16 +70,16 @@ export function MentorCard({ mentor, className = '' }) {
                 }`}
               />
             </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-zinc-950 rounded-full shadow-[0_0_6px_rgba(16,185,129,0.5)]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full shadow-sm" />
           </div>
 
           <div className="flex-1 min-w-0">
-            <h4 className="font-heading font-bold text-base text-zinc-100 group-hover:text-[#FF6B00] transition-colors leading-tight truncate">
+            <h4 className="font-heading font-bold text-base text-[#1D1D1F] group-hover:text-[#0859D4] transition-colors leading-tight truncate">
               {mentor?.name}
             </h4>
             {/* Expertise tag replacing college name */}
             <div className="mt-1 flex items-center gap-1.5">
-              <span className="font-mono text-[11px] font-semibold text-[#FFA057] bg-[#FF6B00]/10 border border-[#FF6B00]/25 px-2 py-0.5 rounded-md truncate max-w-full inline-block">
+              <span className="font-mono text-[11px] font-semibold text-[#0859D4] bg-[#0859D4]/10 border border-[#0859D4]/20 px-2 py-0.5 rounded-md truncate max-w-full inline-block">
                 {mentor?.expertise || 'Domain Lead'}
               </span>
             </div>
@@ -87,7 +87,7 @@ export function MentorCard({ mentor, className = '' }) {
         </div>
 
         {/* Clean concise bio */}
-        <p className="text-xs text-zinc-400 leading-relaxed mb-4 line-clamp-2">
+        <p className="text-xs text-[#6E6E73] leading-relaxed mb-4 line-clamp-2">
           {mentor?.bio}
         </p>
 
@@ -96,7 +96,7 @@ export function MentorCard({ mentor, className = '' }) {
           {mentor?.skills?.slice(0, 3).map((skill) => (
             <span
               key={skill}
-              className="font-mono text-[10px] font-medium bg-white/[0.04] text-zinc-300 px-2 py-0.5 rounded-md border border-white/10 group-hover:border-[#FF6B00]/25 transition-colors"
+              className="font-mono text-[10px] font-medium bg-[#F5F5F7] text-[#424242] px-2 py-0.5 rounded-md border border-black/[0.06] group-hover:border-[#0859D4]/25 transition-colors"
             >
               {skill}
             </span>
@@ -105,14 +105,14 @@ export function MentorCard({ mentor, className = '' }) {
       </div>
 
       {/* Footer Metrics & Follow Action */}
-      <div className="pt-3 border-t border-white/[0.07] flex items-center justify-between">
-        <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
-          <span className="flex items-center gap-1 font-bold text-zinc-100">
+      <div className="pt-3 border-t border-black/[0.08] flex items-center justify-between">
+        <div className="flex items-center gap-2 font-mono text-xs text-[#6E6E73]">
+          <span className="flex items-center gap-1 font-bold text-[#1D1D1F]">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
             <span>{mentor?.rating}</span>
           </span>
-          <span className="text-zinc-600">•</span>
-          <span className="text-zinc-400 text-[11px]">
+          <span className="text-black/25">•</span>
+          <span className="text-[#6E6E73] text-[11px]">
             {(mentor?.followers + (isFollowed ? 1 : 0)).toLocaleString()} learners
           </span>
         </div>
@@ -124,13 +124,13 @@ export function MentorCard({ mentor, className = '' }) {
           onClick={handleFollowToggle}
           className={`text-xs px-3 py-1 rounded-full font-heading font-semibold transition-all flex items-center gap-1 cursor-pointer select-none ${
             isFollowed
-              ? 'bg-zinc-800/90 border border-white/20 text-zinc-200 hover:border-white/40'
-              : 'bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white hover:from-[#ff7a1a] hover:to-[#ffa05c] shadow-[0_0_14px_rgba(255,107,0,0.3)]'
+              ? 'bg-[#F5F5F7] border border-black/15 text-[#1D1D1F] hover:border-black/30'
+              : 'bg-gradient-to-r from-[#0859D4] to-[#1A59F9] text-white shadow-[0_4px_12px_rgba(8,89,212,0.25)]'
           }`}
         >
           {isFollowed ? (
             <>
-              <Check className="w-3 h-3 text-emerald-400" />
+              <Check className="w-3 h-3 text-emerald-600" />
               <span>Following</span>
             </>
           ) : (

@@ -651,8 +651,14 @@ export function ShapeGrid({
       if (!state.raf && state.alive && state.visible) state.raf = requestAnimationFrame(frame);
     };
 
+    let cachedRect = null;
+    const updateRect = () => {
+      cachedRect = container.getBoundingClientRect();
+    };
+
     const pointFrom = event => {
-      const rect = container.getBoundingClientRect();
+      const rect = cachedRect || container.getBoundingClientRect();
+      cachedRect = rect;
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
       if (x < 0 || y < 0 || x > rect.width || y > rect.height) return null;
@@ -697,6 +703,7 @@ export function ShapeGrid({
     };
 
     const resizeObserver = new ResizeObserver(() => {
+      updateRect();
       resize();
       draw();
       wake();
@@ -705,10 +712,14 @@ export function ShapeGrid({
 
     const visibility = new IntersectionObserver(entries => {
       state.visible = entries.some(entry => entry.isIntersecting);
-      if (state.visible) wake();
+      if (state.visible) {
+        updateRect();
+        wake();
+      }
     });
     visibility.observe(container);
 
+    window.addEventListener('scroll', updateRect, { passive: true });
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerdown', onDown, { passive: true });
     document.documentElement.addEventListener('pointerleave', onLeave);
@@ -716,12 +727,14 @@ export function ShapeGrid({
 
     engineRef.current = {
       redraw: () => {
+        updateRect();
         resize();
         draw();
         wake();
       }
     };
 
+    updateRect();
     resize();
     wake();
 
@@ -730,6 +743,7 @@ export function ShapeGrid({
       cancelAnimationFrame(state.raf);
       resizeObserver.disconnect();
       visibility.disconnect();
+      window.removeEventListener('scroll', updateRect);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerdown', onDown);
       document.documentElement.removeEventListener('pointerleave', onLeave);
@@ -740,7 +754,31 @@ export function ShapeGrid({
 
   useEffect(() => {
     engineRef.current?.redraw();
-  });
+  }, [
+    shape,
+    cellSize,
+    lineWidth,
+    direction,
+    speed,
+    lineColor,
+    hoverColor,
+    hoverFillColor,
+    fillOpacity,
+    rainbow,
+    tiltX,
+    tiltY,
+    radius,
+    trail,
+    glow,
+    twinkle,
+    fade,
+    clickCascade,
+    intro,
+    opacity,
+    backgroundColor,
+    paused,
+    dpr
+  ]);
 
   const mask = fadeMask(clamp(fade, 0, 1));
 

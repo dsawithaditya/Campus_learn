@@ -6,30 +6,30 @@ export function AccordionItem({ title, subtitle, duration, children, defaultOpen
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border border-border dark:border-border-dark rounded-md overflow-hidden bg-surface dark:bg-surface-dark mb-3 transition-colors">
+    <div className="border border-black/[0.08] rounded-xl overflow-hidden bg-white mb-3 transition-colors shadow-sm">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-5 py-4 text-left font-heading text-[15px] sm:text-[16px] font-semibold text-text dark:text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors select-none"
+        className="w-full flex items-center justify-between px-5 py-4 text-left font-heading text-[15px] sm:text-[16px] font-semibold text-[#1D1D1F] hover:bg-[#F5F5F7]/70 transition-colors select-none cursor-pointer"
         aria-expanded={isOpen}
       >
         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
           <span>{title}</span>
           {subtitle && (
-            <span className="text-xs font-normal text-muted dark:text-muted-dark">
+            <span className="text-xs font-normal text-[#6E6E73]">
               {subtitle}
             </span>
           )}
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {duration && (
-            <span className="text-xs text-muted dark:text-muted-dark font-body">{duration}</span>
+            <span className="text-xs text-[#6E6E73] font-body">{duration}</span>
           )}
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
           >
-            <ChevronDown className="w-4 h-4 text-muted dark:text-muted-dark" strokeWidth={1.75} />
+            <ChevronDown className="w-4 h-4 text-[#6E6E73]" strokeWidth={1.75} />
           </motion.div>
         </div>
       </button>
@@ -41,9 +41,9 @@ export function AccordionItem({ title, subtitle, duration, children, defaultOpen
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-border/60 dark:border-border-dark/60"
+            className="overflow-hidden border-t border-black/[0.08]"
           >
-            <div className="px-5 py-4 text-sm text-text/80 dark:text-text-dark/80 bg-slate-50/50 dark:bg-slate-800/20">
+            <div className="px-5 py-4 text-sm text-[#424242] bg-[#F9F9FB]">
               {children}
             </div>
           </motion.div>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" fill="none">
+  <defs>
+    <linearGradient id="c2-bg" x1="0" y1="0" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F7F9FC"/>
+      <stop offset="100%" stop-color="#EBF1FA"/>
+    </linearGradient>
+    <radialGradient id="c2-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#0859D4" stop-opacity="0.14"/>
+      <stop offset="65%" stop-color="#0859D4" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#0859D4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="c2-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" stroke="rgba(29,29,31,0.045)" stroke-width="1"/>
+    </pattern>
+    <filter id="c2-shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1D1D1F" flood-opacity="0.09"/>
+    </filter>
+    <filter id="c2-soft" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0859D4" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#c2-bg)"/>
+  <rect width="800" height="500" fill="url(#c2-grid)"/>
+  <rect width="800" height="500" fill="url(#c2-glow)"/>
+    <g filter="url(#c2-shadow)">
+      <rect x="135" y="76" width="530" height="348" rx="26" fill="#FFFFFF" stroke="rgba(29,29,31,0.08)" stroke-width="1.5"/>
+    </g>
+    <g stroke="rgba(29,29,31,0.14)" stroke-width="2.4" stroke-linecap="round">
+      <line x1="400" y1="148" x2="275" y2="238"/>
+      <line x1="400" y1="148" x2="525" y2="238"/>
+      <line x1="275" y1="238" x2="215" y2="338"/>
+      <line x1="275" y1="238" x2="335" y2="338"/>
+      <line x1="525" y1="238" x2="465" y2="338"/>
+      <line x1="525" y1="238" x2="585" y2="338"/>
+    </g>
+    <path d="M400 148 L275 238 L335 338 L465 338 L525 238" stroke="#0859D4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g filter="url(#c2-soft)">
+      <circle cx="400" cy="148" r="28" fill="#0859D4"/>
+      <circle cx="275" cy="238" r="24" fill="#FFFFFF" stroke="#0859D4" stroke-width="4"/>
+      <circle cx="525" cy="238" r="24" fill="#FFFFFF" stroke="#0859D4" stroke-width="4"/>
+      <circle cx="215" cy="338" r="20" fill="#F5F5F7" stroke="rgba(29,29,31,0.18)" stroke-width="2.5"/>
+      <circle cx="335" cy="338" r="22" fill="#0859D4"/>
+      <circle cx="465" cy="338" r="22" fill="#1A59F9"/>
+      <circle cx="585" cy="338" r="20" fill="#F5F5F7" stroke="rgba(29,29,31,0.18)" stroke-width="2.5"/>
+    </g>
+    <circle cx="400" cy="148" r="8" fill="#FFFFFF"/>
+    <circle cx="335" cy="338" r="7" fill="#FFFFFF"/>
+    <circle cx="465" cy="338" r="7" fill="#FFFFFF"/>
+  </svg>

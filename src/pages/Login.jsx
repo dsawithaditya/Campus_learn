@@ -70,22 +70,22 @@ export default function Login() {
 
       {/* Left Column: Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8 glass-card p-8 rounded-2xl border border-border/80 dark:border-border-dark/80 shadow-lift">
+        <div className="w-full max-w-md space-y-8 glass-card p-8 rounded-2xl border border-black/[0.08] shadow-[0_20px_50px_rgba(29,29,31,0.08)]">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-orange-400 mb-3">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0859D4] mb-3">
               <GraduationCap className="w-4 h-4" />
               <span>Campus Sign In</span>
             </div>
-            <h1 className="font-heading font-extrabold text-3xl text-text dark:text-text-dark">
+            <h1 className="font-heading font-extrabold text-3xl text-[#1D1D1F]">
               Welcome back
             </h1>
-            <p className="text-sm text-muted dark:text-muted-dark mt-2">
+            <p className="text-sm text-[#6E6E73] mt-2">
               Log in to continue learning and connect with peer mentors.
             </p>
           </div>
 
           {error && (
-            <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-md text-xs text-rose-400 flex items-center gap-2">
+            <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-md text-xs text-rose-700 flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -95,13 +95,13 @@ export default function Login() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="p-8 text-center bg-emerald-500/10 border border-emerald-500/30 rounded-lg space-y-3"
+              className="p-8 text-center bg-emerald-50 border border-emerald-200 rounded-lg space-y-3"
             >
-              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" strokeWidth={2} />
-              <h3 className="font-heading font-bold text-lg text-emerald-300">
+              <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" strokeWidth={2} />
+              <h3 className="font-heading font-bold text-lg text-emerald-800">
                 Logged in successfully!
               </h3>
-              <p className="text-xs text-emerald-400/90">
+              <p className="text-xs text-emerald-700">
                 Redirecting to your student dashboard...
               </p>
             </motion.div>
@@ -109,7 +109,7 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* College Email */}
               <div>
-                <label htmlFor="login-email" className="block text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider mb-1.5">
+                <label htmlFor="login-email" className="block text-xs font-semibold text-[#1D1D1F] uppercase tracking-wider mb-1.5">
                   College Email (.edu or .ac.in)
                 </label>
                 <input
@@ -121,16 +121,16 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@college.edu or name@iitb.ac.in"
-                  className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500 transition-colors"
+                  className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] transition-colors"
                 />
                 {isEmailDirty && !isEmailValid && (
-                  <p className="text-[11px] text-amber-500 mt-1 flex items-center gap-1">
+                  <p className="text-[11px] text-amber-600 mt-1 flex items-center gap-1">
                     <AlertCircle className="w-3 h-3" />
                     Must be a college email ending with .edu or .ac.in
                   </p>
                 )}
                 {isEmailDirty && isEmailValid && (
-                  <p className="text-[11px] text-emerald-500 mt-1 flex items-center gap-1">
+                  <p className="text-[11px] text-emerald-600 mt-1 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" />
                     Valid campus domain detected
                   </p>
@@ -140,13 +140,13 @@ export default function Login() {
               {/* Password */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label htmlFor="login-password" className="text-xs font-semibold text-text dark:text-text-dark uppercase tracking-wider">
+                  <label htmlFor="login-password" className="text-xs font-semibold text-[#1D1D1F] uppercase tracking-wider">
                     Password
                   </label>
                   <button
                     type="button"
                     onClick={() => addToast('Password reset link sent to your college email if registered.', 'info')}
-                    className="text-xs text-orange-400 hover:underline bg-transparent border-none p-0 cursor-pointer"
+                    className="text-xs text-[#0859D4] hover:underline bg-transparent border-none p-0 cursor-pointer"
                   >
                     Forgot password?
                   </button>
@@ -161,12 +161,12 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3.5 py-2.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-md text-sm text-text dark:text-text-dark outline-none focus:border-orange-500 pr-10 transition-colors"
+                    className="w-full px-3.5 py-2.5 bg-[#F5F5F7] border border-black/[0.08] rounded-md text-sm text-[#1D1D1F] outline-none focus:bg-white focus:border-[#0859D4] pr-10 transition-colors"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-text cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6E6E73] hover:text-[#1D1D1F] cursor-pointer"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -187,14 +187,14 @@ export default function Login() {
               <button
                 type="button"
                 onClick={handleDemoLogin}
-                className="w-full text-center text-xs text-orange-400 hover:text-orange-300 hover:underline font-medium py-1 cursor-pointer"
+                className="w-full text-center text-xs text-[#0859D4] hover:text-[#1A59F9] hover:underline font-medium py-1 cursor-pointer"
               >
                 Auto-fill demo student credentials
               </button>
 
-              <div className="text-center text-xs text-muted dark:text-muted-dark pt-2">
+              <div className="text-center text-xs text-[#6E6E73] pt-2">
                 Don't have a Campus Learn account yet?{' '}
-                <Link to="/signup" className="font-semibold text-orange-400 hover:underline">
+                <Link to="/signup" className="font-semibold text-[#0859D4] hover:underline">
                   Sign up here
                 </Link>
               </div>
@@ -204,17 +204,17 @@ export default function Login() {
       </div>
 
       {/* Right Column: Gradient Art (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 cta-gradient p-12 items-center justify-center relative overflow-hidden text-white">
+      <div className="hidden lg:flex lg:w-1/2 cta-gradient p-12 items-center justify-center relative overflow-hidden text-[#1D1D1F]">
         <div className="max-w-md space-y-6 z-10">
-          <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-            <GraduationCap className="w-6 h-6 text-white" />
+          <div className="w-12 h-12 rounded-xl bg-white shadow-soft flex items-center justify-center border border-black/[0.08]">
+            <GraduationCap className="w-6 h-6 text-[#0859D4]" />
           </div>
-          <h2 className="font-heading font-extrabold text-3xl sm:text-4xl leading-tight">
+          <h2 className="font-heading font-extrabold text-3xl sm:text-4xl leading-tight text-[#1D1D1F]">
             "Everything I know about web dev and hackathons was passed down by a campus senior."
           </h2>
           <div>
-            <p className="font-bold text-base">Rohan Deshmukh</p>
-            <p className="text-xs text-white/70">4th year CSE • IIT Bombay</p>
+            <p className="font-bold text-base text-[#1D1D1F]">Rohan Deshmukh</p>
+            <p className="text-xs text-[#6E6E73]">4th year CSE • IIT Bombay</p>
           </div>
         </div>
       </div>

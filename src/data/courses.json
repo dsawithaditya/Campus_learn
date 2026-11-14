@@ -5,7 +5,7 @@
     "slug": "full-stack-web-dev-react-supabase",
     "categoryId": "tech",
     "mentorId": "m1",
-    "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/react-supabase.svg",
     "shortDescription": "Build production-ready apps with React, Tailwind CSS, authentication and real-time database.",
     "description": "Master modern full-stack web development through hands-on campus projects. From setting up React 18 with Vite to designing PostgreSQL schemas and implementing row-level security on Supabase, this course gives you the exact skills top tech companies and hackathon juries look for.",
     "level": "Intermediate",
@@ -15,7 +15,12 @@
     "reviewsCount": 340,
     "studentsCount": 2450,
     "price": "Free",
-    "tags": ["React", "JavaScript", "Supabase", "Tailwind"],
+    "tags": [
+      "React",
+      "JavaScript",
+      "Supabase",
+      "Tailwind"
+    ],
     "learnPoints": [
       "Modern React 18 patterns, custom hooks, and state management",
       "Setting up Supabase auth, relational tables, and row-level security",
@@ -26,24 +31,48 @@
       {
         "title": "Module 1: React 18 Fundamentals & Tooling",
         "lessons": [
-          { "title": "Vite setup, JSX nuances and modern component tree", "duration": "22 min" },
-          { "title": "State, hooks and component lifecycle deep dive", "duration": "28 min" },
-          { "title": "Tailwind CSS architecture & responsive layouts", "duration": "35 min" }
+          {
+            "title": "Vite setup, JSX nuances and modern component tree",
+            "duration": "22 min"
+          },
+          {
+            "title": "State, hooks and component lifecycle deep dive",
+            "duration": "28 min"
+          },
+          {
+            "title": "Tailwind CSS architecture & responsive layouts",
+            "duration": "35 min"
+          }
         ]
       },
       {
         "title": "Module 2: Supabase Integration & Auth",
         "lessons": [
-          { "title": "Creating projects, table schemas and foreign keys", "duration": "30 min" },
-          { "title": "Student authentication flow with JWTs and cookies", "duration": "40 min" },
-          { "title": "Realtime subscriptions and live state updates", "duration": "25 min" }
+          {
+            "title": "Creating projects, table schemas and foreign keys",
+            "duration": "30 min"
+          },
+          {
+            "title": "Student authentication flow with JWTs and cookies",
+            "duration": "40 min"
+          },
+          {
+            "title": "Realtime subscriptions and live state updates",
+            "duration": "25 min"
+          }
         ]
       },
       {
         "title": "Module 3: Campus Capstone Project",
         "lessons": [
-          { "title": "Designing a campus lost-and-found portal", "duration": "45 min" },
-          { "title": "Production deployment and performance optimization", "duration": "30 min" }
+          {
+            "title": "Designing a campus lost-and-found portal",
+            "duration": "45 min"
+          },
+          {
+            "title": "Production deployment and performance optimization",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -55,7 +84,7 @@
     "slug": "dsa-cpp-placements",
     "categoryId": "tech",
     "mentorId": "m1",
-    "thumbnail": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/dsa-cpp.svg",
     "shortDescription": "Crush on-campus placement tests with problem-solving patterns in Trees, Graphs and DP.",
     "description": "Tailored specifically for Indian engineering college placement seasons. Learn how to break down complex online assessment problems, optimize time-space complexity, and master dynamic programming and graph algorithms tested by Microsoft, Google, and Amazon.",
     "level": "Advanced",
@@ -65,7 +94,12 @@
     "reviewsCount": 512,
     "studentsCount": 3890,
     "price": "Free",
-    "tags": ["C++", "DSA", "LeetCode", "Placements"],
+    "tags": [
+      "C++",
+      "DSA",
+      "LeetCode",
+      "Placements"
+    ],
     "learnPoints": [
       "Master recurrence relations and top-down vs bottom-up Dynamic Programming",
       "Shortest path algorithms: Dijkstra, Bellman-Ford, and topological sort",
@@ -76,22 +110,40 @@
       {
         "title": "Module 1: Advanced Arrays, Two Pointers & Slidings Windows",
         "lessons": [
-          { "title": "Subarray problems and prefix sum patterns", "duration": "35 min" },
-          { "title": "Monotonic stacks and queue applications", "duration": "40 min" }
+          {
+            "title": "Subarray problems and prefix sum patterns",
+            "duration": "35 min"
+          },
+          {
+            "title": "Monotonic stacks and queue applications",
+            "duration": "40 min"
+          }
         ]
       },
       {
         "title": "Module 2: Graph Theory for Online Assessments",
         "lessons": [
-          { "title": "BFS & DFS traversal tricks and cycle detection", "duration": "45 min" },
-          { "title": "Disjoint Set Union (DSU) with path compression", "duration": "38 min" }
+          {
+            "title": "BFS & DFS traversal tricks and cycle detection",
+            "duration": "45 min"
+          },
+          {
+            "title": "Disjoint Set Union (DSU) with path compression",
+            "duration": "38 min"
+          }
         ]
       },
       {
         "title": "Module 3: Dynamic Programming Patterns",
         "lessons": [
-          { "title": "Knapsack variants and partition problems", "duration": "50 min" },
-          { "title": "DP on Trees and digit DP fundamentals", "duration": "45 min" }
+          {
+            "title": "Knapsack variants and partition problems",
+            "duration": "50 min"
+          },
+          {
+            "title": "DP on Trees and digit DP fundamentals",
+            "duration": "45 min"
+          }
         ]
       }
     ],
@@ -103,7 +155,7 @@
     "slug": "nextjs-ai-systems-hackathons",
     "categoryId": "tech",
     "mentorId": "m9",
-    "thumbnail": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/nextjs-ai.svg",
     "shortDescription": "Ship winning hackathon prototypes with Server Components, streaming LLMs and vector search.",
     "description": "Designed for 36-hour weekend sprint hackathons like Smart India Hackathon and HackCBS. Learn how to rapidly prototype AI-powered web applications using Next.js App Router, Gemini and OpenAI APIs, and vector embeddings in LanceDB.",
     "level": "Intermediate",
@@ -113,7 +165,12 @@
     "reviewsCount": 210,
     "studentsCount": 1640,
     "price": "Free",
-    "tags": ["Next.js", "AI", "TypeScript", "Hackathons"],
+    "tags": [
+      "Next.js",
+      "AI",
+      "TypeScript",
+      "Hackathons"
+    ],
     "learnPoints": [
       "Next.js 14/15 App Router, Server Actions and Server Components",
       "Streaming AI responses and tool-calling with AI SDKs",
@@ -124,15 +181,27 @@
       {
         "title": "Module 1: Next.js Fast-Track Architecture",
         "lessons": [
-          { "title": "App router mental model and data fetching", "duration": "25 min" },
-          { "title": "Server actions for seamless form handling", "duration": "30 min" }
+          {
+            "title": "App router mental model and data fetching",
+            "duration": "25 min"
+          },
+          {
+            "title": "Server actions for seamless form handling",
+            "duration": "30 min"
+          }
         ]
       },
       {
         "title": "Module 2: Generative AI & Streaming UI",
         "lessons": [
-          { "title": "Hooking up LLM streaming endpoints", "duration": "35 min" },
-          { "title": "Implementing custom vector search in minutes", "duration": "40 min" }
+          {
+            "title": "Hooking up LLM streaming endpoints",
+            "duration": "35 min"
+          },
+          {
+            "title": "Implementing custom vector search in minutes",
+            "duration": "40 min"
+          }
         ]
       }
     ],
@@ -144,7 +213,7 @@
     "slug": "hindustani-classical-riyaz-essentials",
     "categoryId": "singing",
     "mentorId": "m2",
-    "thumbnail": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/classical-vocals.svg",
     "shortDescription": "Daily 20-minute riyaz routine for pitch stability, breath control, and swar perfection.",
     "description": "Unlock accurate intonation and vocal endurance without straining your vocal cords. This course translates centuries of Hindustani classical tradition into a practical morning riyaz workout suitable for busy college students juggling classes.",
     "level": "Beginner",
@@ -154,7 +223,12 @@
     "reviewsCount": 180,
     "studentsCount": 1280,
     "price": "Free",
-    "tags": ["Classical", "Swar", "Vocal Riyaz", "Pitch"],
+    "tags": [
+      "Classical",
+      "Swar",
+      "Vocal Riyaz",
+      "Pitch"
+    ],
     "learnPoints": [
       "Diaphragmatic breathing techniques to sustain long sur notes",
       "Morning Kharaj riyaz to expand lower register warm-ups",
@@ -165,15 +239,27 @@
       {
         "title": "Module 1: Breath & Pitch Alignment",
         "lessons": [
-          { "title": "Posture, jaw release, and diaphragmatic breathing", "duration": "18 min" },
-          { "title": "Sa Sadhana: Sustaining pure pitch with Tanpura", "duration": "24 min" }
+          {
+            "title": "Posture, jaw release, and diaphragmatic breathing",
+            "duration": "18 min"
+          },
+          {
+            "title": "Sa Sadhana: Sustaining pure pitch with Tanpura",
+            "duration": "24 min"
+          }
         ]
       },
       {
         "title": "Module 2: Alankars & Agility Drills",
         "lessons": [
-          { "title": "Fundamental shuddha swar alankars (1-10)", "duration": "30 min" },
-          { "title": "Speed ladder drills: Vilambit to Drut", "duration": "28 min" }
+          {
+            "title": "Fundamental shuddha swar alankars (1-10)",
+            "duration": "30 min"
+          },
+          {
+            "title": "Speed ladder drills: Vilambit to Drut",
+            "duration": "28 min"
+          }
         ]
       }
     ],
@@ -185,7 +271,7 @@
     "slug": "western-pop-indie-vocals",
     "categoryId": "singing",
     "mentorId": "m2",
-    "thumbnail": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/indie-vocals.svg",
     "shortDescription": "Belting, mix voice, vibrato control and microphoning for acoustic and band gigs.",
     "description": "Perform your favorite indie and pop covers with confidence. Discover how to transition smoothly between chest voice and head voice, add natural vocal fry and vibrato, and use stage microphones without feedback.",
     "level": "Intermediate",
@@ -195,7 +281,12 @@
     "reviewsCount": 145,
     "studentsCount": 940,
     "price": "Free",
-    "tags": ["Pop Vocals", "Mix Voice", "Stage Presence", "Acoustic"],
+    "tags": [
+      "Pop Vocals",
+      "Mix Voice",
+      "Stage Presence",
+      "Acoustic"
+    ],
     "learnPoints": [
       "Navigating the vocal bridge (passaggio) without voice cracking",
       "Dynamic mic technique for explosive chorus belting",
@@ -206,15 +297,27 @@
       {
         "title": "Module 1: The Mixed Voice Mechanics",
         "lessons": [
-          { "title": "Chest voice vs head voice blending", "duration": "22 min" },
-          { "title": "Vowel modification for high notes", "duration": "26 min" }
+          {
+            "title": "Chest voice vs head voice blending",
+            "duration": "22 min"
+          },
+          {
+            "title": "Vowel modification for high notes",
+            "duration": "26 min"
+          }
         ]
       },
       {
         "title": "Module 2: Acoustic Performance Artistry",
         "lessons": [
-          { "title": "Microphone proximity and stage dynamics", "duration": "20 min" },
-          { "title": "Audition preparation and stage fright tactics", "duration": "32 min" }
+          {
+            "title": "Microphone proximity and stage dynamics",
+            "duration": "20 min"
+          },
+          {
+            "title": "Audition preparation and stage fright tactics",
+            "duration": "32 min"
+          }
         ]
       }
     ],
@@ -226,7 +329,7 @@
     "slug": "bollywood-semi-classical-playback",
     "categoryId": "singing",
     "mentorId": "m2",
-    "thumbnail": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/playback-vocals.svg",
     "shortDescription": "Expressions, murkis, and soulful dynamics for iconic Bollywood melodies.",
     "description": "Learn the nuances of playback singing: emotional delivery, subtle gamaks, meend (glides), and crisp diction that turns simple lyrics into goosebumps-inducing musical moments.",
     "level": "Intermediate",
@@ -236,7 +339,12 @@
     "reviewsCount": 98,
     "studentsCount": 810,
     "price": "Free",
-    "tags": ["Bollywood", "Playback", "Murki", "Emotions"],
+    "tags": [
+      "Bollywood",
+      "Playback",
+      "Murki",
+      "Emotions"
+    ],
     "learnPoints": [
       "Singing with conversational warmth and emotion",
       "Ornamentation: Murkis, Khatkas, and Meend transitions",
@@ -247,8 +355,14 @@
       {
         "title": "Module 1: Vocal Expression & Nuance",
         "lessons": [
-          { "title": "Breath dynamics and emotional storytelling", "duration": "25 min" },
-          { "title": "Executing fast murkis with precision", "duration": "30 min" }
+          {
+            "title": "Breath dynamics and emotional storytelling",
+            "duration": "25 min"
+          },
+          {
+            "title": "Executing fast murkis with precision",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -260,7 +374,7 @@
     "slug": "fl-studio-lofi-beats",
     "categoryId": "music",
     "mentorId": "m3",
-    "thumbnail": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/fl-lofi.svg",
     "shortDescription": "Produce nostalgic, relaxed beats on your laptop with drums, chords, and tape textures.",
     "description": "Turn your late-night hostel thoughts into relaxing chillhop tracks. Learn FL Studio 21 from scratch: drum programming with swing, jazz chord voicings, sidechain compression, and vinyl tape saturation without buying expensive gear.",
     "level": "Beginner",
@@ -270,7 +384,12 @@
     "reviewsCount": 390,
     "studentsCount": 2180,
     "price": "Free",
-    "tags": ["FL Studio", "Beat Making", "Lo-Fi", "Music Production"],
+    "tags": [
+      "FL Studio",
+      "Beat Making",
+      "Lo-Fi",
+      "Music Production"
+    ],
     "learnPoints": [
       "Navigating FL Studio Channel Rack, Piano Roll and Mixer",
       "Programming boom-bap drum patterns with human swing",
@@ -281,15 +400,27 @@
       {
         "title": "Module 1: The FL Studio Interface & Workflow",
         "lessons": [
-          { "title": "Browser, pattern selector and tempo configuration", "duration": "20 min" },
-          { "title": "Piano roll shortcuts for rapid MIDI sketching", "duration": "25 min" }
+          {
+            "title": "Browser, pattern selector and tempo configuration",
+            "duration": "20 min"
+          },
+          {
+            "title": "Piano roll shortcuts for rapid MIDI sketching",
+            "duration": "25 min"
+          }
         ]
       },
       {
         "title": "Module 2: Crafting the Lo-Fi Vibe",
         "lessons": [
-          { "title": "Layering Rhodes pianos and dusty guitar riffs", "duration": "35 min" },
-          { "title": "Mixing bass with kick via sidechain compression", "duration": "30 min" }
+          {
+            "title": "Layering Rhodes pianos and dusty guitar riffs",
+            "duration": "35 min"
+          },
+          {
+            "title": "Mixing bass with kick via sidechain compression",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -301,7 +432,7 @@
     "slug": "campus-guitar-chords-strumming",
     "categoryId": "music",
     "mentorId": "m3",
-    "thumbnail": "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/guitar-chords.svg",
     "shortDescription": "Master barre chords, fingerpicking, and campfire songs to lead hostel jam sessions.",
     "description": "Never struggle with buzzing F-chords again. A pragmatic guide for college guitarists who want to play along with any song by ear, switch chords smoothly, and master rhythmic strumming patterns.",
     "level": "Beginner",
@@ -311,7 +442,12 @@
     "reviewsCount": 165,
     "studentsCount": 1420,
     "price": "Free",
-    "tags": ["Guitar", "Strumming", "Fingerstyle", "Jamming"],
+    "tags": [
+      "Guitar",
+      "Strumming",
+      "Fingerstyle",
+      "Jamming"
+    ],
     "learnPoints": [
       "Seamless chord transitions without hesitating between bars",
       "Rhythmic muting (chugging) and 4/4 strumming variations",
@@ -322,8 +458,14 @@
       {
         "title": "Module 1: Left Hand Ergonomics & Transitions",
         "lessons": [
-          { "title": "Muscle memory for open chords and muscle relaxation", "duration": "24 min" },
-          { "title": "The secret to pain-free barre chords (F and Bm)", "duration": "30 min" }
+          {
+            "title": "Muscle memory for open chords and muscle relaxation",
+            "duration": "24 min"
+          },
+          {
+            "title": "The secret to pain-free barre chords (F and Bm)",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -335,7 +477,7 @@
     "slug": "audio-mixing-mastering-budget-headphones",
     "categoryId": "music",
     "mentorId": "m3",
-    "thumbnail": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/audio-mixing.svg",
     "shortDescription": "Equalization, compression, stereo widening and loudness standards for Spotify.",
     "description": "You don't need a ₹10 Lakh sound studio to get clean, punchy mixes. Learn how to mix tracks on standard studio headphones using reference tracks, frequency carving, and limiter settings that translate anywhere.",
     "level": "Advanced",
@@ -345,7 +487,12 @@
     "reviewsCount": 215,
     "studentsCount": 1150,
     "price": "Free",
-    "tags": ["Mixing", "Mastering", "EQ", "Compression"],
+    "tags": [
+      "Mixing",
+      "Mastering",
+      "EQ",
+      "Compression"
+    ],
     "learnPoints": [
       "Corrective EQ to remove mud and harsh resonant peaks",
       "Multiband compression to tame aggressive transients",
@@ -356,8 +503,14 @@
       {
         "title": "Module 1: The Mix Foundation",
         "lessons": [
-          { "title": "Gain staging and track organization", "duration": "20 min" },
-          { "title": "Low-end management: Sub bass vs kick clash", "duration": "35 min" }
+          {
+            "title": "Gain staging and track organization",
+            "duration": "20 min"
+          },
+          {
+            "title": "Low-end management: Sub bass vs kick clash",
+            "duration": "35 min"
+          }
         ]
       }
     ],
@@ -369,7 +522,7 @@
     "slug": "urban-hiphop-street-footwork",
     "categoryId": "dance",
     "mentorId": "m4",
-    "thumbnail": "https://images.unsplash.com/photo-1547153760-18fc86324498?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/hiphop-dance.svg",
     "shortDescription": "Isolations, groove fundamentals, footwork sequences and high-energy 8-count combos.",
     "description": "Whether you want to join your college dance society or level up your social dancing, this course breaks down foundational grooves (bounce, rock, roll), popping isolations, and 4 complete choreographies set to trending beats.",
     "level": "Beginner",
@@ -379,7 +532,12 @@
     "reviewsCount": 270,
     "studentsCount": 1820,
     "price": "Free",
-    "tags": ["Hip Hop", "Street Dance", "Footwork", "Grooves"],
+    "tags": [
+      "Hip Hop",
+      "Street Dance",
+      "Footwork",
+      "Grooves"
+    ],
     "learnPoints": [
       "Body isolations: Head, chest, hips, and shoulders",
       "Classic footwork: Running man, happy feet, and c-walk",
@@ -390,8 +548,14 @@
       {
         "title": "Module 1: Foundations of Street Groove",
         "lessons": [
-          { "title": "The up-bounce and down-bounce groove drill", "duration": "22 min" },
-          { "title": "Isolating chest pops and shoulder rolls", "duration": "28 min" }
+          {
+            "title": "The up-bounce and down-bounce groove drill",
+            "duration": "22 min"
+          },
+          {
+            "title": "Isolating chest pops and shoulder rolls",
+            "duration": "28 min"
+          }
         ]
       }
     ],
@@ -403,7 +567,7 @@
     "slug": "contemporary-fusion-floorwork",
     "categoryId": "dance",
     "mentorId": "m4",
-    "thumbnail": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/contemporary-dance.svg",
     "shortDescription": "Fluid weight transitions, safe floor slides, leaps, and emotional storytelling.",
     "description": "Combine the fluidity of contemporary dance with Indian semi-classical grace. Learn safe floor entries and exits, weight sharing in duets, and how to express raw themes like identity and stress through movement.",
     "level": "Intermediate",
@@ -413,7 +577,12 @@
     "reviewsCount": 130,
     "studentsCount": 970,
     "price": "Free",
-    "tags": ["Contemporary", "Floorwork", "Fusion", "Expressive"],
+    "tags": [
+      "Contemporary",
+      "Floorwork",
+      "Fusion",
+      "Expressive"
+    ],
     "learnPoints": [
       "Safe knee and hip slides without bruising",
       "Spiral turns and effortless floor descent techniques",
@@ -424,8 +593,14 @@
       {
         "title": "Module 1: Floor Mechanics & Conditioning",
         "lessons": [
-          { "title": "Core conditioning for weightless landings", "duration": "24 min" },
-          { "title": "Shoulder rolls and corkscrew floor transitions", "duration": "30 min" }
+          {
+            "title": "Core conditioning for weightless landings",
+            "duration": "24 min"
+          },
+          {
+            "title": "Shoulder rolls and corkscrew floor transitions",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -437,7 +612,7 @@
     "slug": "choreographing-winning-dance-routine",
     "categoryId": "dance",
     "mentorId": "m4",
-    "thumbnail": "https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/fest-choreography.svg",
     "shortDescription": "Formations, tempo changes, lighting coordination and team sync for big stages.",
     "description": "How do award-winning campus dance crews design routines that blow the judges away? Learn stage geography, seamless transitions between 20+ dancers, track mixing, and prop integration that wins trophies.",
     "level": "Advanced",
@@ -447,7 +622,12 @@
     "reviewsCount": 115,
     "studentsCount": 830,
     "price": "Free",
-    "tags": ["Choreography", "Stage Sync", "Crew Dynamics", "Competitions"],
+    "tags": [
+      "Choreography",
+      "Stage Sync",
+      "Crew Dynamics",
+      "Competitions"
+    ],
     "learnPoints": [
       "Stage formations: V-lines, blocks, and ripple effects",
       "Editing multi-track audio mixes with sound effects",
@@ -458,8 +638,14 @@
       {
         "title": "Module 1: Structuring a 6-Minute Set",
         "lessons": [
-          { "title": "The emotional arc and high-energy climax", "duration": "26 min" },
-          { "title": "Blocking, level changes and visual focus points", "duration": "32 min" }
+          {
+            "title": "The emotional arc and high-energy climax",
+            "duration": "26 min"
+          },
+          {
+            "title": "Blocking, level changes and visual focus points",
+            "duration": "32 min"
+          }
         ]
       }
     ],
@@ -471,7 +657,7 @@
     "slug": "basketball-tactics-court-vision",
     "categoryId": "sports",
     "mentorId": "m5",
-    "thumbnail": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/basketball-tactics.svg",
     "shortDescription": "Pick-and-roll execution, fast-break defense, handles and clutch shooting.",
     "description": "Elevate your collegiate 5v5 game. From setting rock-solid screens and executing high pick-and-rolls to full-court man-to-man pressure defense, this course breaks down winning tactical playbooks.",
     "level": "Intermediate",
@@ -481,7 +667,12 @@
     "reviewsCount": 190,
     "studentsCount": 1390,
     "price": "Free",
-    "tags": ["Basketball", "Pick and Roll", "Defense", "Inter-College"],
+    "tags": [
+      "Basketball",
+      "Pick and Roll",
+      "Defense",
+      "Inter-College"
+    ],
     "learnPoints": [
       "Mastering 3 essential pick-and-roll reads as ball handler",
       "Lockdown defensive footwork to deny baseline penetration",
@@ -492,8 +683,14 @@
       {
         "title": "Module 1: Offensive Execution & Spacing",
         "lessons": [
-          { "title": "5-out motion offense principles", "duration": "25 min" },
-          { "title": "Reading hedges, drops, and traps on ball screens", "duration": "32 min" }
+          {
+            "title": "5-out motion offense principles",
+            "duration": "25 min"
+          },
+          {
+            "title": "Reading hedges, drops, and traps on ball screens",
+            "duration": "32 min"
+          }
         ]
       }
     ],
@@ -505,7 +702,7 @@
     "slug": "hostel-calisthenics-bodyweight-fitness",
     "categoryId": "sports",
     "mentorId": "m5",
-    "thumbnail": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/calisthenics.svg",
     "shortDescription": "Build muscle and explosive power in your hostel room using pull-ups, push-ups and dips.",
     "description": "No gym membership required. Learn progressive bodyweight training that takes you from basic push-ups to muscle-ups, handstands, and pistol squats right in your hostel room or campus park.",
     "level": "Beginner",
@@ -515,7 +712,12 @@
     "reviewsCount": 240,
     "studentsCount": 1940,
     "price": "Free",
-    "tags": ["Calisthenics", "Hostel Workout", "Pushups", "Pullups"],
+    "tags": [
+      "Calisthenics",
+      "Hostel Workout",
+      "Pushups",
+      "Pullups"
+    ],
     "learnPoints": [
       "Progressive overload without gym weights",
       "Scapular health and injury-free shoulder conditioning",
@@ -526,8 +728,14 @@
       {
         "title": "Module 1: The Push & Pull Foundations",
         "lessons": [
-          { "title": "Push-up progressions: Knee to pseudo-planche", "duration": "20 min" },
-          { "title": "Pull-up ladder and negative resistance eccentrics", "duration": "28 min" }
+          {
+            "title": "Push-up progressions: Knee to pseudo-planche",
+            "duration": "20 min"
+          },
+          {
+            "title": "Pull-up ladder and negative resistance eccentrics",
+            "duration": "28 min"
+          }
         ]
       }
     ],
@@ -539,7 +747,7 @@
     "slug": "cricket-bowling-batting-mechanics",
     "categoryId": "sports",
     "mentorId": "m5",
-    "thumbnail": "https://images.unsplash.com/photo-1531415074868-036b1c57e329?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/cricket-mechanics.svg",
     "shortDescription": "Wrist seam position, yorker precision, front-foot drives and power hitting.",
     "description": "Step onto the university pitch with unmatched technique. Learn how to bowl consistent outswingers, nail deadly yorkers in death overs, and hit crisp lofted shots without losing shape.",
     "level": "Advanced",
@@ -549,7 +757,12 @@
     "reviewsCount": 155,
     "studentsCount": 1120,
     "price": "Free",
-    "tags": ["Cricket", "Fast Bowling", "Batting", "T20 Strategy"],
+    "tags": [
+      "Cricket",
+      "Fast Bowling",
+      "Batting",
+      "T20 Strategy"
+    ],
     "learnPoints": [
       "Seam presentation and wrist snap for conventional swing",
       "Bowling yorkers and slower ball variations at the death",
@@ -560,8 +773,14 @@
       {
         "title": "Module 1: Pace Bowling Biomechanics",
         "lessons": [
-          { "title": "Run-up rhythm, jump alignment and gather", "duration": "25 min" },
-          { "title": "Wrist cock and release point consistency", "duration": "30 min" }
+          {
+            "title": "Run-up rhythm, jump alignment and gather",
+            "duration": "25 min"
+          },
+          {
+            "title": "Wrist cock and release point consistency",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -573,17 +792,22 @@
     "slug": "figma-campus-startups-portfolio",
     "categoryId": "art",
     "mentorId": "m6",
-    "thumbnail": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/figma-systems.svg",
     "shortDescription": "Auto-layout, design tokens, interactive prototypes and landing pages in Figma.",
     "description": "Design sleek digital products that investors take seriously. Master auto-layout v5, component variants, variable modes for light and dark themes, and craft hireable product design case studies for off-campus internships.",
     "level": "Intermediate",
     "durationHours": 12,
     "lessonsCount": 24,
-    "rating": 5.0,
+    "rating": 5,
     "reviewsCount": 420,
     "studentsCount": 2840,
     "price": "Free",
-    "tags": ["Figma", "UI/UX", "Design Systems", "Product Design"],
+    "tags": [
+      "Figma",
+      "UI/UX",
+      "Design Systems",
+      "Product Design"
+    ],
     "learnPoints": [
       "Deep dive into nested auto-layout and responsive constraints",
       "Configuring color, typography and spacing variables",
@@ -594,15 +818,27 @@
       {
         "title": "Module 1: The Modern Figma Paradigm",
         "lessons": [
-          { "title": "Frame hierarchy and auto-layout mastery", "duration": "28 min" },
-          { "title": "Building flexible components with component properties", "duration": "35 min" }
+          {
+            "title": "Frame hierarchy and auto-layout mastery",
+            "duration": "28 min"
+          },
+          {
+            "title": "Building flexible components with component properties",
+            "duration": "35 min"
+          }
         ]
       },
       {
         "title": "Module 2: Complete Design System from Scratch",
         "lessons": [
-          { "title": "Design tokens, color semantics and typography scales", "duration": "40 min" },
-          { "title": "Prototyping realistic modal transitions and scroll states", "duration": "32 min" }
+          {
+            "title": "Design tokens, color semantics and typography scales",
+            "duration": "40 min"
+          },
+          {
+            "title": "Prototyping realistic modal transitions and scroll states",
+            "duration": "32 min"
+          }
         ]
       }
     ],
@@ -614,7 +850,7 @@
     "slug": "fest-poster-design-visual-identity",
     "categoryId": "art",
     "mentorId": "m6",
-    "thumbnail": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/poster-design.svg",
     "shortDescription": "Typography hierarchy, brutalist layouts, and print-ready graphics for social media.",
     "description": "Make your college events look world-class. Learn how to combine bold typographic hierarchies, textured overlays, retro-futuristic grids, and generate print-ready flex banners and Instagram reels covers.",
     "level": "Beginner",
@@ -624,7 +860,12 @@
     "reviewsCount": 190,
     "studentsCount": 1410,
     "price": "Free",
-    "tags": ["Graphic Design", "Posters", "Branding", "Typography"],
+    "tags": [
+      "Graphic Design",
+      "Posters",
+      "Branding",
+      "Typography"
+    ],
     "learnPoints": [
       "The rules of visual weight, hierarchy and contrast",
       "Curating font pairings: Display serif meets industrial grotesque",
@@ -635,8 +876,14 @@
       {
         "title": "Module 1: Graphic Design Fundamentals",
         "lessons": [
-          { "title": "Grid systems, rule of thirds, and negative space", "duration": "22 min" },
-          { "title": "Color theory and emotional palette creation", "duration": "26 min" }
+          {
+            "title": "Grid systems, rule of thirds, and negative space",
+            "duration": "22 min"
+          },
+          {
+            "title": "Color theory and emotional palette creation",
+            "duration": "26 min"
+          }
         ]
       }
     ],
@@ -648,7 +895,7 @@
     "slug": "digital-vector-illustration",
     "categoryId": "art",
     "mentorId": "m6",
-    "thumbnail": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/vector-art.svg",
     "shortDescription": "Character styling, pen tool curves, lighting gradients and isometric scenes.",
     "description": "Express your creativity digitally. Master vector pen tool curves, flat character illustration styles, isometric campus buildings, and dynamic lighting that pops off the screen.",
     "level": "Intermediate",
@@ -658,7 +905,12 @@
     "reviewsCount": 160,
     "studentsCount": 1050,
     "price": "Free",
-    "tags": ["Illustration", "Vector Art", "Digital Art", "Characters"],
+    "tags": [
+      "Illustration",
+      "Vector Art",
+      "Digital Art",
+      "Characters"
+    ],
     "learnPoints": [
       "Clean Bezier curve manipulation with fewer anchor points",
       "Stylizing human anatomy and expressive poses",
@@ -669,8 +921,14 @@
       {
         "title": "Module 1: Line Work & Form",
         "lessons": [
-          { "title": "Mastering the pen tool without frustration", "duration": "25 min" },
-          { "title": "Character sketching and proportion guidelines", "duration": "30 min" }
+          {
+            "title": "Mastering the pen tool without frustration",
+            "duration": "25 min"
+          },
+          {
+            "title": "Character sketching and proportion guidelines",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -682,7 +940,7 @@
     "slug": "campus-event-photography-street-portraits",
     "categoryId": "photography",
     "mentorId": "m7",
-    "thumbnail": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/event-photography.svg",
     "shortDescription": "Low-light concert shots, candid student portraits and manual camera controls.",
     "description": "Capture the raw spirit of college life. Learn how to expose properly in low-light festival concerts, capture candid human moments on the quad, and direct friends into natural portraits.",
     "level": "Beginner",
@@ -692,7 +950,12 @@
     "reviewsCount": 210,
     "studentsCount": 1530,
     "price": "Free",
-    "tags": ["Photography", "Portraits", "Street", "Manual Camera"],
+    "tags": [
+      "Photography",
+      "Portraits",
+      "Street",
+      "Manual Camera"
+    ],
     "learnPoints": [
       "The exposure triangle: Balancing ISO, shutter speed and aperture",
       "Capturing sharp action shots in dimly lit auditorium stages",
@@ -703,8 +966,14 @@
       {
         "title": "Module 1: Mastering Manual Exposure",
         "lessons": [
-          { "title": "Aperture depth-of-field and creamy bokeh", "duration": "20 min" },
-          { "title": "Freezing motion vs artistic motion blur", "duration": "24 min" }
+          {
+            "title": "Aperture depth-of-field and creamy bokeh",
+            "duration": "20 min"
+          },
+          {
+            "title": "Freezing motion vs artistic motion blur",
+            "duration": "24 min"
+          }
         ]
       }
     ],
@@ -716,7 +985,7 @@
     "slug": "cinematic-video-editing-color-grading",
     "categoryId": "photography",
     "mentorId": "m7",
-    "thumbnail": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/video-editing.svg",
     "shortDescription": "Pacing cuts, sound design, Lumetri color scopes and viral vertical video formats.",
     "description": "Edit after-movies, college vlog reels, and short films like a pro editor. Master timeline shortcuts, J and L cuts, sound effect layering, and rich cinematic color grading with Lumetri Color.",
     "level": "Intermediate",
@@ -726,7 +995,12 @@
     "reviewsCount": 275,
     "studentsCount": 1780,
     "price": "Free",
-    "tags": ["Premiere Pro", "Color Grading", "Video Editing", "Reels"],
+    "tags": [
+      "Premiere Pro",
+      "Color Grading",
+      "Video Editing",
+      "Reels"
+    ],
     "learnPoints": [
       "J and L cuts for seamless narrative transitions",
       "Reading waveform and vectorscope charts for balanced skin tones",
@@ -737,8 +1011,14 @@
       {
         "title": "Module 1: Assembly & Editorial Rhythm",
         "lessons": [
-          { "title": "Three-point editing and shortcut muscle memory", "duration": "25 min" },
-          { "title": "Cutting to beats vs cutting to emotional cues", "duration": "30 min" }
+          {
+            "title": "Three-point editing and shortcut muscle memory",
+            "duration": "25 min"
+          },
+          {
+            "title": "Cutting to beats vs cutting to emotional cues",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -750,7 +1030,7 @@
     "slug": "lightroom-color-theory-presets",
     "categoryId": "photography",
     "mentorId": "m7",
-    "thumbnail": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/lightroom-presets.svg",
     "shortDescription": "Tone curve precision, HSL color grading, split toning and signature preset styling.",
     "description": "Give your photos a recognizable visual aesthetic. Learn the mathematics of Tone Curves, calibration tricks, masking subjects with AI, and crafting consistent aesthetic presets for social media.",
     "level": "Intermediate",
@@ -760,7 +1040,12 @@
     "reviewsCount": 120,
     "studentsCount": 890,
     "price": "Free",
-    "tags": ["Lightroom", "Color Theory", "Presets", "Photo Editing"],
+    "tags": [
+      "Lightroom",
+      "Color Theory",
+      "Presets",
+      "Photo Editing"
+    ],
     "learnPoints": [
       "S-curve secrets for filmic blacks and highlight rolloff",
       "Selective masking for faces, skies and backgrounds",
@@ -771,8 +1056,14 @@
       {
         "title": "Module 1: Tone Curve & Calibration Mastery",
         "lessons": [
-          { "title": "Understanding RGB channels and linear contrast", "duration": "22 min" },
-          { "title": "Color grading wheels: Shadows, Midtones, Highlights", "duration": "28 min" }
+          {
+            "title": "Understanding RGB channels and linear contrast",
+            "duration": "22 min"
+          },
+          {
+            "title": "Color grading wheels: Shadows, Midtones, Highlights",
+            "duration": "28 min"
+          }
         ]
       }
     ],
@@ -784,7 +1075,7 @@
     "slug": "valorant-mechanics-radiant-game-sense",
     "categoryId": "gaming",
     "mentorId": "m8",
-    "thumbnail": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/valorant-tactics.svg",
     "shortDescription": "Crosshair placement, peek mechanics, utility combos, and clutch round decision-making.",
     "description": "Break out of Gold/Platinum and reach Immortal. Learn from an APAC Radiant player: crosshair placement discipline, dead-zoning, clearing angles in slices, and managing economy as an in-game leader.",
     "level": "Intermediate",
@@ -794,7 +1085,12 @@
     "reviewsCount": 380,
     "studentsCount": 2600,
     "price": "Free",
-    "tags": ["Valorant", "Esports", "Aim Training", "Game Sense"],
+    "tags": [
+      "Valorant",
+      "Esports",
+      "Aim Training",
+      "Game Sense"
+    ],
     "learnPoints": [
       "Pixel-perfect crosshair placement for every bomb site entry",
       "Counter-strafing and dead-zoning mechanics",
@@ -805,8 +1101,14 @@
       {
         "title": "Module 1: Gunplay & Movement Fundamentals",
         "lessons": [
-          { "title": "Micro-adjustments vs arm flick aiming techniques", "duration": "24 min" },
-          { "title": "Peeker's advantage and slicing the angle", "duration": "28 min" }
+          {
+            "title": "Micro-adjustments vs arm flick aiming techniques",
+            "duration": "24 min"
+          },
+          {
+            "title": "Peeker's advantage and slicing the angle",
+            "duration": "28 min"
+          }
         ]
       }
     ],
@@ -818,7 +1120,7 @@
     "slug": "collegiate-chess-tactics-endgames",
     "categoryId": "gaming",
     "mentorId": "m10",
-    "thumbnail": "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/collegiate-chess.svg",
     "shortDescription": "Positional calculation, king safety, rook endgames and reliable opening repertoires.",
     "description": "Sharpen your mind and win board points for your college team. Learn principled opening repertoires for White and Black, tactical motif recognition (skewers, decoys, deflections), and critical rook endgames.",
     "level": "Intermediate",
@@ -828,7 +1130,12 @@
     "reviewsCount": 290,
     "studentsCount": 1670,
     "price": "Free",
-    "tags": ["Chess", "Tactics", "Strategy", "Endgames"],
+    "tags": [
+      "Chess",
+      "Tactics",
+      "Strategy",
+      "Endgames"
+    ],
     "learnPoints": [
       "Calculating 3 to 5 ply lines with candidate move checklists",
       "Lucena and Philidor positions in Rook & Pawn endgames",
@@ -839,8 +1146,14 @@
       {
         "title": "Module 1: Calculation & Tactical Motifs",
         "lessons": [
-          { "title": "Identifying undefended pieces and geometric patterns", "duration": "26 min" },
-          { "title": "The art of deflection, interference and pins", "duration": "30 min" }
+          {
+            "title": "Identifying undefended pieces and geometric patterns",
+            "duration": "26 min"
+          },
+          {
+            "title": "The art of deflection, interference and pins",
+            "duration": "30 min"
+          }
         ]
       }
     ],
@@ -852,7 +1165,7 @@
     "slug": "bgmi-competitive-rotations-team-tactics",
     "categoryId": "gaming",
     "mentorId": "m8",
-    "thumbnail": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80",
+    "thumbnail": "/images/courses/bgmi-rotations.svg",
     "shortDescription": "Circle predictions, compound defense, DMR spray control and zone edge positioning.",
     "description": "Dominate college gaming championships. Master vehicle utility, zone forecasting, compound fortifying, close-range hip-fire accuracy, and strategic placement points for LAN tournaments.",
     "level": "Beginner",
@@ -862,7 +1175,12 @@
     "reviewsCount": 170,
     "studentsCount": 1480,
     "price": "Free",
-    "tags": ["BGMI", "Battle Royale", "Esports", "Mobile Gaming"],
+    "tags": [
+      "BGMI",
+      "Battle Royale",
+      "Esports",
+      "Mobile Gaming"
+    ],
     "learnPoints": [
       "Circle shifts prediction and vehicle rotation timing",
       "Defending multi-story buildings against 4-man rushes",
@@ -873,12 +1191,17 @@
       {
         "title": "Module 1: Zone Positioning & Rotations",
         "lessons": [
-          { "title": "Center circle vs zone edge playstyles", "duration": "20 min" },
-          { "title": "Vehicle prioritization and defensive parking", "duration": "25 min" }
+          {
+            "title": "Center circle vs zone edge playstyles",
+            "duration": "20 min"
+          },
+          {
+            "title": "Vehicle prioritization and defensive parking",
+            "duration": "25 min"
+          }
         ]
       }
     ],
     "createdAt": "2025-02-08"
   }
 ]
-

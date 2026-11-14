@@ -1,18 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Flame, Code2, Music, Palette, Trophy, Camera, Gamepad2, Mic2 } from 'lucide-react';
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Flame,
+  Code2,
+  Music,
+  Palette,
+  Trophy,
+  Camera,
+  Gamepad2,
+  Mic2,
+} from 'lucide-react';
 import coursesData from '../data/courses.json';
 import mentorsData from '../data/mentors.json';
 
 const DOMAIN_META = {
-  tech: { society: 'The Systems Guild', color: '#FF6B00', icon: Code2 },
-  singing: { society: 'The Vocal Conservatory', color: '#F472B6', icon: Mic2 },
-  music: { society: 'The Sonic Architects', color: '#A78BFA', icon: Music },
-  dance: { society: 'The Kinetic Crew', color: '#FB923C', icon: Flame },
-  sports: { society: 'The Athletic Vanguard', color: '#34D399', icon: Trophy },
-  art: { society: 'The Spatial Designers', color: '#FFA057', icon: Palette },
-  photography: { society: 'The Optics Collective', color: '#2DD4BF', icon: Camera },
-  gaming: { society: 'The Tactical Arena', color: '#F87171', icon: Gamepad2 },
+  tech: { society: 'The Systems Guild', color: '#0859D4', icon: Code2 },
+  singing: { society: 'The Vocal Conservatory', color: '#EE46D3', icon: Mic2 },
+  music: { society: 'The Sonic Architects', color: '#6465ED', icon: Music },
+  dance: { society: 'The Kinetic Crew', color: '#EF5533', icon: Flame },
+  sports: { society: 'The Athletic Vanguard', color: '#1BC47D', icon: Trophy },
+  art: { society: 'The Spatial Designers', color: '#EF5533', icon: Palette },
+  photography: { society: 'The Optics Collective', color: '#00B5CE', icon: Camera },
+  gaming: { society: 'The Tactical Arena', color: '#E11D48', icon: Gamepad2 },
 };
 
 /**
@@ -32,7 +44,7 @@ export function GrailSpiralDeck() {
   const tiltRef = useRef({ x: 0, y: 0 });
 
   const [activeCategory, setActiveCategory] = useState('tech');
-  const [activeCourseTitle, setActiveCourseTitle] = useState('');
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const deckItems = React.useMemo(() => {
     const raw = Array.isArray(coursesData) ? coursesData.slice(0, 11) : [];
@@ -91,9 +103,9 @@ export function GrailSpiralDeck() {
       const dt = Math.min(0.05, now - lastTime) || 0.016;
       lastTime = now;
 
-      // Auto-spin along spiral like Grail's Ne.autoSpeed
+      // Gentle auto-flow along deck
       if (!prefersReduced && !pointerRef.current.dragging) {
-        spinTargetRef.current += 0.24 * dt;
+        spinTargetRef.current += 0.14 * dt;
       }
 
       // Smooth lerp toward target spin
@@ -119,19 +131,13 @@ export function GrailSpiralDeck() {
         lastActiveIdx = centerIndex;
         lastChangeTime = nowMs;
         setActiveCategory(deckItems[centerIndex].categoryId || 'tech');
-        setActiveCourseTitle(deckItems[centerIndex].title || '');
+        setActiveIndex(centerIndex);
       }
 
-      // Time elapsed since card switch (for lens autofocus micro-blur snap)
-      const timeSinceChange = (nowMs - lastChangeTime) / 1000;
-      // Focus snap blur: quick camera lens micro-blur pulse (~0.32s duration)
-      const changeBlur = Math.max(0, (1 - timeSinceChange / 0.32) * 4.6);
-
       const isMobile = window.innerWidth < 768;
-      const radiusX = isMobile ? 170 : 330;
-      const radiusZ = isMobile ? 120 : 210;
-      const gapY = isMobile ? 18 : 28;
-      const angleStep = isMobile ? 0.62 : 0.52;
+      const radiusX = isMobile ? 225 : 345;
+      const radiusZ = isMobile ? 90 : 140;
+      const angleStep = isMobile ? 0.72 : 0.66;
 
       const baseSlot = Math.round(spin) - half;
 
@@ -142,84 +148,57 @@ export function GrailSpiralDeck() {
         if (!cardEl) continue;
 
         const n = virtualIdx - spin;
+        const distFromCenter = Math.abs(n);
         const angle = n * angleStep;
         const sinA = Math.sin(angle);
         const cosA = Math.cos(angle);
 
-        // Smooth spiral coordinates with gentle horizontal fanning
-        let x = radiusX * sinA - n * 6;
-        let y = n * gapY;
-        const z = radiusZ * cosA - Math.abs(n) * 16;
+        // Symmetrical 3-card studio fan: center card elevated, left/right neighbors arched cleanly
+        let x = radiusX * sinA;
+        let y = Math.pow(distFromCenter, 1.35) * (isMobile ? 14 : 20);
+        const z = radiusZ * (cosA - 1);
 
-        // Magnetic pull toward cursor on front-facing cards
-        const dx = ptr.x * 200 - x;
-        const dy = ptr.y * 120 - y;
-        const mag = Math.exp(-(dx * dx + dy * dy) / 32000) * 0.12;
+        // Subtle magnetic pull toward cursor on front card
+        const dx = ptr.x * 140 - x;
+        const dy = ptr.y * 90 - y;
+        const mag = Math.exp(-(dx * dx + dy * dy) / 28000) * 0.08;
         x += dx * mag;
         y += dy * mag;
 
-        // Elegant gentle yaw curve: center cards face viewer, wings curve gracefully away
-        const rotY = -sinA * 24;
-        const rotZ = -sinA * 2.8;
-        const scale = (isMobile ? 0.78 : 0.88) + Math.max(0, cosA) * 0.16;
+        const rotY = -sinA * 14;
+        const rotZ = sinA * 3.5;
+        const scale = (isMobile ? 0.86 : 0.9) + Math.max(0, cosA) * 0.1;
 
-        // Layering hierarchy: center active card has unambiguously highest z-index
-        // Using flat-stacking 2.5D prevents browser 3D polygon-intersection slicing bugs
-        const computedZIndex = Math.round(500 + cosA * 400 - Math.abs(n) * 25);
+        const computedZIndex = Math.round(500 + cosA * 400 - distFromCenter * 40);
 
-        // Distance in slot units from center
-        const distFromCenter = Math.abs(n);
-
-        // TOP THREE CARDS (center n=0, immediate left n=-1, immediate right n=+1)
-        // are properly visible in full focus (0px blur, high contrast & sharp text).
-        let depthBlur = 0;
-        let depthOpacity = 1.0;
-
-        if (distFromCenter <= 1.25) {
-          // In-focus plane for top three cards: 100% crisp, no blur!
-          depthBlur = 0;
-          depthOpacity = Math.max(0.86, 0.98 - distFromCenter * 0.1);
-        } else {
-          // Outer background cards: progressive optical depth blur and soft fade
-          const excess = distFromCenter - 1.25;
-          depthBlur = Math.min(10.0, excess * 4.6);
-          depthOpacity = Math.max(0.0, 0.68 - excess * 0.35);
-        }
-
-        // Active center card switch micro-blur pulse (only momentary on the center card for ~0.24s)
         const isCenterCard = itemIdx === centerIndex && distFromCenter < 0.5;
-        const switchBlur =
-          isCenterCard && timeSinceChange < 0.24
-            ? Math.max(0, (1 - timeSinceChange / 0.24) * 3.4)
-            : 0;
+        // Keep left, center, and right cards visible symmetrically with solid surfaces
+        const hiddenCard = cosA < 0.05 || distFromCenter > 1.75;
+        let depthOpacity = 0;
 
-        const totalBlur = depthBlur + switchBlur;
-
-        // If card is behind the spiral plane (cosA < -0.15) or far out, hide
-        if (cosA < -0.15 || distFromCenter > 2.85) {
-          depthOpacity = 0;
+        if (!hiddenCard) {
+          depthOpacity = distFromCenter <= 1.25 ? 1 : Math.max(0, 1 - (distFromCenter - 1.25) * 2.1);
         }
 
         cardEl.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${rotY.toFixed(1)}deg) rotateZ(${rotZ.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
         cardEl.style.opacity = depthOpacity.toFixed(2);
+        cardEl.style.visibility = hiddenCard ? 'hidden' : 'visible';
         cardEl.style.zIndex = String(Math.max(1, computedZIndex));
-        cardEl.style.pointerEvents = distFromCenter <= 1.25 && cosA > 0 ? 'auto' : 'none';
-        cardEl.style.filter = totalBlur > 0.08 ? `blur(${totalBlur.toFixed(2)}px)` : 'none';
+        cardEl.style.pointerEvents = distFromCenter <= 1.2 && cosA > 0.25 ? 'auto' : 'none';
 
-        // Luminous active rim glow on the focused center card
-        if (isCenterCard) {
-          const glowAlpha = Math.max(0.3, 0.8 - timeSinceChange * 1.5);
-          cardEl.style.borderColor = `rgba(255, 107, 0, ${glowAlpha.toFixed(2)})`;
-          cardEl.style.boxShadow = `0 24px 60px rgba(0,0,0,0.95), 0 0 ${(24 * (1 - Math.min(1, timeSinceChange / 0.5))).toFixed(0)}px rgba(255, 107, 0, ${(glowAlpha * 0.5).toFixed(2)})`;
-        } else if (distFromCenter <= 1.25) {
-          // The adjacent top 2 cards (left and right) have clean, crisp subtle borders
-          cardEl.style.borderColor = 'rgba(255, 255, 255, 0.16)';
-          cardEl.style.boxShadow =
-            '0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.12)';
-        } else {
-          // Outer background cards
-          cardEl.style.borderColor = 'rgba(255, 255, 255, 0.06)';
-          cardEl.style.boxShadow = '0 16px 40px rgba(0,0,0,0.85)';
+        const nextTier = hiddenCard ? 'hidden' : isCenterCard ? 'center' : 'near';
+        if (cardEl.dataset.tier !== nextTier) {
+          cardEl.dataset.tier = nextTier;
+          if (nextTier === 'hidden') {
+            cardEl.style.borderColor = 'transparent';
+            cardEl.style.boxShadow = 'none';
+          } else if (nextTier === 'center') {
+            cardEl.style.borderColor = 'rgba(8, 89, 212, 0.35)';
+            cardEl.style.boxShadow = '0 24px 52px rgba(29,29,31,0.12), 0 4px 14px rgba(8, 89, 212, 0.08)';
+          } else {
+            cardEl.style.borderColor = 'rgba(29, 29, 31, 0.08)';
+            cardEl.style.boxShadow = '0 14px 32px rgba(29,29,31,0.06)';
+          }
         }
       }
     };
@@ -252,135 +231,145 @@ export function GrailSpiralDeck() {
     pointerRef.current.dragging = false;
   };
 
+  const stepDeck = (dir) => {
+    spinTargetRef.current = Math.round(spinTargetRef.current) + dir;
+  };
+
   const activeMeta = DOMAIN_META[activeCategory] || DOMAIN_META.tech;
 
   return (
-    <div
-      ref={stageRef}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-      className="relative w-full h-[430px] sm:h-[500px] flex items-center justify-center overflow-visible select-none cursor-grab active:cursor-grabbing my-4"
-      style={{ perspective: '1300px' }}
-    >
-      {/* Dynamic Accent Ambient Glow Behind Spiral */}
+    <div className="relative w-full flex flex-col items-center my-2 select-none">
       <div
-        className="absolute w-[360px] sm:w-[520px] h-[360px] sm:h-[420px] rounded-full blur-3xl pointer-events-none transition-colors duration-700 opacity-25"
-        style={{
-          background: `radial-gradient(circle, ${activeMeta.color} 0%, #FF6B00 45%, transparent 72%)`,
-        }}
-      />
-
-      {/* Spiral Carousel Group (Flat compositing context prevents 3D polygon-intersection slicing artifacts) */}
-      <div
-        ref={groupRef}
-        className="relative w-0 h-0 flex items-center justify-center"
-        style={{ transformStyle: 'flat' }}
+        ref={stageRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+        className="relative w-full h-[390px] sm:h-[420px] flex items-center justify-center overflow-visible cursor-grab active:cursor-grabbing"
+        style={{ perspective: '1300px' }}
       >
-        {deckItems.map((item, idx) => {
-          const Icon = item.Icon;
-          return (
-            <div
-              key={item.id || idx}
-              ref={(el) => {
-                cardRefs.current[idx] = el;
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (item.slug) navigate(`/course/${item.slug}`);
-              }}
-              style={{
-                backfaceVisibility: 'hidden',
-                willChange: 'transform, opacity, filter',
-              }}
-              className="absolute -left-[135px] -top-[175px] w-[270px] h-[350px] rounded-[22px] bg-[#111116] border border-white/15 hover:border-[#FF6B00]/80 p-5 flex flex-col justify-between text-left shadow-[0_24px_60px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,255,255,0.12)] transition-colors duration-300 cursor-pointer group"
-            >
-              {/* Top Guild/Society Crest + Action Icon (Grail Quest Card Layout) */}
-              <div>
-                <div className="flex items-start justify-between mb-4">
-                  {/* Shield Crest Emblem */}
-                  <div
-                    className="w-12 h-[52px] rounded-2xl flex items-center justify-center border shadow-lg transition-transform duration-300 group-hover:scale-105"
-                    style={{
-                      backgroundColor: `${item.accent}18`,
-                      borderColor: `${item.accent}45`,
-                      boxShadow: `0 6px 20px ${item.accent}24`,
-                    }}
-                  >
-                    <Icon className="w-5 h-5" style={{ color: item.accent }} />
+        {/* Subtle Accent Studio Glow Behind Deck */}
+        <div
+          className="absolute w-[340px] sm:w-[480px] h-[320px] sm:h-[360px] rounded-full blur-3xl pointer-events-none transition-colors duration-700 opacity-12"
+          style={{
+            background: `radial-gradient(circle, ${activeMeta.color} 0%, #0859D4 45%, transparent 72%)`,
+          }}
+        />
+
+        <div
+          ref={groupRef}
+          className="relative w-0 h-0 flex items-center justify-center"
+          style={{ transformStyle: 'flat' }}
+        >
+          {deckItems.map((item, idx) => {
+            const Icon = item.Icon;
+            return (
+              <div
+                key={item.id || idx}
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (item.slug) navigate(`/course/${item.slug}`);
+                }}
+                style={{
+                  backfaceVisibility: 'hidden',
+                  willChange: 'transform, opacity',
+                }}
+                className="absolute -left-[145px] -top-[180px] w-[290px] h-[355px] rounded-[24px] bg-white border border-black/10 hover:border-[#0859D4] p-4 flex flex-col justify-between text-left transition-colors duration-300 cursor-pointer group"
+              >
+                <div>
+                  {/* Clean Studio Visual Header */}
+                  <div className="relative w-full h-[132px] rounded-2xl bg-[#F5F5F7] border border-black/[0.06] overflow-hidden mb-3.5">
+                    {item.thumbnail && (
+                      <img
+                        src={item.thumbnail}
+                        alt={item.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
+                    <div className="absolute top-2.5 left-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-black/[0.08] shadow-sm">
+                      <Icon className="w-3 h-3" style={{ color: item.accent }} />
+                      <span className="font-mono text-[10px] font-semibold text-[#1D1D1F] tracking-tight">
+                        {item.society.replace(/^The\s+/i, '')}
+                      </span>
+                    </div>
+                    <span className="absolute top-2.5 right-2.5 font-mono text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-black/[0.08] text-[#424242]">
+                      {item.level}
+                    </span>
                   </div>
 
-                  <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-zinc-300 flex items-center gap-1">
-                    <span
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ backgroundColor: item.accent }}
-                    />
-                    {item.level}
-                  </span>
+                  <h3 className="font-heading font-bold text-[17px] text-[#1D1D1F] leading-[1.2] tracking-tight group-hover:text-[#0859D4] transition-colors line-clamp-2 mb-1.5 px-0.5">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-xs text-[#6E6E73] leading-relaxed line-clamp-2 px-0.5">
+                    {item.shortDescription}
+                  </p>
                 </div>
 
-                {/* Society / Guild Subtitle */}
-                <p className="font-mono text-[11px] text-zinc-400 tracking-wide mb-1.5">
-                  {item.society}
-                </p>
-
-                {/* Bold Quest-Style Cohort Title */}
-                <h3 className="font-heading font-bold text-[19px] text-white leading-[1.12] tracking-tight group-hover:text-[#FF6B00] transition-colors line-clamp-2 mb-2.5">
-                  {item.title}
-                </h3>
-
-                {/* Concise Body Copy */}
-                <p className="text-xs text-zinc-400 leading-[1.35] line-clamp-3">
-                  {item.shortDescription}
-                </p>
-              </div>
-
-              {/* Bottom Pill Row + Motto Footer (Matching Grail's Ze card canvas) */}
-              <div className="pt-3 border-t border-white/[0.08]">
-                <div className="flex items-center justify-between mb-2.5">
-                  <div className="flex items-center gap-2">
+                {/* Minimalist Card Footer */}
+                <div className="pt-3 border-t border-black/[0.07] flex items-center justify-between px-0.5">
+                  <div className="flex items-center gap-2 min-w-0">
                     {item.mentorAvatar && (
                       <img
                         src={item.mentorAvatar}
                         alt={item.mentorName}
                         loading="lazy"
                         decoding="async"
-                        className="w-6 h-6 rounded-full object-cover border border-[#FF6B00]/50"
+                        className="w-6 h-6 rounded-full object-cover border border-black/10 shrink-0"
                       />
                     )}
-                    <span className="text-[11px] font-medium text-zinc-300 truncate max-w-[125px]">
+                    <span className="text-xs font-medium text-[#1D1D1F] truncate max-w-[135px]">
                       {item.mentorName}
                     </span>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-white/[0.07] text-[11px] font-mono text-[#FFA057] font-semibold flex items-center gap-0.5">
+                  <span className="px-2.5 py-1 rounded-full bg-[#F5F5F7] group-hover:bg-[#0859D4] text-[11px] font-mono text-[#0859D4] group-hover:text-white font-semibold flex items-center gap-0.5 transition-colors shrink-0">
                     {item.durationHours}h <ArrowUpRight className="w-3 h-3" />
                   </span>
                 </div>
-
-                <div className="text-[10px] font-mono text-zinc-500 text-center pt-2 border-t border-white/[0.05] truncate">
-                  Live peer cohort beats recorded theory.
-                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-      {/* Bottom Interactive Hint Pill */}
-      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-zinc-950/90 border border-white/10 backdrop-blur-xl text-[11px] font-mono text-zinc-400 pointer-events-none shadow-lg">
-        <span
-          className="w-2 h-2 rounded-full transition-colors duration-300"
-          style={{ backgroundColor: activeMeta.color }}
-        />
-        <span className="text-zinc-200 font-semibold">{activeMeta.society}</span>
-        <span className="text-zinc-600">•</span>
-        <span className="hidden sm:inline truncate max-w-[220px] text-zinc-400">
-          {activeCourseTitle || 'Drag to flow cohorts'}
-        </span>
-        <span className="text-[#FF6B00] uppercase tracking-wider text-[10px]">
-          Drag 3D Spiral
-        </span>
+      {/* Minimalist Single-Line Deck Controller */}
+      <div className="mt-2 z-30 inline-flex items-center gap-2 p-1 rounded-full bg-white border border-black/[0.08] shadow-[0_6px_20px_rgba(29,29,31,0.06)]">
+        <button
+          type="button"
+          onClick={() => stepDeck(-1)}
+          aria-label="Previous cohort"
+          className="w-7 h-7 rounded-full hover:bg-[#F5F5F7] text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
+        >
+          <ChevronLeft className="w-3.5 h-3.5" />
+        </button>
+
+        <div className="flex items-center gap-2 px-2 text-xs font-mono">
+          <span
+            className="w-2 h-2 rounded-full transition-colors duration-300 shrink-0"
+            style={{ backgroundColor: activeMeta.color }}
+          />
+          <span className="text-[#1D1D1F] font-semibold whitespace-nowrap">
+            {activeMeta.society}
+          </span>
+          <span className="text-black/20">•</span>
+          <span className="text-[#0859D4] font-semibold tabular-nums whitespace-nowrap">
+            {String(activeIndex + 1).padStart(2, '0')} / {String(deckItems.length).padStart(2, '0')}
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => stepDeck(1)}
+          aria-label="Next cohort"
+          className="w-7 h-7 rounded-full hover:bg-[#F5F5F7] text-[#424242] hover:text-[#0859D4] flex items-center justify-center transition-colors cursor-pointer"
+        >
+          <ChevronRight className="w-3.5 h-3.5" />
+        </button>
       </div>
     </div>
   );

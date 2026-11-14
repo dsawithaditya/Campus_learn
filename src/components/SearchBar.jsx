@@ -64,7 +64,7 @@ export function SearchBar({
   return (
     <div ref={containerRef} className={`relative w-full ${className}`}>
       <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-        <div className="absolute left-4 pointer-events-none text-muted dark:text-muted-dark">
+        <div className="absolute left-4 pointer-events-none text-[#6E6E73]">
           <Search className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.75} />
         </div>
 
@@ -81,7 +81,7 @@ export function SearchBar({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           aria-label="Search courses and categories"
-          className="w-full pl-11 sm:pl-12 pr-12 py-3 sm:py-3.5 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-pill shadow-soft text-sm sm:text-base text-text dark:text-text-dark placeholder:text-muted/70 dark:placeholder:text-muted-dark/70 transition-all focus:border-primary dark:focus:border-primary-contrast focus:shadow-lift outline-none"
+          className="w-full pl-11 sm:pl-12 pr-12 py-3 sm:py-3.5 bg-[#F5F5F7] border border-black/[0.08] rounded-pill shadow-soft text-sm sm:text-base text-[#1D1D1F] placeholder:text-[#6E6E73] transition-all focus:bg-white focus:border-[#0859D4] focus:shadow-lift outline-none"
         />
 
         {query && (
@@ -92,7 +92,7 @@ export function SearchBar({
               setIsOpen(false);
             }}
             aria-label="Clear search"
-            className="absolute right-4 p-1 rounded-full text-muted hover:text-text dark:hover:text-text-dark"
+            className="absolute right-4 p-1 rounded-full text-[#6E6E73] hover:text-[#1D1D1F]"
           >
             <X className="w-4 h-4" strokeWidth={1.75} />
           </button>
@@ -101,10 +101,10 @@ export function SearchBar({
 
       {/* Suggestion dropdown */}
       {isOpen && trimmed && (matchedCategories.length > 0 || matchedCourses.length > 0) && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-surface dark:bg-surface-dark border border-border dark:border-border-dark rounded-lg shadow-lift overflow-hidden z-40 max-h-[380px] overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/10 rounded-xl shadow-[0_20px_50px_rgba(29,29,31,0.12)] overflow-hidden z-40 max-h-[380px] overflow-y-auto">
           {matchedCategories.length > 0 && (
-            <div className="p-2 border-b border-border/60 dark:border-border-dark/60">
-              <div className="text-[11px] font-semibold text-muted dark:text-muted-dark uppercase px-3 py-1">
+            <div className="p-2 border-b border-black/[0.06]">
+              <div className="text-[11px] font-semibold text-[#6E6E73] uppercase px-3 py-1">
                 Categories
               </div>
               {matchedCategories.map((cat) => (
@@ -115,11 +115,11 @@ export function SearchBar({
                     setIsOpen(false);
                     navigate(`/explore?category=${cat.id}`);
                   }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 text-left rounded-sm hover:bg-primary-soft/50 dark:hover:bg-slate-800 transition-colors text-sm"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-left rounded-lg hover:bg-[#F5F5F7] transition-colors text-sm cursor-pointer"
                 >
-                  <Tag className="w-4 h-4 text-primary shrink-0" strokeWidth={1.75} />
-                  <span className="font-medium text-text dark:text-text-dark">{cat.name}</span>
-                  <span className="text-xs text-muted dark:text-muted-dark ml-auto">
+                  <Tag className="w-4 h-4 text-[#0859D4] shrink-0" strokeWidth={1.75} />
+                  <span className="font-medium text-[#1D1D1F]">{cat.name}</span>
+                  <span className="text-xs text-[#6E6E73] ml-auto">
                     {cat.courseCount} courses
                   </span>
                 </button>
@@ -129,7 +129,7 @@ export function SearchBar({
 
           {matchedCourses.length > 0 && (
             <div className="p-2">
-              <div className="text-[11px] font-semibold text-muted dark:text-muted-dark uppercase px-3 py-1">
+              <div className="text-[11px] font-semibold text-[#6E6E73] uppercase px-3 py-1">
                 Courses
               </div>
               {matchedCourses.map((c) => (
@@ -140,7 +140,7 @@ export function SearchBar({
                     setIsOpen(false);
                     navigate(`/course/${c.slug}`);
                   }}
-                  className="w-full flex items-center gap-3 px-3 py-2 text-left rounded-sm hover:bg-primary-soft/50 dark:hover:bg-slate-800 transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 text-left rounded-lg hover:bg-[#F5F5F7] transition-colors cursor-pointer"
                 >
                   <img
                     src={c.thumbnail}
@@ -148,24 +148,24 @@ export function SearchBar({
                     className="w-8 h-8 rounded object-cover shrink-0"
                   />
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-text dark:text-text-dark truncate">
+                    <p className="text-sm font-medium text-[#1D1D1F] truncate">
                       {c.title}
                     </p>
-                    <p className="text-xs text-muted dark:text-muted-dark truncate">
+                    <p className="text-xs text-[#6E6E73] truncate">
                       {c.level} • {c.durationHours} hrs
                     </p>
                   </div>
-                  <BookOpen className="w-4 h-4 text-muted dark:text-muted-dark shrink-0" strokeWidth={1.75} />
+                  <BookOpen className="w-4 h-4 text-[#6E6E73] shrink-0" strokeWidth={1.75} />
                 </button>
               ))}
             </div>
           )}
 
-          <div className="bg-slate-50 dark:bg-slate-800/50 p-2 text-center border-t border-border/60 dark:border-border-dark/60">
+          <div className="bg-[#F5F5F7] p-2 text-center border-t border-black/[0.06]">
             <button
               type="button"
               onClick={handleSearchSubmit}
-              className="text-xs font-semibold text-primary dark:text-primary-contrast hover:underline"
+              className="text-xs font-semibold text-[#0859D4] hover:underline cursor-pointer"
             >
               See all results for "{query}" →
             </button>
